@@ -7,6 +7,7 @@ import serial
 import pickle
 import inspect
 import subprocess
+import messaging.sms 	#Librería que codifica y decodifica los SMS en modo PDU
 
 import logger
 import contactList
@@ -216,21 +217,32 @@ class Gsm(Modem):
 			timeCounter = 0
 			self.successfulSending = None
 			#############################
+
+			pdu = SmsSubmit(telephoneNumber, plainText).to_pdu()[0]
+
 			# Enviamos los comandos AT correspondientes para efectuar el envío el mensaje de texto
-			info01 = self.sendAT('AT+CMGS="' + str(telephoneNumber) + '"') # Numero al cual enviar el SMS
 			info02 = self.sendAT(plainText + ascii.ctrl('z'))              # Mensaje de texto terminado en Ctrl+z
 			# ------------------ Caso de envío EXITOSO ------------------
-			# Ejemplo de info02[0]: Mensaje enviado desde el Modem.\x1a\r\n
-			# Ejemplo de info02[1]: +CMGS: 17\r\n
-			# Ejemplo de info02[3]: OK\r\n
-			# Comprobamos si el envío fue exitoso
-			for i in info02:
-				if i.startswith('OK'):
-					self.successfulSending = True
+			# Ejemplo de info01[0]: AT+CMGS=38\r\n
+			# Ejemplo de info02[1]: AT+CMGS=38\r\n
+			# Ejemplo de info02[3]: >
+			# Comprobamos que el módulo esté listo para mandar el mensaje
+			for i in info01:
+				if i.startswith('>'):
+					info02 = self.sendAT(pdu + ascii.ctrl('z'))   # Mensaje de texto terminado en Ctrl+z
 					break
-				elif i.startswith('+CMS ERROR'):
+				elif i.startswith('ERROR'):
 					self.successfulSending = False
 					break
+
+			for i in info02:
+				if i.startswith('+CMGS:'):
+					self.successfulSending = True
+					break
+				elif i.startswith('+CMS ERROR:'):
+					self.successfulSending = False
+					break
+
 			# Esperamos respuesta de la red si es que no la hubo
 			while self.successfulSending is None and timeCounter < 15:
 				time.sleep(1)
