@@ -221,7 +221,7 @@ class Gsm(Modem):
 			pdu = SmsSubmit(telephoneNumber, plainText).to_pdu()[0]
 
 			# Enviamos los comandos AT correspondientes para efectuar el envío el mensaje de texto
-			info02 = self.sendAT(plainText + ascii.ctrl('z'))              # Mensaje de texto terminado en Ctrl+z
+			info01 = self.sendAT('AT+CMGS=' + pdu.length) # Envío la longitud del paquete PDU
 			# ------------------ Caso de envío EXITOSO ------------------
 			# Ejemplo de info01[0]: AT+CMGS=38\r\n
 			# Ejemplo de info02[1]: AT+CMGS=38\r\n
