@@ -20,6 +20,10 @@ DOWNLOADS = 'Downloads'
 class Network(object):
 
 	MEDIA_NAME = None
+	pattern = None
+	state = None
+	threadName = None
+	thread = None
 
 	TCP_PORT = JSON_CONFIG["NETWORK"]["TCP_PORT"]
 	UDP_PORT = JSON_CONFIG["NETWORK"]["UDP_PORT"]
@@ -27,8 +31,8 @@ class Network(object):
 	CONNECTIONS = JSON_CONFIG["NETWORK"]["CONNECTIONS"]
 
 	localInterface = None
-	localIPAddress = None
-
+	localAddress = None
+	
 	successfulConnection = None
 	receptionQueue = None
 	isActive = False
@@ -36,6 +40,7 @@ class Network(object):
 	def __init__(self, _receptionQueue, _MEDIA_NAME):
 		self.receptionQueue = _receptionQueue
 		self.MEDIA_NAME = _MEDIA_NAME
+		self.thread = threading.Thread(target = self.receive, name = self.threadName)
 
 	def __del__(self):
 		try:
@@ -52,17 +57,17 @@ class Network(object):
 			logger.write('INFO', '[%s] Objeto destruido.' % self.MEDIA_NAME)
 
 	def connect(self, _localIPAddress):
-		self.localIPAddress = _localIPAddress
+		self.localAddress = _localIPAddress
 		try:
 			# Creamos los sockets para una conexión TCP
 			self.tcpReceptionSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			self.tcpReceptionSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-			self.tcpReceptionSocket.bind((self.localIPAddress, self.TCP_PORT))
+			self.tcpReceptionSocket.bind((self.localAddress, self.TCP_PORT))
 			self.tcpReceptionSocket.listen(self.CONNECTIONS)
 			self.tcpReceptionSocket.settimeout(TIMEOUT)
 			# Creamos los sockets para una conexión UDP
 			self.udpReceptionSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-			self.udpReceptionSocket.bind((self.localIPAddress, self.UDP_PORT))
+			self.udpReceptionSocket.bind((self.localAddress, self.UDP_PORT))
 			self.udpReceptionSocket.settimeout(TIMEOUT)
 			self.successfulConnection = True
 			return True
@@ -200,8 +205,10 @@ class Network(object):
 					logger.write('WARNING', '[%s-TCP] Mensaje de \'%s\' rechazado!' % (self.MEDIA_NAME, ipAddress))
 					remoteSocket.close()
 			# Para que el bloque 'try' (en la funcion 'accept') no se quede esperando indefinidamente
-			except socket.timeout as errorMessage:
+			except socket.timeout:
 				pass
+			except:
+				self.isActive = False
 		self.tcpReceptionSocket.close()
 		logger.write('WARNING','[%s-TCP] Función \'%s\' terminada.' % (self.MEDIA_NAME, inspect.stack()[0][3]))
 
@@ -236,8 +243,10 @@ class Network(object):
 				else:
 					logger.write('WARNING', '[%s-UDP] Mensaje de \'%s\' rechazado!' % (self.MEDIA_NAME, ipAddress))
 			# Esta excepción es parte de la ejecución, no implica un error
-			except socket.timeout, errorMessage:
+			except socket.timeout:
 				pass
+			except:
+				self.isActive = False
 		self.udpReceptionSocket.close()
 		logger.write('WARNING', '[%s-UDP] Función \'%s\' terminada.' % (self.MEDIA_NAME, inspect.stack()[0][3]))
 

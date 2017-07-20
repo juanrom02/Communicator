@@ -6,6 +6,7 @@ import termios
 
 import contactList
 import communicator
+import controllerClass
 import messageClass
 
 def main():
@@ -39,7 +40,7 @@ def main():
 					print 'Abortado.'
 					continue
 				# Indicamos el cliente al cual se va a enviar el mensaje
-				receiver = raw_input('Cliente a enviar: ')
+				receiver = raw_input('Cliente a enviar: ')	
 				# Indicamos el mensaje que se desea enviar
 				messageToSend = raw_input('Mensaje a enviar: ')
 				# Preguntamos si hay alguna preferencia en relación a los medios de comunicación
@@ -147,7 +148,21 @@ def askClients():
 def askMedia():
 	selectMedia = raw_input('¿Desea elegir un medio de comunicación preferido? [S/n] ')
 	if selectMedia is 'S' or selectMedia is 's' or len(selectMedia) is 0:
-		print 'Lista de medios: GSM, GPRS, WIFI, BLUETOOTH, EMAIL, '
+                availableMedia = 'Lista de medios disponibles:'
+                if communicator.controllerInstance.availableGsm:
+                        availableMedia = availableMedia + ' GSM,'
+                if communicator.controllerInstance.availableGprs:
+                        availableMedia = availableMedia + ' GPRS,'
+                if communicator.controllerInstance.availableWifi:
+                        availableMedia = availableMedia + ' WIFI,'
+                if communicator.controllerInstance.availableEthernet:
+                        availableMedia = availableMedia + ' ETHERNET,'
+                if communicator.controllerInstance.availableBluetooth:
+                        availableMedia = availableMedia + ' BLUETOOTH,'
+                if communicator.controllerInstance.availableEmail:
+                        availableMedia = availableMedia + ' EMAIL,'
+
+		print availableMedia
 		return True
 	elif selectMedia is 'N' or selectMedia is 'n':
 		return False

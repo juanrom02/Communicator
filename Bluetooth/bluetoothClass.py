@@ -23,8 +23,11 @@ class Bluetooth(object):
 	localUUID = JSON_CONFIG["BLUETOOTH"]["UUID"]
 
 	localInterface = None
-	localMACAddress = None
+	localAddress = None
 	localPortRFCOMM = None
+	MEDIA_NAME = 'BLUETOOTH'
+	threadName = None
+	thread = None
 
 	successfulConnection = None
 	receptionQueue = None
@@ -32,6 +35,7 @@ class Bluetooth(object):
 
 	def __init__(self, _receptionQueue):
 		self.receptionQueue = _receptionQueue
+		self.thread = threading.Thread(target = self.receive, name = self.threadName)
 
 	def __del__(self):
 		try:
@@ -47,12 +51,12 @@ class Bluetooth(object):
 
 	# La función 'receiveRFCOMM' cierra el socket al finalizar, por eso hay que hacer esto de nuevo
 	def connect(self, _localMACAddress):
-		self.localMACAddress = _localMACAddress
+		self.localAddress = _localMACAddress
 		try:
 			# Creamos un nuevo socket Bluetooth que usa el protocolo de transporte especificado
 			self.serverSocketRFCOMM = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 			# Enlazamos al adaptador local algun puerto disponible
-			self.serverSocketRFCOMM.bind((self.localMACAddress, bluetooth.PORT_ANY))
+			self.serverSocketRFCOMM.bind((self.localAddress, bluetooth.PORT_ANY))
 			# Especificamos el numero de conexiones permitidas (todavia sin aceptar) antes de rechazar las nuevas entrantes
 			self.serverSocketRFCOMM.listen(CONNECTIONS)
 			# Especificamos el tiempo de espera de conexiones (funcion 'accept')

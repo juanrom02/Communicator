@@ -7,6 +7,9 @@ import time
 import json
 import Queue
 import subprocess
+from subprocess import check_output
+import regex
+import pexpect
 
 currentDirectory = os.getcwd() 
 if not currentDirectory.endswith('Communicator'):
@@ -194,6 +197,7 @@ def send(message, receiver = None, media = None):
 def receive():
 	if alreadyOpen:
 		if receptionQueue.qsize() > 0:
+                        print receptionQueue #DEBUG
 			# El elemento 0 es la prioridad, por eso sacamos el 1 porque es el mensaje
 			return receptionQueue.get_nowait()[1]
 		else:
@@ -236,44 +240,64 @@ def hangUpVoiceCall():
 
 def connectGprs():
 	# Si no existe una conexión GPRS activa, intentamos conectarnos a la red
-	if not gprsInstance.isActive:
+	if not gprsInstance.isActive:                          
 		try:
 			logger.write('INFO', '[COMMUNICATOR] Intentando conectar con la red GPRS...')
-			ponProcess = subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-			ponOutput, ponError = ponProcess.communicate()
+			if gsmInstance.androidConnected:
+				pattern = 'usb[0-9]+'
+				command = "adb shell dumpsys connectivity | grep -o 'ni{\[type: WIFI'"
+				gprsError = check_output(command.split())
+			else:
+				pattern = 'ppp[0-9]+'
+				gprsProcess = subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+				gprsOutput, gprsError = gprsProcess.communicate()
 			# Si no se produjo ningún error, entonces se intenta iniciar la conexión con el APN
-			if ponError == '':
-				syslogFile = io.open('/var/log/syslog', 'a+')
-				syslogFile.seek(0, 2) # Apuntamos al final del archivo
-				while True:
-					syslogOutput = syslogFile.readline()
-					if syslogOutput.find('local  IP address ') > 0:
-						# Se asignó una direccion IP...
-						local_IP_Address = syslogOutput.split()[8].encode('utf-8')
-						logger.write('DEBUG', '[COMMUNICATOR] Dirección IP: %s' % local_IP_Address)
-						continue
-					elif syslogOutput.find('remote IP address ') > 0:
-						# Se asignó una puerta de enlace...
-						remote_IP_Address = syslogOutput.split()[8].encode('utf-8')
-						logger.write('DEBUG', '[COMMUNICATOR] Puerta de enlace: %s' % remote_IP_Address)
-						continue
-					elif syslogOutput.find('primary   DNS address ') > 0:
-						# Se asignó un servidor DNS primario...
-						primary_DNS_Address = syslogOutput.split()[8].encode('utf-8')
-						logger.write('DEBUG', '[COMMUNICATOR] DNS Primario: %s' % primary_DNS_Address)
-						continue
-					elif syslogOutput.find('secondary DNS address ') > 0:
-						# Se asignó un servidor DNS secundario (último parámetro)...
-						secondary_DNS_Address = syslogOutput.split()[8].encode('utf-8')
-						logger.write('DEBUG', '[COMMUNICATOR] DNS Secundario: %s' % secondary_DNS_Address)
-						continue
-					elif syslogOutput.find('Script /etc/ppp/ip-up finished') > 0:
-						#logger.write('DEBUG', '[COMMUNICATOR] Parámetros de red configurados exitosamente!')
-						return True
-					elif syslogOutput.find('Connection terminated') > 0:
-						logger.write('DEBUG', '[COMMUNICATOR] No se pudo establecer la conexión con la red GPRS!')
-						return False
+			if gprsError == '':
+				notAvailable = True
+				while notAvailable:
+					time.sleep(1)
+					ipOutput = check_output(['ip','link','show'])
+					interface = regex.findall(pattern, ipOutput)
+					if interface:
+						notAvailable = False
+				ifconfig = 'ifconfig ' + interface[0]
+				notAvailable = True
+				while notAvailable:
+					time.sleep(1)
+					ifconfigProcess = subprocess.Popen(ifconfig.split(), stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+					ifconfigOutput, ifconfigError = ifconfigProcess.communicate()
+					ipv4 = regex.findall('inet addr:(.*)  Bcast', str(ifconfigOutput))
+					if ipv4:
+							notAvailable = False
+				ipv6 = regex.findall('inet6 addr: (.*) Scope', str(ifconfigOutput))
+				logger.write('DEBUG', '[COMMUNICATOR] Dirección IPv4: %s' % ipv4[0])
+				logger.write('DEBUG', '[COMMUNICATOR] Dirección IPv6: %s' % ipv6[0])
+				return True
 			# El puerto serial en '/etc/ppp/options-mobile' está mal configurado
+			elif gprsError.startswith('ni'):
+				change = raw_input('El telefono Android utiliza una conexion WiFi, desea cambiar a GPRS?[s/n]:')
+				if change in ['s','S','Y','y']:
+					shell = pexpect.spawn("adb shell")
+					shell.expect("$")
+					gsmInstance.sendPexpect(shell, "su", "#")
+					gsmInstance.sendPexpect(shell, "svc data enable", "#")
+					gsmInstance.sendPexpect(shell, "svc wifi disable", "#")
+					time.sleep(5)
+					gsmInstance.sendPexpect(shell, "dumpsys connectivity | grep -o 'ni{\[type: MOBILE'", "#")
+					if not shell.expect(['ni',pexpect.TIMEOUT],1):
+						shell.sendline('exit')
+						shell.sendline('exit')
+						return True
+					else:
+						gsmInstance.sendPexpect(shell, "svc wifi enable", "#")
+						gsmInstance.sendPexpect(shell, "svc data disable", "#")
+						shell.sendline('exit')
+						shell.sendline('exit')						
+						logger.write('WARNING', '[COMMUNICATOR] Conexion GPRS fallida. WiFi activado nuevamente')
+						return False
+				else:
+					logger.write('INFO', '[COMMUNICATOR] Se usara la conexion WiFi del telefono')
+					return False
 			else:
 				logger.write('WARNING', '[COMMUNICATOR] Ningún módem conectado para realizar la conexión!')
 				return False
@@ -289,10 +313,21 @@ def disconnectGprs():
 	# Si ya existe una conexión GPRS activa, intentamos desconectarnos de la red
 	if gprsInstance.isActive:
 		try:
-			poffProcess = subprocess.Popen('poff', stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+			if gsmInstance.androidConnected:
+				change = raw_input('El telefono posee conexion WiFi, desea activarla?[s/n]:')
+				if change in ['s','S','Y','y']:
+					shell = pexpect.spawn("adb shell")
+					shell.expect("$")
+					gsmInstance.sendPexpect(shell, "svc wifi enable", "#")
+					gsmInstance.sendPexpect(shell, "svc data disable", "#")	
+					shell.sendline('exit')
+					shell.sendline('exit')
+			else:
+					command = 'poff'
+			poffProcess = subprocess.Popen(command.split(), stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 			poffOutput, poffError = poffProcess.communicate()
-			if poffOutput.find('No pppd is running') > 0:
-				logger.write('WARNING', '[COMMUNICATOR] El demonio pppd no está ejecutándose y no hay conexión!')
+			if poffOutput.find('Not connected') > 0 or poffOutput.startswith('Result: Parcel'):
+				logger.write('WARNING', '[COMMUNICATOR] No hay conexión!')
 				return False
 			else:
 				logger.write('INFO', '[COMMUNICATOR] La red GPRS ha sido desconectada correctamente!')

@@ -27,6 +27,7 @@ class Transmitter(threading.Thread):
 	ethernetInstance = None
 	emailInstance = None
 	bluetoothInstance = None
+	androidInstance = None
 
 	isActive = False
 	transmissionQueue = None
