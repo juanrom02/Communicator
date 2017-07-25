@@ -121,6 +121,7 @@ class Controller(threading.Thread):
 				return False
 		# Si anteriormente hubo un intento de 'connect()' con o sin éxito, debemos limpiar el puerto
 		if self.gsmInstance.localInterface is not None:
+			self.gsmInstance.telitConnected = False
 			self.closeConnection(self.gsmInstance)
 		return False
 	
@@ -180,63 +181,6 @@ class Controller(threading.Thread):
 			self.gsmInstance.sendPexpect(shell, "svc wifi enable", "#")
 			shell.sendline('exit')
 			shell.sendline('exit')
-				
-	def verifyEthernetConnection(self):
-		# Generamos la expresión regular
-		ethPattern = re.compile('eth[0-9]+')
-		activeInterfacesList = open('/tmp/activeInterfaces', 'a+').read()
-		for networkInterface in os.popen('ip link show').readlines():
-			# Con 'ethPattern.search(networkInterface)' buscamos alguna coincidencia
-			matchedPattern = ethPattern.search(networkInterface)
-			# La interfaz actual coincide con un patrón 'eth'
-			if matchedPattern is not None and networkInterface.find("state UP") > 0:
-				# El patrón coincidente no está siendo usado y la instancia no está activa (habrá que habilitarla)
-				if matchedPattern.group() not in activeInterfacesList and self.ethernetInstance.localInterface is None:
-					# Obtenemos la interfaz que concide con el patrón
-					self.ethernetInstance.localInterface = matchedPattern.group()
-					# Escribimos en nuestro archivo la interfaz, para indicar que está ocupada
-					activeInterfacesFile = open('/tmp/activeInterfaces', 'a+')
-					activeInterfacesFile.write(self.ethernetInstance.localInterface + '\n')
-					activeInterfacesFile.close()
-					# Obtenemos la dirección IP local asignada estáticamente o por DHCP
-					commandToExecute = 'ip addr show ' + self.ethernetInstance.localInterface + ' | grep inet'
-					localAddress = os.popen(commandToExecute).readline().split()[1].split('/')[0]
-					# Si no se produce ningún error durante la configuración, ponemos a la IP a escuchar
-					if self.ethernetInstance.connect(localAddress):
-						ethernetThread = threading.Thread(target = self.ethernetInstance.receive, name = ethernetThreadName)
-						ethernetInfo = self.ethernetInstance.localInterface + ' - ' + self.ethernetInstance.localAddress
-						logger.write('INFO', '[ETHERNET] Listo para usarse (' + ethernetInfo + ').')
-						ethernetThread.start()
-						return True
-					# Si se produce un error durante la configuración, devolvemos 'False'
-					else:
-						return False
-				# El patrón coincidente es igual a la interfaz de la instancia
-				elif matchedPattern.group() == self.ethernetInstance.localInterface:
-					# Si no se produjo ningún error durante la configuración, devolvemos 'True'
-					if self.ethernetInstance.successfulConnection:
-						return True
-					# Entonces significa que hubo un error, devolvemos 'False'
-					else:
-						return False
-				# El patrón coincidente está siendo usado pero no es igual a la interfaz de la instancia
-				else:
-					continue
-			# No se encontró coincidencia en la iteración actual, entonces seguimos buscando
-			else:
-				continue
-		# Si anteriormente hubo un intento de 'connect()' con o sin éxito, debemos limpiar la interfaz
-		if self.ethernetInstance.localInterface is not None:
-			localInterface = self.ethernetInstance.localInterface
-			# Limpiamos todos los campos del objeto NETWORK
-			closeConnection(self.ethernetInstance, 'ETHERNET')
-			self.ethernetInstance.localAddress = None
-			# Eliminamos del archivo la interfaz de red usada
-			dataToWrite = open('/tmp/activeInterfaces').read().replace(localInterface + '\n', '')
-			activeInterfacesFile = open('/tmp/activeInterfaces', 'w')
-			activeInterfacesFile.write(dataToWrite)
-			activeInterfacesFile.close()
-		return False
 
 	def verifyBluetoothConnection(self):
 		activeInterfacesList = open('/tmp/activeInterfaces', 'a+').read()
@@ -295,8 +239,8 @@ class Controller(threading.Thread):
 			testSocket = socket.create_connection((remoteHost, 80), 2) # Se determina si es alcanzable
 			# Comprobamos si aún no intentamos conectarnos con los servidores de GMAIL (por eso el 'None')
 			if self.emailInstance.successfulConnection is None:
-				# Si no se produce ningún error durante la configuración, ponemos a recibir EMAILs
-				if self.emailInstance.connect():
+				# Si no se produce ningún error durante la configuración, ponemos a recibir
+				if self.emailInstance.connect(self.gsmInstance.telitConnected):				
 					emailThread = threading.Thread(target = self.emailInstance.receive, name = emailThreadName)
 					emailThread.start()
 					logger.write('INFO', '[EMAIL] Listo para usarse (' + self.emailInstance.emailAccount + ').')

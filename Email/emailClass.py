@@ -11,6 +11,9 @@ import smtplib
 import imaplib
 import mimetypes
 import subprocess
+import modemClass
+import base64
+import traceback
 
 from email import encoders
 from email.header import decode_header
@@ -39,13 +42,28 @@ class Email(object):
 
 	successfulConnection = None
 	receptionQueue = None
-	emailAccount = None
 	isActive = False
+	telitConnected = None
+	
+	smtpHost = None
+	smtpPort = None
+	imapHost = None
+	imapPort = None
+	emailPassword = None
+	emailAccount = None
+	clientName = None
 
 	def __init__(self, _receptionQueue):
 		self.receptionQueue = _receptionQueue
 		# Establecemos tiempo maximo antes de reintentar lectura (válido para 'imapServer')
 		socket.setdefaulttimeout(TIMEOUT)
+		self.smtpHost = JSON_CONFIG["EMAIL"]["SMTP_SERVER"]
+		self.smtpPort = JSON_CONFIG["EMAIL"]["SMTP_PORT"]
+		self.imapHost = JSON_CONFIG["EMAIL"]["IMAP_SERVER"]
+		self.imapPort = JSON_CONFIG["EMAIL"]["IMAP_PORT"]
+		self.emailPassword = JSON_CONFIG["EMAIL"]["PASSWORD"]
+		self.emailAccount = JSON_CONFIG["EMAIL"]["ACCOUNT"]
+		self.clientName = JSON_CONFIG["COMMUNICATOR"]["NAME"]
 
 	def __del__(self):
 		try:
@@ -57,63 +75,81 @@ class Email(object):
 		finally:
 			logger.write('INFO','[EMAIL] Objeto destruido.' )
 
-	def connect(self):
+	def connect(self, telit):
 		try:
-			smtpHost = JSON_CONFIG["EMAIL"]["SMTP_SERVER"]
-			smtpPort = JSON_CONFIG["EMAIL"]["SMTP_PORT"]
-			imapHost = JSON_CONFIG["EMAIL"]["IMAP_SERVER"]
-			imapPort = JSON_CONFIG["EMAIL"]["IMAP_PORT"]
-			emailPassword = JSON_CONFIG["EMAIL"]["PASSWORD"]
-			self.emailAccount = JSON_CONFIG["EMAIL"]["ACCOUNT"]
-			# El 'timeout' siguiente es para la función 'sendmail' de 'smtpServer'
-			self.smtpServer = smtplib.SMTP(smtpHost, smtpPort, timeout = 30) # Establecemos servidor y puerto SMTP
-			self.imapServer = imaplib.IMAP4_SSL(imapHost, imapPort)          # Establecemos servidor y puerto IMAP
-			self.smtpServer.ehlo()
-			self.smtpServer.starttls()
-			self.smtpServer.ehlo()
-			self.smtpServer.login(self.emailAccount, emailPassword) # Nos logueamos en el servidor SMTP
-			self.imapServer.login(self.emailAccount, emailPassword) # Nos logueamos en el servidor IMAP
-			self.imapServer.select('INBOX')                         # Seleccionamos la Bandeja de Entrada
+			if not telit and not self.testConnection():
+				self.smtpServer = smtplib.SMTP(self.smtpHost, self.smtpPort, timeout = 30) # Establecemos servidor y puerto SMTP
+				self.imapServer = imaplib.IMAP4_SSL(self.imapHost, self.imapPort)          # Establecemos servidor y puerto IMAP
+				self.smtpServer.ehlo()
+				self.smtpServer.starttls()
+				self.smtpServer.ehlo()
+				self.smtpServer.login(self.emailAccount, self.emailPassword) # Nos logueamos en el servidor SMTP
+				self.imapServer.login(self.emailAccount, self.emailPassword) # Nos logueamos en el servidor IMAP
+				self.imapServer.select('INBOX')                         # Seleccionamos la Bandeja de Entrada
+				self.telitConnected = False
+			elif not self.testTelitConnection():
+				self.telitIMAPConnect()
+				self.telitConnected = True
 			self.successfulConnection = True
 			return True
 		# Error con los servidores (probablemente estén mal escritos o los puertos son incorrectos)
 		except Exception as errorMessage:
-			logger.write('ERROR', '[EMAIL] Error al intentar conectar con los servidores SMTP e IMAP!')
+			print traceback.format_exc()
+			logger.write('ERROR', '[EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - %s' % errorMessage)
 			self.successfulConnection = False
 			return False
+			
+	def testConnection(self):
+		try:
+			self.smtpServer.noop()
+			self.imapServer.noop()
+			return True
+		except smtplib.SMTPServerDisconnected, imaplib.IMAP4.error:
+			return False
+		except TypeError:
+			return False
+	
+	def testTelitConnection(self):
+		try:
+			self.sendTelitCommand('. NOOP', '. OK')
+			return True
+		except:
+			return False		
+		
+	def sendTelitCommand(self, command, expected):
+		response = modemClass.sendAT(command + '\r')
+		for line in response:
+			if line.startswith(expected):
+				return response
+		raise Exception(' Telit: %s' % command)
+		
+	def telitSMTPConnect(self):
+		self.sendTelitCommand('AT#SSLD=1,%s,"%s",0,0' % (self.smtpPort,self.smtpHost),'CONNECT')
+		self.sendTelitCommand('EHLO %s' % self.clientName, '250-%s' % self.smtpHost)
+		self.sendTelitCommand('AUTH LOGIN', '334')
+		self.sendTelitCommand(base64.b64encode(self.emailAccount), '334')
+		self.sendTelitCommand(base64.b64encode(self.emailPassword), '235')
+		
+	def telitIMAPConnect():
+		self.sendTelitCommand('AT#SSLD=1,%s,"%s",0,0' % (self.imapPort,self.imapHost), 'CONNECT')				
+		self.sendTelitCommand('. LOGIN %s %s' % (self.emailAccount,self.emailPassword), '. OK')
+		self.sendTelitCommand('. SELECT INBOX', '. OK')	
 
 	def send(self, message, emailDestination):
 		# Comprobación de envío de texto plano
 		if isinstance(message, messageClass.Message) and hasattr(message, 'plainText'):
-			return self.sendMessage(message.plainText, emailDestination)
-		# Comprobación de envío de archivo
-		elif isinstance(message, messageClass.Message) and hasattr(message, 'fileName'):
-			return self.sendAttachment(message.fileName, emailDestination)
-		# Entonces se trata de enviar una instancia de mensaje
-		else:
-			return self.sendMessageInstance(message, emailDestination)
-
-	def sendMessage(self, plainText, emailDestination):
-		try:
-			# Se construye un mensaje simple
-			mimeText = MIMEText(plainText, 'plain')
-			mimeText['From'] = '%s <%s>' % (JSON_CONFIG["COMMUNICATOR"]["NAME"], JSON_CONFIG["EMAIL"]["ACCOUNT"])
+			mimeText = MIMEText(message.plainText, 'plain')
+			mimeText['From'] = '%s <%s>' % (self.clientName, self.emailAccount)
 			mimeText['To'] = emailDestination
 			mimeText['Subject'] = JSON_CONFIG["EMAIL"]["SUBJECT"]
-			self.smtpServer.sendmail(mimeText['From'], mimeText['To'], mimeText.as_string())
-			logger.write('INFO', '[EMAIL] Mensaje enviado a \'%s\'' % emailDestination)
-			return True
-		except Exception as errorMessage:
-			logger.write('WARNING', '[EMAIL] Mensaje no enviado: %s' % str(errorMessage))
-			return False
-
-	def sendAttachment(self, relativeFilePath, emailDestination, messageToSend = 'Este email tiene un archivo adjunto.'):
-		try:
+			return self.sendMessage(mimeText)
+		# Comprobación de envío de archivo
+		elif isinstance(message, messageClass.Message) and hasattr(message, 'fileName'):
 			mimeMultipart = MIMEMultipart()
-			mimeMultipart['From'] = '%s <%s>' % (JSON_CONFIG["COMMUNICATOR"]["NAME"], JSON_CONFIG["EMAIL"]["ACCOUNT"])
+			mimeMultipart['From'] = '%s <%s>' % (self.clientName, self.emailAccount)
 			mimeMultipart['To'] = emailDestination
 			mimeMultipart['Subject'] = JSON_CONFIG["EMAIL"]["SUBJECT"]
-			absoluteFilePath = os.path.abspath(relativeFilePath)
+			absoluteFilePath = os.path.abspath(message.fileName)
 			fileDirectory, fileName = os.path.split(absoluteFilePath)
 			cType = mimetypes.guess_type(absoluteFilePath)[0]
 			mainType, subType = cType.split('/', 1)
@@ -141,29 +177,76 @@ class Email(object):
 			attachmentFile.add_header('Content-Disposition', 'attachment', filename = fileName)
 			#mimeText = MIMEText(messageToSend, _subtype = 'plain')
 			mimeMultipart.attach(attachmentFile)
-			#mimeMultipart.attach(mimeText)
-			self.smtpServer.sendmail(mimeMultipart['From'], mimeMultipart['To'], mimeMultipart.as_string())
-			logger.write('INFO', '[EMAIL] Archivo \'%s\' enviado correctamente!' % fileName)
-			return True
-		except Exception as errorMessage:
-			logger.write('WARNING', '[EMAIL] Archivo \'%s\' no enviado: %s' % (fileName, str(errorMessage)))
-			return False
-
-	def sendMessageInstance(self, message, emailDestination):
-		try:
+			return self.sendMessage(mimeMultipart, telitConnected)
+		# Entonces se trata de enviar una instancia de mensaje
+		else:
 			# Serializamos el objeto para poder transmitirlo
 			serializedMessage = 'INSTANCE' + pickle.dumps(message)
 			# Se construye un mensaje simple
 			mimeText = MIMEText(serializedMessage)
-			mimeText['From'] = '%s <%s>' % (JSON_CONFIG["COMMUNICATOR"]["NAME"], JSON_CONFIG["EMAIL"]["ACCOUNT"])
+			mimeText['From'] = '%s <%s>' % (self.clientName, self.emailAccount)
 			mimeText['To'] = emailDestination
 			mimeText['Subject'] = JSON_CONFIG["EMAIL"]["SUBJECT"]
-			self.smtpServer.sendmail(mimeText['From'], mimeText['To'], mimeText.as_string())
-			logger.write('INFO', '[EMAIL] Instancia de mensaje enviada a \'%s\'' % emailDestination)
+			return self.sendMessage(mimeText)
+
+	def sendMessage(self, mime):
+		try:
+			if self.telitConnected:
+				self.sendTelitCommand('. LOGOUT', '. OK')
+				self.telitSMTPConnect()
+				self.sendTelitCommand('MAIL FROM: %s' % self.emailAccount, '250')
+				self.sendTelitCommand('RCPT TO: %s' % mime['To'], '250')
+				self.sendTelitCommand('DATA', '354')
+				self.sendTelitCommand(mime.as_string(), '250')
+				self.sendTelitCommand('QUIT', '221')
+				self.telitIMAPConnect()
+			else:
+				self.smtpServer.sendmail(mime['From'], mime['To'], mime.as_string())
+			logger.write('INFO', '[EMAIL] Mensaje enviado a \'%s\'' % mime['To'])
 			return True
 		except Exception as errorMessage:
-			logger.write('WARNING', '[EMAIL] Instancia de mensaje no enviada: %s' % str(errorMessage))
+			logger.write('WARNING', '[EMAIL] Mensaje no enviado: %s' % str(errorMessage))
 			return False
+
+	#~ def sendAttachment(self, relativeFilePath, emailDestination, messageToSend = 'Este email tiene un archivo adjunto.'):
+		#~ try:
+#~ 
+			#~ #mimeMultipart.attach(mimeText)
+			#~ if telitConnected:
+				#~ self.sendTelitCommand('. LOGOUT', '. OK')
+				#~ self.telitSMTPConnect()
+				#~ self.sendTelitCommand('MAIL FROM: %s' % self.emailAccount, '250')
+				#~ self.sendTelitCommand('RCPT TO: %s' % emailDestination, '250')
+				#~ self.sendTelitCommand('DATA', '354')
+				#~ self.sendTelitCommand(mimeMutlipart.as_string(), '250')
+				#~ self.sendTelitCommand('QUIT', '221')
+				#~ self.telitIMAPConnect()
+			#~ else:
+				#~ self.smtpServer.sendmail(mimeMultipart['From'], mimeMultipart['To'], mimeMultipart.as_string())
+			#~ logger.write('INFO', '[EMAIL] Archivo \'%s\' enviado correctamente!' % fileName)
+			#~ return True
+		#~ except Exception as errorMessage:
+			#~ logger.write('WARNING', '[EMAIL] Archivo \'%s\' no enviado: %s' % (fileName, str(errorMessage)))
+			#~ return False
+
+	#~ def sendMessageInstance(self, message, emailDestination, telitConnected):
+		#~ try:
+			#~ if telitConnected:
+				#~ self.sendTelitCommand('. LOGOUT', '. OK')
+				#~ self.telitSMTPConnect()
+				#~ self.sendTelitCommand('MAIL FROM: %s' % self.emailAccount, '250')
+				#~ self.sendTelitCommand('RCPT TO: %s' % emailDestination, '250')
+				#~ self.sendTelitCommand('DATA', '354')
+				#~ self.sendTelitCommand(mimeText.as_string(), '250')
+				#~ self.sendTelitCommand('QUIT', '221')
+				#~ self.telitIMAPConnect()
+			#~ else:
+				#~ self.smtpServer.sendmail(mimeText['From'], mimeText['To'], mimeText.as_string())
+			#~ logger.write('INFO', '[EMAIL] Instancia de mensaje enviada a \'%s\'' % emailDestination)
+			#~ return True
+		#~ except Exception as errorMessage:
+			#~ logger.write('WARNING', '[EMAIL] Instancia de mensaje no enviada: %s' % str(errorMessage))
+			#~ return False
 
 	def receive(self):
  		self.isActive = True
@@ -172,19 +255,25 @@ class Email(object):
 			# Mientras no se haya recibido ningun correo electronico, el temporizador no haya expirado y no se haya detectado movimiento...
 			while emailIds[0] == '' and self.isActive:
 				try:
-					self.imapServer.recent() # Actualizamos la Bandeja de Entrada
-					result, emailIds = self.imapServer.uid('search', None, '(UNSEEN)') # Buscamos emails sin leer (nuevos)
-					# Ejemplo de emailIds: ['35 36 37']
+					if self.telitConnected:
+						result = self.sendTelitCommand('. SEARCH UNSEEN', '. OK')
+						emailIdsList = regex.findall('[0-9]+', result[0])
+					else:
+						self.imapServer.recent() # Actualizamos la Bandeja de Entrada
+						result, emailIds = self.imapServer.uid('search', None, '(UNSEEN)') # Buscamos emails sin leer (nuevos)
+						emailIdsList = emailIds[0].split()
 				except Exception as e:
 					pass
 			# Si no se terminó la función (el modo EMAIL no dejó de funcionar), leemos los mensajes recibidos...
 			if self.isActive:
-				emailIdsList = emailIds[0].split()
-				emailAmount = len(emailIdsList) # Cantidad de emails no leidos
+				emailAmount = len(emailIdsList)
 				logger.write('DEBUG', '[EMAIL] Ha(n) llegado ' + str(emailAmount) + ' nuevo(s) mensaje(s) de correo electronico!')
 				# Recorremos los emails recibidos...
 				for emailId in emailIdsList:
-					result, emailData = self.imapServer.uid('fetch', emailId, '(RFC822)')
+					if self.telitConnected:
+						emailData = sendTelitIMAP('. FETCH %s RFC822' % emailId)
+					else:
+						result, emailData = self.imapServer.uid('fetch', emailId, '(RFC822)')
 					# Retorna un objeto 'message', y podemos acceder a los items de su cabecera como un diccionario.
 					emailReceived = email.message_from_string(emailData[0][1])
 					sourceName = self.getSourceName(emailReceived)     # Almacenamos el nombre del remitente
@@ -287,8 +376,12 @@ class Email(object):
 			return None
 
 	def deleteEmail(self, emailId):
-		self.imapServer.store(emailId, '+FLAGS', '\\Deleted')
-		self.imapServer.expunge()
+		if self.telitConnected:
+			self.sendTelitCommand('. STORE %s +FLAGS \Deleted' % emailId, '. OK')
+			self.sendTelitCommand('. EXPUNGE', '. OK')
+		else:
+			self.imapServer.store(emailId, '+FLAGS', '\\Deleted')
+			self.imapServer.expunge()
 
 	def sendOutput(self, sourceEmail, emailSubject, emailBody):
 		try:

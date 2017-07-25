@@ -197,7 +197,6 @@ def send(message, receiver = None, media = None):
 def receive():
 	if alreadyOpen:
 		if receptionQueue.qsize() > 0:
-                        print receptionQueue #DEBUG
 			# El elemento 0 es la prioridad, por eso sacamos el 1 porque es el mensaje
 			return receptionQueue.get_nowait()[1]
 		else:

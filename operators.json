@@ -1,0 +1,24 @@
+{
+"722310":
+	{
+	"NAME"		: "Claro Argentina",
+	"USER"		: "amx",
+	"PASSWORD"	: "amx",
+	"APN"		: "ba.amx"
+	},
+"72234":
+	{
+	"NAME"		: "Personal Argentina",
+	"USER"		: "datos",
+	"PASSWORD"	: "datos",
+	"APN"		: "datos.personal.com"
+	},
+"72207":
+	{
+	"NAME"		: "Movistar Argentina",
+	"USER"		: "wap.gprs.unifon.com.ar",
+	"PASSWORD"	: "wap",
+	"APN"		: "wap"
+	}
+}
+	
