@@ -12,6 +12,9 @@ import regex
 import traceback
 import threading
 import pexpect
+from tempfile import mkstemp
+from shutil import move
+from os import fdopen, remove
 
 import logger
 import contactList
@@ -42,9 +45,32 @@ class Modem(object):
 			self.modemInstance.timeout = JSON_CONFIG["MODEM"]["TIME_OUT"]
 			self.modemInstance.baudrate = JSON_CONFIG["MODEM"]["BAUD_RATE"]
 
-	def sendAT(self, atCommand):
-		self.modemInstance.write(atCommand + '\r')       # Envio el comando AT al modem                
-		modemOutput = self.modemInstance.readlines() # Espero la respuesta
+	def sendAT(self, atCommand, expected = None, wait = 0, mode = 1):
+		if mode == 0:
+			self.modemInstance.write(atCommand) 
+		elif mode == 1:
+			self.modemInstance.write(atCommand + '\r')
+		elif mode == 2:
+			self.modemInstance.write(atCommand + '\r\n')
+		print atCommand
+		if expected != None:
+			totalOutput = []
+			while wait > 0:    
+				modemOutput = self.modemInstance.readlines() # Espero la respuesta
+				totalOutput += modemOutput
+				for outputElement in modemOutput:
+					if outputElement.startswith(expected):
+						print totalOutput
+						return totalOutput
+					elif outputElement.startswith(('. BAD', 'ERROR', '+CME ERROR', '+CMS ERROR')):
+						raise Exception(outputElement)
+				time.sleep(1)   
+				wait -= 1
+			print totalOutput
+			raise RuntimeError("%s: %s" % (atCommand, totalOutput[-1]))
+		else:
+			modemOutput = self.modemInstance.readlines() # Espero la respuesta
+		print modemOutput
 		# El módem devuelve una respuesta ante un comando
 		if len(modemOutput) > 0:
 				# Verificamos si se produjo algún tipo de error relacionado con el comando AT
@@ -53,7 +79,7 @@ class Modem(object):
 						if outputElement.startswith(('ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
 								errorMessage = outputElement.replace('\r\n', '')
 								if atCommand.startswith('AT'):
-									logger.write('WARNING', '[GSM] %s - %s.' % (atCommand, errorMessage))
+									logger.write('WARNING', '[GSM] %s - %s.' % (atCommand[:-1], errorMessage))
 								else:
 									logger.write('WARNING', '[GSM] No se pudo enviar el mensaje - %s.' % errorMessage)
 								raise
@@ -62,7 +88,7 @@ class Modem(object):
 								raise
 		# Esto ocurre cuando el puerto 'ttyUSBx' no es un módem
 		else:
-			raise
+			raise Exception("%s: No hubo respuesta" % atCommand)
 		# Si la respuesta al comando AT no era un mensaje de error, retornamos la salida
 		return modemOutput
 
@@ -78,14 +104,22 @@ class Gsm(Modem):
 	MEDIA_NAME = 'GSM'
 	thread = None
 	threadName = None
+	
+	telit_lock = None
 
 	def __init__(self, _receptionQueue):
 			Modem.__init__(self)
 			self.receptionQueue = _receptionQueue
 			self.thread = threading.Thread(target = self.receive, name = self.threadName)
 
-	def __del__(self):
+	def close(self):
+		try:
+			if self.telitConnected:
+				self.sendAT('AT#SGACT=1,0')
 			self.modemInstance.close()
+		except:
+			pass
+		finally:
 			logger.write('INFO', '[GSM] Objeto destruido.')
 
 
@@ -105,16 +139,17 @@ class Gsm(Modem):
 							self.telitConnected = True
 					elif model[1].startswith('MF626'):
 							logger.write('DEBUG', '[GSM] Dongle ZTE MF626 conectado en %s.' % _serialPort)
-							self.sendAT('AT+CPMS="SM","SM","SM"')         #Si no le mando esto, el dongle ZTE me manda advertencias cada 2 segundos\;
+							self.sendAT('AT+CPMS="SM"')         #Si no le mando esto, el dongle ZTE me manda advertencias cada 2 segundos\;
 							self.sendAT('AT+CMEE=2')                 # Habilitamos reporte de error
 							self.sendAT('AT+CMGF=0')                 # Establecemos el modo PDU para SMS
 							self.sendAT('AT+CNMI=1,2,0,0,0') # Habilitamos notificacion de mensaje entrante
+							self.configPPP('mf626')
 					else:
 							self.sendAT('AT+CMEE=2')                 # Habilitamos reporte de error
 							self.sendAT('AT+CMGF=0')                 # Establecemos el modo PDU para SMS
 							self.sendAT('AT+CLIP=1')                 # Habilitamos identificador de llamadas
 							self.sendAT('AT+CNMI=1,2,0,0,0') # Habilitamos notificacion de mensaje entrante
-					self.configPPP()
+							self.configPPP()
 					self.atConnection = True
 					return True
 			except:
@@ -225,8 +260,11 @@ class Gsm(Modem):
 				smsBodyList = list()
 				smsHeaderList = list()
 				smsConcatList = list()
+				self.telit_lock.acquire()
 				unreadList = self.sendAT('AT+CMGL=0')   #Equivale al "REC UNREAD" en modo texto
+				self.telit_lock.release()
 		except:
+				print traceback.format_exc()
 				pass
 		# Ejemplo de unreadList[0]: AT+CMGL=0\r\n
 		# Ejemplo de unreadList[1]: +CMGL: 0,1,"",43\r\n
@@ -303,12 +341,26 @@ class Gsm(Modem):
 												# Obtenemos el índice del mensaje en memoria
 												smsIndex = self.getSmsIndex(smsHeader.split(',')[0])
 												# Eliminamos el mensaje desde la memoria porque ya fue leído
+												self.telit_lock.acquire()
 												self.removeSms(smsIndex)
+												self.telit_lock.release()
 										# Eliminamos la cabecera y el cuerpo del mensaje de las listas correspondiente
 										smsHeaderList.remove(smsHeader)
 										smsBodyList.remove(smsBody)
 										# Decrementamos la cantidad de mensajes a procesar
 										smsAmount -= 1
+						elif self.telitConnected:
+							self.telit_lock.acquire()
+							unreadList = self.sendAT('AT+CMGL=0')
+							self.telit_lock.release()
+							for unreadIndex, unreadData in enumerate(unreadList):
+								if unreadData.startswith('+CMGL'):
+										smsHeaderList.append(unreadList[unreadIndex])
+										smsBodyList.append(unreadList[unreadIndex + 1])
+										smsAmount += 1
+								elif unreadData.startswith('OK'):
+										break
+							time.sleep(1.5)
 						elif self.modemInstance.inWaiting() is not 0:
 								bytesToRead = self.modemInstance.inWaiting()
 								receptionList = self.modemInstance.read(bytesToRead).split('\r\n')
@@ -373,111 +425,109 @@ class Gsm(Modem):
 					return self.sendMessage(serializedMessage, telephoneNumber, True)
 
 	def sendMessage(self, plainText, telephoneNumber, isInstance):
-			try:
-					#############################
-					timeCounter = 0
-					self.successfulSending = None
-					self.successfulList = list()      #Util en SMS concatenados
-					smsLine = list()
-					index = 1
-					#############################
-					print 'plainText'
-					print repr(plainText)
+		try:
+			#############################
+			timeCounter = 0
+			self.successfulSending = None
+			self.successfulList = list()      #Util en SMS concatenados
+			smsLine = list()
+			index = 1
+			#############################
+			print 'plainText'
+			print repr(plainText)
 
-					if self.androidConnected:
-							#Para enviar un SMS de multiples lineas, debo enviar una a la vez
-							smsLine = plainText.split('\n')
-							#Consulto el tiempo del dispositivo, para cuando quiera ver los eventos posteriores
-							time_device = self.sendADB('adb shell date')
-							time_device = time_device[:-11]
-							#Desbloqueo el celular
-							self.sendADB('adb shell input keyevent 26')
-							self.sendADB('adb shell input swipe 540 1900 540 1000')
-							self.sendADB('adb shell input text 7351')
-							#Envio el SMS y bloqueo el celular
-							self.sendADB('adb shell am start -a android.intent.action.SENDTO -d sms:' + str(telephoneNumber) + ' --ez exit_on_sent true')
-							for line in smsLine:
-									self.sendADB('adb shell input text "' + line + '"')
-									self.sendADB('adb shell input keyevent 66')
-							self.sendADB('adb shell input keyevent 67') #Elimino el ultimo \n
-						   #self.sendADB('adb shell am start -a android.intent.action.SENDTO -d sms:' + str(telephoneNumber) + ' --es sms_body "' + plainText + '" --ez exit_on_sent true')
-							self.sendADB('adb shell input keyevent 22')
-							self.sendADB('adb shell input keyevent 66')
-							self.sendADB('adb shell input keyevent 26')
-							#Consulto si se envio correctamente el mensaje
-							thread = threading.Thread(target=self.logcat, args=(time_device, "adb logcat -v brief Microlog:D *:S"))
-							thread.start()
+			if self.androidConnected:
+				#Para enviar un SMS de multiples lineas, debo enviar una a la vez
+				smsLine = plainText.split('\n')
+				#Consulto el tiempo del dispositivo, para cuando quiera ver los eventos posteriores
+				time_device = self.sendADB('adb shell date')
+				time_device = time_device[:-11]
+				#Desbloqueo el celular
+				self.sendADB('adb shell input keyevent 26')
+				self.sendADB('adb shell input swipe 540 1900 540 1000')
+				self.sendADB('adb shell input text 7351')
+				#Envio el SMS y bloqueo el celular
+				self.sendADB('adb shell am start -a android.intent.action.SENDTO -d sms:' + str(telephoneNumber) + ' --ez exit_on_sent true')
+				for line in smsLine:
+					self.sendADB('adb shell input text "' + line + '"')
+					self.sendADB('adb shell input keyevent 66')
+				self.sendADB('adb shell input keyevent 67') #Elimino el ultimo \n
+			   #self.sendADB('adb shell am start -a android.intent.action.SENDTO -d sms:' + str(telephoneNumber) + ' --es sms_body "' + plainText + '" --ez exit_on_sent true')
+				self.sendADB('adb shell input keyevent 22')
+				self.sendADB('adb shell input keyevent 66')
+				self.sendADB('adb shell input keyevent 26')
+				#Consulto si se envio correctamente el mensaje
+				thread = threading.Thread(target=self.logcat, args=(time_device, "adb logcat -v brief Microlog:D *:S"))
+				thread.start()
 
-							thread.join(10)
-							if thread.is_alive():
-									self.process.terminate()
-									thread.join()
-							if self.SmsReceiverResult == None:
-									logger.write('WARNING', '[ANDROID] El estado del envio es desconocido. Revisar la conexion')
-									self.successfulList.append(False)
-							else:
-									self.successfulList.append(self.SmsReceiverResult)
-									self.SmsReceiverResult = None
-					else:          
-							csca = self.sendAT('AT+CSCA?')  #Consulta el numero del SMSC, util para el Dongle ZTE
-							smsc = regex.findall('"(.*)"', csca[1])       #Me devuelve una lista con las expresiones entre comillas, solo hay una
-							sms = SmsSubmit(str(telephoneNumber), plainText)
-							sms.csca = smsc[0]
-							pdu = sms.to_pdu()
-							amount = len(sms.to_pdu())
+				thread.join(10)
+				if thread.is_alive():
+					self.process.terminate()
+					thread.join()
+				if self.SmsReceiverResult == None:
+					logger.write('WARNING', '[ANDROID] El estado del envio es desconocido. Revisar la conexion')
+					self.successfulList.append(False)
+				else:
+					self.successfulList.append(self.SmsReceiverResult)
+					self.SmsReceiverResult = None
+			else:    
+				self.telit_lock.acquire()
+				csca = self.sendAT('AT+CSCA?')  #Consulta el numero del SMSC, util para el Dongle ZTE
+				smsc = regex.findall('"(.*)"', csca[1])       #Me devuelve una lista con las expresiones entre comillas, solo hay una
+				sms = SmsSubmit(str(telephoneNumber), plainText)
+				sms.csca = smsc[0]
+				pdus = sms.to_pdu()
+				amount = len(pdus)
+				print amount
 
-							for pdu in sms.to_pdu():
-									# Enviamos los comandos AT correspondientes para efectuar el envío el mensaje de texto
-									info01 = self.sendAT('AT+CMGS=' + str(pdu.length)) # Envío la longitud del paquete PDU
-									# ------------------ Caso de envío EXITOSO ------------------
-									# Ejemplo de info01[0]: AT+CMGS=38\r\n
-									# Ejemplo de info01[1]: >
-									# Comprobamos que el módulo esté listo para mandar el mensaje
-									for i in info01:
-											if i.startswith('>'):
-													info02 = self.sendAT(str(pdu.pdu) + ascii.ctrl('z'))   # Mensaje de texto terminado en Ctrl+z
-													break
-											elif i.startswith('ERROR'):
-													self.successfulSending = False
-													break
-													
-									for i in info02:
-											if i.startswith('OK'):
-													self.successfulSending = True
-													break
-											elif i.startswith('ERROR'):
-													self.successfulSending = False
-													break
+				for pdu in pdus:
+						# Enviamos los comandos AT correspondientes para efectuar el envío el mensaje de texto
+						info01 = self.sendAT('AT+CMGS=' + str(pdu.length)) # Envío la longitud del paquete PDU
+						# ------------------ Caso de envío EXITOSO ------------------
+						# Ejemplo de info01[0]: AT+CMGS=38\r\n
+						# Ejemplo de info01[1]: >
+						# Comprobamos que el módulo esté listo para mandar el mensaje
+						for i in info01:
+							if i.startswith('>'):
+								try:
+									info02 = self.sendAT(str(pdu.pdu) + ascii.ctrl('z'), 'OK', 10, 1)   # Mensaje de texto terminado en Ctrl+z
+									self.successfulSending = True
+								except RuntimeError:
+									self.successfulSending = False
+								break
+							elif i.startswith('ERROR'):
+								self.successfulSending = False
+								break
+						# Agregamos la respuesta de la red a la lista
+						self.successfulList.append(self.successfulSending)
+						if self.successfulSending:
+							if (amount > 1):
+								logger.write('DEBUG', '[SMS] Mensaje ' + str(index)+ '/' + str(amount) + ' enviado a ' + str(telephoneNumber) + '.')
+								index += 1
+						else:
+							break
+				self.telit_lock.release()
 
-									# Esperamos respuesta de la red si es que no la hubo
-									while self.successfulSending is None and timeCounter < 15:
-											time.sleep(1)
-											timeCounter += 1
-									# Agregamos la respuesta de la red a la lista
-									self.successfulList.append(self.successfulSending)
-									if self.successfulSending:
-											if (amount > 1):
-													logger.write('DEBUG', '[SMS] Mensaje ' + str(index)+ '/' + str(amount) + ' enviado a ' + str(telephoneNumber) + '.')
-													index += 1
-									else:
-											break
+			if False in self.successfulList:
+				if isInstance:
+					logger.write('WARNING', '[GSM] No se pudo enviar la instancia de mensaje a %s.' % str(telephoneNumber))
+				else:
+					logger.write('WARNING', '[GSM] No se pudo enviar el mensaje a %s.' % str(telephoneNumber))
+				return False
+			else:
+				logger.write('INFO', '[GSM] Mensaje de texto enviado a %s.' % str(telephoneNumber))
+				# Borramos el mensaje enviado almacenado en la memoria
+				smsIndex = self.getSmsIndex(info02[-3])
+				self.telit_lock.acquire()
+				self.removeSms(smsIndex)
+				self.telit_lock.release()
+				#self.removeAllSms() #DEBUG: Es necesario?
+				return True
 
-					if False in self.successfulList:
-							if isInstance:
-									logger.write('WARNING', '[GSM] No se pudo enviar la instancia de mensaje a %s.' % str(telephoneNumber))
-							else:
-									logger.write('WARNING', '[GSM] No se pudo enviar el mensaje a %s.' % str(telephoneNumber))
-							return False
-					else:
-							logger.write('INFO', '[GSM] Mensaje de texto enviado a %s.' % str(telephoneNumber))
-							# Borramos el mensaje enviado almacenado en la memoria
-							self.removeAllSms() #DEBUG: Es necesario?
-							return True
-
-			except:
-					print traceback.format_exc()
-					logger.write('ERROR', '[GSM] Error al enviar el mensaje de texto a %s.' % str(telephoneNumber))
-					return False
+		except:
+				print traceback.format_exc()
+				logger.write('ERROR', '[GSM] Error al enviar el mensaje de texto a %s.' % str(telephoneNumber))
+				return False
 
 	def sendVoiceCall(self, telephoneNumber):
 			try:
@@ -487,8 +537,8 @@ class Gsm(Modem):
 					active = False
 					while active:
 						status = self.sendAT('AT+CLCC')[1].split(',')[2] 
-						if status = '0':
-							active True
+						if status == '0':
+							active = True
 						else:
 							time.sleep(1)
 					
@@ -524,7 +574,9 @@ class Gsm(Modem):
 
 	def removeAllSms(self):
 			try:
+					self.telit_lock.acquire()
 					self.sendAT('AT+CMGD=1,4') # Elimina todos los mensajes en memoria
+					self.telit_lock.release()
 					return True
 			except:
 					return False
@@ -608,20 +660,42 @@ class Gsm(Modem):
 									self.SmsReceiverResult = False
 									return
 									
-	def configPPP(self):
-		self.sendAT("AT+COPS=0,2")
-		cops = self.sendAT("AT+COPS?")
-		operator = cops[1].split(',')[2]
-		operator = operator[1:-1]
-		user = JSON_GPRS[operator]["USER"]
-		password = JSON_GPRS[operator]["PASSWORD"]
-		apn = JSON_GPRS[operator]["APN"]
-		mobileauth = open("/etc/ppp/peers/mobile-auth","w")
-		mobileauth.write("file /etc/ppp/options-mobile\n")
-		mobileauth.write('user "%s"\n' % user)
-		mobileauth.write('password "%s"\n' % password)
-		mobileauth.write('connect "/usr/sbin/chat -v -t15 -f /etc/ppp/chatscripts/mobile-modem.chat"\n')
-		mobileauth.close()
-		cgdcont = open("/etc/ppp/chatscripts/apn.operator","w")
-		cgdcont.write('AT+CGDCONT=1,"IP","%s"' % apn)
-		cgdcont.close()
+	def configPPP(self, model = None):
+		try:
+			self.sendAT("AT+COPS=0,2")
+			cops = self.sendAT("AT+COPS?")
+			operator = cops[1].split(',')[2]
+			operator = operator[1:-1]
+			user = JSON_GPRS[operator]["USER"]
+			password = JSON_GPRS[operator]["PASSWORD"]
+			apn = JSON_GPRS[operator]["APN"]
+			mobileauth = open("/etc/ppp/peers/mobile-auth","w")
+			mobileauth.write("file /etc/ppp/options-mobile\n")
+			mobileauth.write('user "%s"\n' % user)
+			mobileauth.write('password "%s"\n' % password)
+			mobileauth.write('connect "/usr/sbin/chat -v -t15 -f /etc/ppp/chatscripts/mobile-modem.chat"\n')
+			mobileauth.close()
+			cgdcont = open("/etc/ppp/chatscripts/apn.operator","w")
+			cgdcont.write('AT+CGDCONT=1,"IP","%s"\r' % apn)
+			cgdcont.close()
+			temp, temp_path = mkstemp()
+			new_options = fdopen(temp, "w")
+			old_options = open("/etc/ppp/options-mobile", "r")
+			lines = old_options.readlines()
+			lines = lines[1:]
+			old_options.close()
+			if model == 'mf626':
+				gprs_port = int(self.modemInstance.port[-1:]) + 1
+				new_options.write(self.modemInstance.port[:-1] + str(gprs_port) + '\r\n')
+			else:
+				new_options.write(self.modemInstance.port + '\r\n')
+			for line in lines:
+				new_options.write(line)
+			remove("/etc/ppp/options-mobile")
+			move(temp_path, "/etc/ppp/options-mobile")
+			new_options.close()
+			return True
+		except:
+			print traceback.format_exc()
+			return False
+			

@@ -42,7 +42,7 @@ def main():
 				# Indicamos el cliente al cual se va a enviar el mensaje
 				receiver = raw_input('Cliente a enviar: ')	
 				# Indicamos el mensaje que se desea enviar
-				messageToSend = raw_input('Mensaje a enviar: ')
+				messageToSend = raw_input('Mensaje/Ruta del archivo a enviar: ')
 				# Preguntamos si hay alguna preferencia en relación a los medios de comunicación
 				selectMedia = askMedia()
 				if selectMedia is True:

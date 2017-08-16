@@ -10,6 +10,7 @@ import subprocess
 from subprocess import check_output
 import regex
 import pexpect
+import gc #DBG
 
 currentDirectory = os.getcwd() 
 if not currentDirectory.endswith('Communicator'):
@@ -83,6 +84,9 @@ def open():
 		controllerInstance.ethernetInstance = ethernetInstance
 		controllerInstance.bluetoothInstance = bluetoothInstance
 		controllerInstance.emailInstance = emailInstance
+		
+		emailInstance.gsmInstance = gsmInstance
+		emailInstance.controllerInstance = controllerInstance
 		# Creamos la instancia para la transmisión de paquetes
 		transmitterInstance = transmitterClass.Transmitter(transmissionQueue)
 		transmitterInstance.gsmInstance = gsmInstance
@@ -109,28 +113,34 @@ def close():
 	global gsmInstance, gprsInstance, wifiInstance, ethernetInstance, bluetoothInstance, emailInstance
 
 	if alreadyOpen:
-		logger.write('INFO', 'Cerrando el Comunicador...')
+		logger.write('INFO', 'Cerrando el Comunicador...')		
 		if gprsInstance.isActive:
 			disconnectGprs()
-		# Frenamos la transmisión de mensajes
-		transmitterInstance.isActive = False
-		transmitterInstance.join()
-		# Frenamos la verificación de las conexiones
-		controllerInstance.isActive = False
-		controllerInstance.join()
-		# Destruimos todas las instancias de comunicación
-		del gsmInstance
-		del gprsInstance
-		del wifiInstance
-		del ethernetInstance
-		del bluetoothInstance
-		del emailInstance
 		# Destruimos las colas de recepción y transmisión
 		del receptionQueue
 		del transmissionQueue
-		# Destruimos las instancias de manejo del comunicador
-		del controllerInstance
-		del transmitterInstance
+		# Frenamos la transmisión de mensajes
+		transmitterInstance.isActive = False
+		transmitterInstance.join()
+		transmitterInstance.close()
+		# Frenamos la verificación de las conexiones
+		controllerInstance.isActive = False
+		controllerInstance.join()
+		controllerInstance.close()
+		# Destruimos todas las instancias de comunicación
+		if emailInstance.successfulConnection:
+			emailInstance.close()
+		if gsmInstance.successfulConnection:
+			gsmInstance.close()
+		if gprsInstance.successfulConnection:
+			gprsInstance.close()
+		if wifiInstance.successfulConnection:
+			wifiInstance.close()
+		if ethernetInstance.successfulConnection:
+			ethernetInstance.close()
+		if bluetoothInstance.successfulConnection:
+			bluetoothInstance.close()
+		# Destruimos las instancias de manejo del comunicador		
 		logger.write('INFO', 'Comunicador cerrado exitosamente!')
 		# Indicamos que terminó la sesion
 		alreadyOpen = False

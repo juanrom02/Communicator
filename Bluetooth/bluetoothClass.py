@@ -37,7 +37,7 @@ class Bluetooth(object):
 		self.receptionQueue = _receptionQueue
 		self.thread = threading.Thread(target = self.receive, name = self.threadName)
 
-	def __del__(self):
+	def close(self):
 		try:
 			# Eliminamos del archivo la MAC usada en esta misma instancia
 			dataToWrite = open('/tmp/activeInterfaces').read().replace(self.localInterface + '\n', '')

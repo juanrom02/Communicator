@@ -9,6 +9,7 @@ import threading
 import subprocess
 import traceback
 import pexpect
+import serial
 
 import logger
 
@@ -36,6 +37,8 @@ class Controller(threading.Thread):
 	ethernetInstance = None
 	bluetoothInstance = None
 	emailInstance = None
+	
+	telit_lock = threading.Lock()
 
 	isActive = False
 
@@ -43,19 +46,19 @@ class Controller(threading.Thread):
 		threading.Thread.__init__(self, name = 'ControllerThread')
 		self.REFRESH_TIME = _REFRESH_TIME
 
-	def __del__(self):
+	def close(self):
+		# Esperamos que terminen los hilos receptores
 		self.gsmInstance.isActive = False
 		self.gprsInstance.isActive = False
 		self.wifiInstance.isActive = False
 		self.ethernetInstance.isActive = False
 		self.bluetoothInstance.isActive = False
 		self.emailInstance.isActive = False
-		# Esperamos que terminen los hilos receptores
 		for receptorThread in threading.enumerate():
 			if receptorThread.getName() in threadNameList and receptorThread.isAlive():
 				receptorThread.join()
 		logger.write('INFO', '[CONTROLLER] Objeto destruido.')
-
+			
 	def run(self):
 		self.isActive = True
 		self.gsmInstance.threadName = gsmThreadName
@@ -65,6 +68,9 @@ class Controller(threading.Thread):
 		self.ethernetInstance.threadName = ethernetThreadName
 		self.ethernetInstance.pattern = re.compile('eth[0-9]+')
 		self.ethernetInstance.state = 'UP'
+		self.emailInstance.threadName = emailThreadName
+		self.gsmInstance.telit_lock = self.telit_lock
+		self.emailInstance.telit_lock = self.telit_lock
 		while self.isActive:
 			self.availableGsm = self.verifyGsmConnection()
 			if self.gsmInstance.androidConnected:
@@ -79,7 +85,7 @@ class Controller(threading.Thread):
 			self.availableBluetooth = self.verifyBluetoothConnection()
 			self.availableEmail = self.verifyEmailConnection()
 			time.sleep(self.REFRESH_TIME)
-		logger.write('WARNING', '[CONTROLLER] Función \'%s\' terminada.' % inspect.stack()[0][3])		
+		logger.write('WARNING', '[CONTROLLER] Función \'%s\' terminada.' % inspect.stack()[0][3])	
 
 	def verifyGsmConnection(self):
 		if self.gsmInstance.connectAndroid():
@@ -105,7 +111,23 @@ class Controller(threading.Thread):
 				if self.gsmInstance.connectAT('/dev/' + ttyUSBx):
 					self.gsmInstance.thread.start()
 					logger.write('INFO', '[GSM] Listo para usarse (' + ttyUSBx + ').')
-					subprocess.Popen('pon').communicate()
+					if not self.gsmInstance.telitConnected:
+						ponOut, ponErr = subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+						if ponErr != '':
+							logger.write('WARNING', '[GPRS] La conexion automatica ha fallado: %s' % ponErr )
+						else:
+							time.sleep(5)
+					else:
+						try:
+							self.telit_lock.acquire()
+							self.gsmInstance.sendAT('AT#SGACT=1,1','OK', 5)
+							self.telit_lock.release()
+						except RuntimeError:
+							self.telit_lock.release()
+							logger.write('WARNING', '[GPRS] La conexion automatica ha fallado: timeout de AT#SGACT')
+						except:
+							self.telit_lock.release()
+							pass
 					return True
 				# Cuando se intenta una conexion sin exito (connect = False), debe cerrarse y probar con la siguiente
 				else:
@@ -235,14 +257,21 @@ class Controller(threading.Thread):
 	def verifyEmailConnection(self):
 		TEST_REMOTE_SERVER = 'www.gmail.com'
 		try:
-			remoteHost = socket.gethostbyname(TEST_REMOTE_SERVER)
-			testSocket = socket.create_connection((remoteHost, 80), 2) # Se determina si es alcanzable
+			if self.gsmInstance.telitConnected and not self.emailInstance.thread.is_alive():
+				self.telit_lock.acquire()
+				result = self.gsmInstance.sendAT('AT#PING="%s"' % TEST_REMOTE_SERVER, '#PING: 04', 20)
+				self.telit_lock.release()
+				ping = result[-3].split(',')
+				if ping[-1].startswith('255'):
+					raise RuntimeError
+			elif not self.gsmInstance.telitConnected:
+				remoteHost = socket.gethostbyname(TEST_REMOTE_SERVER)
+				testSocket = socket.create_connection((remoteHost, 80), 2) # Se determina si es alcanzable
 			# Comprobamos si aún no intentamos conectarnos con los servidores de GMAIL (por eso el 'None')
-			if self.emailInstance.successfulConnection is None:
+			if self.emailInstance.successfulConnection is False:
 				# Si no se produce ningún error durante la configuración, ponemos a recibir
-				if self.emailInstance.connect(self.gsmInstance.telitConnected):				
-					emailThread = threading.Thread(target = self.emailInstance.receive, name = emailThreadName)
-					emailThread.start()
+				if self.emailInstance.connect():				
+					self.emailInstance.thread.start()
 					logger.write('INFO', '[EMAIL] Listo para usarse (' + self.emailInstance.emailAccount + ').')
 					return True
 				# Si se produce un error durante la configuración, devolvemos 'False'
@@ -255,11 +284,13 @@ class Controller(threading.Thread):
 			else:
 				return False
 		# No hay conexión a Internet (TEST_REMOTE_SERVER no es alcanzable), por lo que se vuelve a intentar
-		except socket.error as DNSError:
+		except (socket.error, RuntimeError, serial.serialutil.SerialException, socket.gaierror) as DNSError:
+			print traceback.format_exc()
 			if self.emailInstance.isActive:
+				logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailInstance.emailAccount)
 				self.emailInstance.successfulConnection = None
-				self.emailInstance.emailAccount = None
 				self.emailInstance.isActive = False
+				self.emailInstance.thread = threading.Thread(target = self.emailInstance.receive, name = emailThreadName)
 			return False
 			
 	def closeConnection(self, instance):

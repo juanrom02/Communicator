@@ -42,7 +42,7 @@ class Network(object):
 		self.MEDIA_NAME = _MEDIA_NAME
 		self.thread = threading.Thread(target = self.receive, name = self.threadName)
 
-	def __del__(self):
+	def close(self):
 		try:
 			# Eliminamos del archivo la interfaz usada en esta misma instancia
 			dataToWrite = open('/tmp/activeInterfaces').read().replace(self.localInterface + '\n', '')

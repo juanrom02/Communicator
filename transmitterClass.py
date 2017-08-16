@@ -36,7 +36,7 @@ class Transmitter(threading.Thread):
 		threading.Thread.__init__(self, name = 'TransmitterThread')
 		self.transmissionQueue = _transmissionQueue
 
-	def __del__(self):
+	def close(self):
 		logger.write('INFO', '[TRANSMITTER] Objeto destruido.')
 
 	def run(self):

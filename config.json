@@ -28,7 +28,7 @@
 	"SUBJECT"     : "Comunicador Inteligente",
 	"SMTP_SERVER" : "smtp.gmail.com",
 	"IMAP_SERVER" : "imap.gmail.com",
-	"SMTP_PORT"   : 587,
+	"SMTP_PORT"   : 465,
 	"IMAP_PORT"   : 993
 	},
 "MODEM":
@@ -50,6 +50,10 @@
 	"FILE_LOG"              : "events.log",
 	"FILE_LOGGING_LEVEL"    : "DEBUG",
 	"CONSOLE_LOGGING_LEVEL" : "DEBUG"
+	},
+"AUDIO":
+	{
+	"LANGUAGE"	: "es"
 	}
 }
 
