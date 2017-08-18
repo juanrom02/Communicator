@@ -33,6 +33,7 @@ class Modem(object):
 	atConnected = None
 	successfulConnection = androidConnected or atConnected
 	localInterface = None
+	incoming_call = False
 
 	def __init__(self):
 			self.modemInstance = serial.Serial()
@@ -45,52 +46,84 @@ class Modem(object):
 			self.modemInstance.timeout = JSON_CONFIG["MODEM"]["TIME_OUT"]
 			self.modemInstance.baudrate = JSON_CONFIG["MODEM"]["BAUD_RATE"]
 
-	def sendAT(self, atCommand, expected = None, wait = 0, mode = 1):
+	def sendAT(self, atCommand, expected = 'OK', wait = 0, mode = 1):
+		start = time.time()
+		end = start + wait
+		self.modemInstance.reset_input_buffer()
 		if mode == 0:
 			self.modemInstance.write(atCommand) 
 		elif mode == 1:
 			self.modemInstance.write(atCommand + '\r')
 		elif mode == 2:
 			self.modemInstance.write(atCommand + '\r\n')
-		print atCommand
-		if expected != None:
-			totalOutput = []
-			while wait > 0:    
-				modemOutput = self.modemInstance.readlines() # Espero la respuesta
-				totalOutput += modemOutput
-				for outputElement in modemOutput:
-					if outputElement.startswith(expected):
-						print totalOutput
-						return totalOutput
-					elif outputElement.startswith(('. BAD', 'ERROR', '+CME ERROR', '+CMS ERROR')):
-						raise Exception(outputElement)
-				time.sleep(1)   
-				wait -= 1
-			print totalOutput
-			raise RuntimeError("%s: %s" % (atCommand, totalOutput[-1]))
-		else:
-			modemOutput = self.modemInstance.readlines() # Espero la respuesta
-		print modemOutput
-		# El módem devuelve una respuesta ante un comando
-		if len(modemOutput) > 0:
-				# Verificamos si se produjo algún tipo de error relacionado con el comando AT
-				for outputElement in modemOutput:
-						# El 'AT+CNMA' sólo es soportado en Dongles USB que requieren confirmación de SMS
-						if outputElement.startswith(('ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
-								errorMessage = outputElement.replace('\r\n', '')
-								if atCommand.startswith('AT'):
-									logger.write('WARNING', '[GSM] %s - %s.' % (atCommand[:-1], errorMessage))
-								else:
-									logger.write('WARNING', '[GSM] No se pudo enviar el mensaje - %s.' % errorMessage)
-								raise
-						# El comando AT para llamadas de voz (caracterizado por su terminacion en ';') no es soportado
-						elif outputElement.startswith('NO CARRIER') and atCommand.startswith('ATD') and atCommand.endswith(';'):
-								raise
-		# Esto ocurre cuando el puerto 'ttyUSBx' no es un módem
-		else:
-			raise Exception("%s: No hubo respuesta" % atCommand)
-		# Si la respuesta al comando AT no era un mensaje de error, retornamos la salida
-		return modemOutput
+		#print atCommand
+		totalOutput = list()
+		while True:
+			modemOutput = self.modemInstance.readline()
+			if modemOutput == '':
+				if wait == 0:
+					raise Exception("%s: No hubo respuesta." % atCommand)
+			else:
+				totalOutput.append(modemOutput)
+				if modemOutput.startswith(expected):
+					#print totalOutput
+					if expected == '+CLIP':
+						self.callerID = self.getTelephoneNumber(expected)
+						logger.write('INFO', '[GSM] El número %s está llamando.' % self.callerID)
+						self.incoming_call = True
+					return totalOutput
+				elif modemOutput.startswith(('. BAD', 'ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
+					errorMessage = modemOutput.replace('\r\n', '')
+					raise Exception(errorMessage)
+				elif modemOutput.startswith('NO CARRIER') and atCommand.startswith('ATD') and atCommand.endswith(';'):
+					raise
+				elif modemOutput.startswith('RING'):
+					expected = '+CLIP'
+					wait = 0
+			if wait == 0:
+				continue
+			elif time.time() > end:
+				print totalOutput
+				raise RuntimeError("%s -> %s" % (atCommand, totalOutput[-1]))
+		#~ 
+		#~ if expected != None:
+			#~ totalOutput = []
+			#~ while wait > 0:    
+				#~ modemOutput = self.modemInstance.readlines() # Espero la respuesta
+				#~ totalOutput += modemOutput
+				#~ for outputElement in modemOutput:
+					#~ if outputElement.startswith(expected):
+						#~ print totalOutput
+						#~ return totalOutput
+					#~ elif outputElement.startswith(('. BAD', 'ERROR', '+CME ERROR', '+CMS ERROR')):
+						#~ raise Exception(outputElement)
+				#~ time.sleep(1)   
+				#~ wait -= 1
+			#~ print totalOutput
+			#~ raise RuntimeError("%s: %s" % (atCommand, totalOutput[-1]))
+		#~ else:
+			#~ modemOutput = self.modemInstance.readlines() # Espero la respuesta
+		#~ print modemOutput
+		#~ # El módem devuelve una respuesta ante un comando
+		#~ if len(modemOutput) > 0:
+				#~ # Verificamos si se produjo algún tipo de error relacionado con el comando AT
+				#~ for outputElement in modemOutput:
+						#~ # El 'AT+CNMA' sólo es soportado en Dongles USB que requieren confirmación de SMS
+						#~ if outputElement.startswith(('ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
+								#~ errorMessage = outputElement.replace('\r\n', '')
+								#~ if atCommand.startswith('AT'):
+									#~ logger.write('WARNING', '[GSM] %s - %s.' % (atCommand[:-1], errorMessage))
+								#~ else:
+									#~ logger.write('WARNING', '[GSM] No se pudo enviar el mensaje - %s.' % errorMessage)
+								#~ raise
+						#~ # El comando AT para llamadas de voz (caracterizado por su terminacion en ';') no es soportado
+						#~ elif outputElement.startswith('NO CARRIER') and atCommand.startswith('ATD') and atCommand.endswith(';'):
+								#~ raise
+		#~ # Esto ocurre cuando el puerto 'ttyUSBx' no es un módem
+		#~ else:
+			#~ raise Exception("%s: No hubo respuesta" % atCommand)
+		#~ # Si la respuesta al comando AT no era un mensaje de error, retornamos la salida
+		#~ return modemOutput
 
 	def closePort(self):
 			self.modemInstance.close()
@@ -113,14 +146,8 @@ class Gsm(Modem):
 			self.thread = threading.Thread(target = self.receive, name = self.threadName)
 
 	def close(self):
-		try:
-			if self.telitConnected:
-				self.sendAT('AT#SGACT=1,0')
-			self.modemInstance.close()
-		except:
-			pass
-		finally:
-			logger.write('INFO', '[GSM] Objeto destruido.')
+		self.modemInstance.close()
+		logger.write('INFO', '[GSM] Objeto destruido.')
 
 
 	def connectAT(self, _serialPort):
@@ -153,8 +180,8 @@ class Gsm(Modem):
 					self.atConnection = True
 					return True
 			except:
-					self.atConnection = False
-					return False
+				self.atConnection = False
+				return False
 					
 
 	def connectAndroid(self):
@@ -256,6 +283,7 @@ class Gsm(Modem):
 							   
 	def receiveAT(self):
 		try:
+				time.sleep(3)
 				smsAmount = 0
 				smsBodyList = list()
 				smsHeaderList = list()
@@ -263,6 +291,13 @@ class Gsm(Modem):
 				self.telit_lock.acquire()
 				unreadList = self.sendAT('AT+CMGL=0')   #Equivale al "REC UNREAD" en modo texto
 				self.telit_lock.release()
+				for unreadIndex, unreadData in enumerate(unreadList):
+					if unreadData.startswith('+CMGL'):
+							smsHeaderList.append(unreadList[unreadIndex])
+							smsBodyList.append(unreadList[unreadIndex + 1])
+							smsAmount += 1
+					elif unreadData.startswith('OK'):
+							break
 		except:
 				print traceback.format_exc()
 				pass
@@ -273,13 +308,6 @@ class Gsm(Modem):
 		# Ejemplo de unreadList[4]: 0791452300008090040D91453915572013F70000714042415564291CD4F29C0EA296D9693A68DA9C8264B4178C068AD174B55A4301\r\n
 		# Ejemplo de unreadList[5]: \r\n
 		# Ejemplo de unreadList[6]: OK\r\n
-		for unreadIndex, unreadData in enumerate(unreadList):
-				if unreadData.startswith('+CMGL'):
-						smsHeaderList.append(unreadList[unreadIndex])
-						smsBodyList.append(unreadList[unreadIndex + 1])
-						smsAmount += 1
-				elif unreadData.startswith('OK'):
-						break
 		# Ejemplo de smsHeaderList[0]: +CMGL: 0,1,"",43\r\n
 		# Ejemplo de smsBodyList[0]  : 0791452300008001040D91945171928062F70003714012816350291AD4F29C0EA296D9693A68DA9C8264B1178C068AE174B31A\r\n
 		# Ejemplo de smsHeaderList[1]: +CMGL: 1,1,"",45\r\n
@@ -350,6 +378,7 @@ class Gsm(Modem):
 										# Decrementamos la cantidad de mensajes a procesar
 										smsAmount -= 1
 						elif self.telitConnected:
+							time.sleep(5)
 							self.telit_lock.acquire()
 							unreadList = self.sendAT('AT+CMGL=0')
 							self.telit_lock.release()
@@ -360,7 +389,6 @@ class Gsm(Modem):
 										smsAmount += 1
 								elif unreadData.startswith('OK'):
 										break
-							time.sleep(1.5)
 						elif self.modemInstance.inWaiting() is not 0:
 								bytesToRead = self.modemInstance.inWaiting()
 								receptionList = self.modemInstance.read(bytesToRead).split('\r\n')
@@ -549,6 +577,7 @@ class Gsm(Modem):
 
 	def answerVoiceCall(self):
 			try:
+					self.incoming_call = False
 					self.sendAT('ATA') # Atiende la llamada entrante
 					logger.write('INFO', '[GSM] Conectado con el número %s.' % self.callerID)
 					return True

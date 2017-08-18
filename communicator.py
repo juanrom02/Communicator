@@ -10,7 +10,10 @@ import subprocess
 from subprocess import check_output
 import regex
 import pexpect
+import threading
 import gc #DBG
+import traceback #DBG
+import traceback #DBG
 
 currentDirectory = os.getcwd() 
 if not currentDirectory.endswith('Communicator'):
@@ -114,8 +117,8 @@ def close():
 
 	if alreadyOpen:
 		logger.write('INFO', 'Cerrando el Comunicador...')		
-		if gprsInstance.isActive:
-			disconnectGprs()
+		#~ if gprsInstance.isActive:
+			#~ disconnectGprs()
 		# Destruimos las colas de recepción y transmisión
 		del receptionQueue
 		del transmissionQueue
@@ -127,19 +130,6 @@ def close():
 		controllerInstance.isActive = False
 		controllerInstance.join()
 		controllerInstance.close()
-		# Destruimos todas las instancias de comunicación
-		if emailInstance.successfulConnection:
-			emailInstance.close()
-		if gsmInstance.successfulConnection:
-			gsmInstance.close()
-		if gprsInstance.successfulConnection:
-			gprsInstance.close()
-		if wifiInstance.successfulConnection:
-			wifiInstance.close()
-		if ethernetInstance.successfulConnection:
-			ethernetInstance.close()
-		if bluetoothInstance.successfulConnection:
-			bluetoothInstance.close()
 		# Destruimos las instancias de manejo del comunicador		
 		logger.write('INFO', 'Comunicador cerrado exitosamente!')
 		# Indicamos que terminó la sesion
@@ -331,6 +321,10 @@ def disconnectGprs():
 					gsmInstance.sendPexpect(shell, "svc data disable", "#")	
 					shell.sendline('exit')
 					shell.sendline('exit')
+			elif gsmInstance.telitConnected:
+				controllerInstance.telit_lock.acquire()
+				gsmInstance.sendAT('AT#SGACT=1,0')
+				self.controllerInstance.telit_lock.release()
 			else:
 					command = 'poff'
 			poffProcess = subprocess.Popen(command.split(), stdout = subprocess.PIPE, stderr = subprocess.PIPE)
@@ -342,6 +336,7 @@ def disconnectGprs():
 				logger.write('INFO', '[COMMUNICATOR] La red GPRS ha sido desconectada correctamente!')
 				return True
 		except:
+			print traceback.format_exc()
 			logger.write('ERROR', '[COMMUNICATOR] Se produjo un error al intentar desconectarse de la red GPRS!')
 			return False
 	else:

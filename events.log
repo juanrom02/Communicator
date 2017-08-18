@@ -20158,3 +20158,1781 @@ ert.: NO CARRIER
 [2017-08-16 16:52:50,494][WARNING] [GSM] Función 'receiveAT' terminada.
 [2017-08-16 16:52:52,180][INFO] [EMAIL] Objeto destruido.
 [2017-08-16 16:52:52,181][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 10:56:28,674][INFO] Abriendo el Comunicador...
+[2017-08-17 10:56:28,695][INFO] Comunicador abierto exitosamente!
+[2017-08-17 10:56:43,852][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-17 10:56:45,373][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-17 10:56:48,611][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-17 10:57:37,730][INFO] Cerrando el Comunicador...
+[2017-08-17 10:57:39,317][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 10:57:39,319][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 10:57:39,320][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 10:57:39,322][INFO] [WIFI] Objeto destruido.
+[2017-08-17 10:57:39,323][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 10:57:39,675][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-17 10:57:39,673][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-17 12:20:33,995][INFO] Abriendo el Comunicador...
+[2017-08-17 12:20:34,010][INFO] Comunicador abierto exitosamente!
+[2017-08-17 12:20:40,222][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-17 12:20:45,360][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-17 12:20:56,771][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-17 12:21:05,262][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-17 12:21:05,596][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-17 12:21:09,420][INFO] Cerrando el Comunicador...
+[2017-08-17 12:21:10,025][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 12:21:10,027][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 12:21:11,376][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 12:21:11,377][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 12:21:11,380][INFO] [WIFI] Objeto destruido.
+[2017-08-17 12:21:11,381][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 12:21:11,916][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 12:21:12,399][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-17 12:21:12,407][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-17 12:35:31,058][INFO] Abriendo el Comunicador...
+[2017-08-17 12:35:31,072][INFO] Comunicador abierto exitosamente!
+[2017-08-17 12:35:37,281][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-17 12:35:38,886][INFO] Cerrando el Comunicador...
+[2017-08-17 12:39:10,449][INFO] Abriendo el Comunicador...
+[2017-08-17 12:39:10,463][INFO] Comunicador abierto exitosamente!
+[2017-08-17 12:39:16,571][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB2.
+[2017-08-17 12:39:16,592][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-17 12:39:17,752][WARNING] [GSM] AT#SGACT=1, - ERROR.
+[2017-08-17 12:39:17,753][WARNING] [GPRS] La conexion automatica ha fallado - exceptions must be old-style classes or derived from BaseException, not NoneType
+[2017-08-17 12:39:17,809][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-17 12:39:18,947][WARNING] [GSM] AT#SGACT=1, - +CME ERROR: unspecified GPRS error.
+[2017-08-17 12:39:20,042][WARNING] [GSM] AT#SSLD=1,993,"imap.gmail.com",0, - +CME ERROR: context not opened.
+[2017-08-17 12:39:20,046][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - exceptions must be old-style classes or derived from BaseException, not NoneType
+[2017-08-17 12:39:23,914][INFO] Cerrando el Comunicador...
+[2017-08-17 12:39:24,066][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 12:39:24,068][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 12:56:25,249][INFO] Abriendo el Comunicador...
+[2017-08-17 12:56:25,263][INFO] Comunicador abierto exitosamente!
+[2017-08-17 12:56:31,365][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB2.
+[2017-08-17 12:56:31,385][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-17 12:56:31,427][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 12:56:32,685][WARNING] [GSM] AT#PING="www.gmail.com" - ERROR.
+[2017-08-17 12:56:37,282][INFO] Cerrando el Comunicador...
+[2017-08-17 12:56:38,861][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 12:56:38,863][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 12:56:38,864][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 12:56:38,865][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:00:50,440][INFO] Abriendo el Comunicador...
+[2017-08-17 13:00:50,455][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:00:56,560][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB2.
+[2017-08-17 13:00:56,583][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-17 13:00:56,653][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:01:00,633][INFO] Cerrando el Comunicador...
+[2017-08-17 13:01:01,060][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:01:01,062][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:01:01,063][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:01:01,064][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:01:01,442][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:05:56,984][INFO] Abriendo el Comunicador...
+[2017-08-17 13:05:57,000][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:06:03,100][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB2.
+[2017-08-17 13:06:03,123][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-17 13:06:03,164][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:06:04,289][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - ERROR
+[2017-08-17 13:06:06,177][INFO] Cerrando el Comunicador...
+[2017-08-17 13:06:07,618][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:06:07,620][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:06:07,622][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:06:07,623][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:06:08,028][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:07:57,638][INFO] Abriendo el Comunicador...
+[2017-08-17 13:07:57,660][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:08:03,762][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB2.
+[2017-08-17 13:08:03,792][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-17 13:08:03,856][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:08:07,241][INFO] Cerrando el Comunicador...
+[2017-08-17 13:08:08,243][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:08:08,245][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:08:08,246][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:08:08,247][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:08:08,523][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:10:14,277][INFO] Abriendo el Comunicador...
+[2017-08-17 13:10:14,298][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:10:27,933][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:10:34,611][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB2.
+[2017-08-17 13:10:34,630][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-17 13:10:44,687][INFO] Cerrando el Comunicador...
+[2017-08-17 13:10:45,940][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:10:45,942][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:10:46,094][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:10:46,095][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:10:46,096][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:10:47,373][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:11:25,757][INFO] Abriendo el Comunicador...
+[2017-08-17 13:11:25,789][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:11:31,887][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB2.
+[2017-08-17 13:11:31,907][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-17 13:11:31,960][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:11:54,808][INFO] Cerrando el Comunicador...
+[2017-08-17 13:11:55,893][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:11:55,895][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:12:55,192][INFO] Abriendo el Comunicador...
+[2017-08-17 13:12:55,213][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:12:59,815][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB2.
+[2017-08-17 13:12:59,836][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-17 13:12:59,904][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:13:25,476][INFO] Cerrando el Comunicador...
+[2017-08-17 13:13:26,802][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:13:26,804][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:13:28,541][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:13:28,543][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:13:28,544][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:13:31,916][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:22:01,703][INFO] Abriendo el Comunicador...
+[2017-08-17 13:22:01,718][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:22:16,854][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:22:25,022][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:22:25,042][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:23:52,648][INFO] Cerrando el Comunicador...
+[2017-08-17 13:23:52,860][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:23:52,862][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:23:53,510][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:23:53,511][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:23:53,512][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:23:55,574][INFO] Abriendo el Comunicador...
+[2017-08-17 13:23:55,589][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:24:01,701][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:24:01,720][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:24:01,765][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:24:33,085][INFO] Cerrando el Comunicador...
+[2017-08-17 13:24:33,193][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:24:33,195][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:24:36,015][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:24:36,017][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:24:36,018][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:24:36,556][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:25:17,563][INFO] Abriendo el Comunicador...
+[2017-08-17 13:25:17,579][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:25:23,686][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:25:23,705][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:25:23,763][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:25:39,702][INFO] Cerrando el Comunicador...
+[2017-08-17 13:25:40,175][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:25:40,177][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:25:40,625][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:25:40,626][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:25:40,627][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:26:34,849][INFO] Abriendo el Comunicador...
+[2017-08-17 13:26:34,864][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:26:40,963][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:26:40,985][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:26:41,043][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:26:48,831][INFO] Cerrando el Comunicador...
+[2017-08-17 13:26:49,939][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:26:49,940][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:26:51,555][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:26:51,556][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:26:51,557][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:27:10,510][INFO] Abriendo el Comunicador...
+[2017-08-17 13:27:10,528][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:27:16,628][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:27:16,649][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:27:16,705][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:27:25,430][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 -  10.23.66.224).
+[2017-08-17 13:27:25,453][INFO] [GPRS] Se ha desconectado el medio (/dev/ttyUSB3 -  10.23.66.224).
+[2017-08-17 13:27:32,462][INFO] Cerrando el Comunicador...
+[2017-08-17 13:27:33,111][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:27:33,113][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:27:33,736][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:27:33,738][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:27:33,738][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:27:37,401][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:29:05,966][INFO] Abriendo el Comunicador...
+[2017-08-17 13:29:05,979][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:29:19,607][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:29:26,278][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:29:26,300][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:29:33,948][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.139.220.26).
+[2017-08-17 13:29:33,971][INFO] [GPRS] Se ha desconectado el medio (/dev/ttyUSB3 - 10.139.220.26).
+[2017-08-17 13:29:37,012][INFO] Cerrando el Comunicador...
+[2017-08-17 13:29:37,556][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:29:37,558][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:29:39,120][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:29:39,128][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:29:39,129][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:29:39,667][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:34:49,573][INFO] Abriendo el Comunicador...
+[2017-08-17 13:34:49,587][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:34:55,691][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:34:55,711][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:34:55,758][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:35:06,201][INFO] Cerrando el Comunicador...
+[2017-08-17 13:35:07,681][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:35:07,683][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:35:08,384][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:35:08,386][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:35:08,387][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:35:18,226][INFO] Abriendo el Comunicador...
+[2017-08-17 13:35:18,247][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:35:38,902][INFO] Cerrando el Comunicador...
+[2017-08-17 13:35:39,357][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:35:39,359][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:35:44,602][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:35:44,603][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:35:45,162][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:35:46,042][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:35:46,060][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:35:46,095][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:35:47,064][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:35:48,143][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:35:48,145][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:35:48,147][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:35:52,930][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-17 13:35:53,277][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:35:54,938][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:35:54,940][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:35:55,201][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-17 13:35:55,777][INFO] [EMAIL] Objeto destruido.
+[2017-08-17 13:35:55,778][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:35:57,441][INFO] Abriendo el Comunicador...
+[2017-08-17 13:35:57,457][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:36:11,071][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:36:23,484][INFO] Cerrando el Comunicador...
+[2017-08-17 13:36:24,574][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:36:24,575][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:36:28,750][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:36:28,752][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:36:28,753][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:36:37,112][INFO] Abriendo el Comunicador...
+[2017-08-17 13:36:37,128][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:36:43,240][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:36:43,267][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:36:43,324][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:36:55,416][INFO] Cerrando el Comunicador...
+[2017-08-17 13:36:56,744][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:36:56,746][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:36:58,046][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:36:58,048][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:36:58,049][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:39:16,351][INFO] Abriendo el Comunicador...
+[2017-08-17 13:39:16,367][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:39:22,471][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:39:22,492][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:39:22,549][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:39:30,495][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.142.240.255).
+[2017-08-17 13:39:30,518][INFO] [GPRS] Se ha desconectado el medio (/dev/ttyUSB3 - 10.142.240.255).
+[2017-08-17 13:39:35,789][INFO] Cerrando el Comunicador...
+[2017-08-17 13:39:35,984][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:39:35,985][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:39:38,805][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:39:38,808][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:39:38,809][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:39:42,482][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:40:05,816][INFO] Abriendo el Comunicador...
+[2017-08-17 13:40:05,836][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:40:11,945][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:40:11,966][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:40:12,024][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:40:20,485][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.26.95.239).
+[2017-08-17 13:40:20,507][INFO] [GPRS] Se ha desconectado el medio (/dev/ttyUSB3 - 10.26.95.239).
+[2017-08-17 13:40:29,809][INFO] Cerrando el Comunicador...
+[2017-08-17 13:40:29,980][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:40:29,982][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:40:31,923][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:40:31,925][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:40:31,926][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:40:32,457][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:43:15,286][INFO] Abriendo el Comunicador...
+[2017-08-17 13:43:15,302][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:43:21,406][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:43:21,427][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:43:21,481][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:43:41,878][INFO] Cerrando el Comunicador...
+[2017-08-17 13:43:42,408][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:43:42,410][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:43:45,402][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:43:45,404][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:43:45,406][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:43:47,143][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:45:09,679][INFO] Abriendo el Comunicador...
+[2017-08-17 13:45:09,693][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:45:15,799][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:45:15,819][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:45:15,861][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:45:23,490][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.23.37.57).
+[2017-08-17 13:45:23,512][INFO] [GPRS] Se ha desconectado el medio (/dev/ttyUSB3 - 10.23.37.57).
+[2017-08-17 13:45:32,092][INFO] Cerrando el Comunicador...
+[2017-08-17 13:45:32,271][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:45:32,272][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:45:34,889][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:45:34,892][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:45:34,894][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:45:35,461][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:46:12,482][INFO] Abriendo el Comunicador...
+[2017-08-17 13:46:12,495][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:46:26,128][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:46:34,299][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:46:34,319][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:46:41,979][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.22.152.121).
+[2017-08-17 13:46:42,006][INFO] [GPRS] Se ha desconectado el medio (/dev/ttyUSB3 - 10.22.152.121).
+[2017-08-17 13:46:44,710][INFO] Cerrando el Comunicador...
+[2017-08-17 13:46:45,599][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:46:45,601][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:46:47,192][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:46:47,194][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:46:47,195][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:46:47,679][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:47:57,605][INFO] Abriendo el Comunicador...
+[2017-08-17 13:47:57,619][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:48:11,249][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:48:17,893][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:48:17,913][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:48:27,020][INFO] Cerrando el Comunicador...
+[2017-08-17 13:48:27,703][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:48:27,706][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:48:29,287][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-17 13:48:29,290][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:48:29,291][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:48:33,500][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-17 13:48:35,876][INFO] Abriendo el Comunicador...
+[2017-08-17 13:48:35,890][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:48:49,525][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:48:57,695][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:48:57,715][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:49:05,383][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.139.123.173).
+[2017-08-17 13:49:12,146][INFO] Cerrando el Comunicador...
+[2017-08-17 13:49:12,241][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-17 13:49:13,469][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:49:13,470][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:49:13,471][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-17 13:49:13,472][INFO] Comunicador cerrado exitosamente!
+[2017-08-17 13:52:46,236][INFO] Abriendo el Comunicador...
+[2017-08-17 13:52:46,259][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:52:52,347][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:52:52,367][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:52:52,407][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:52:56,328][INFO] Cerrando el Comunicador...
+[2017-08-17 13:52:56,839][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:52:56,841][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:53:35,766][INFO] Abriendo el Comunicador...
+[2017-08-17 13:53:35,776][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:53:41,889][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:53:41,910][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:53:41,961][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:53:54,223][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.17.55.23).
+[2017-08-17 13:54:27,509][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - AT#SSLD=1,993,"imap.gmail.com",0,1: 
+[2017-08-17 13:54:51,379][INFO] Cerrando el Comunicador...
+[2017-08-17 13:54:51,458][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-17 13:54:52,368][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:54:52,369][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:55:06,722][INFO] Abriendo el Comunicador...
+[2017-08-17 13:55:06,732][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:55:12,843][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:55:12,873][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:55:12,929][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:55:22,695][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.56.117.137).
+[2017-08-17 13:55:55,987][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - AT#SSLD=1,993,"imap.gmail.com",0,1: 
+[2017-08-17 13:55:59,136][INFO] Cerrando el Comunicador...
+[2017-08-17 13:55:59,230][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-17 13:55:59,323][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:55:59,325][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 13:58:52,308][INFO] Abriendo el Comunicador...
+[2017-08-17 13:58:52,327][INFO] Comunicador abierto exitosamente!
+[2017-08-17 13:58:58,437][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 13:58:58,458][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 13:58:58,499][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 13:59:10,760][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.57.183.109).
+[2017-08-17 13:59:44,051][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - AT#SSLD=1,993,"imap.gmail.com",0,1: 
+[2017-08-17 13:59:52,586][INFO] Cerrando el Comunicador...
+[2017-08-17 13:59:52,666][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-17 13:59:53,952][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 13:59:53,953][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 14:05:36,607][INFO] Abriendo el Comunicador...
+[2017-08-17 14:05:36,621][INFO] Comunicador abierto exitosamente!
+[2017-08-17 14:05:42,726][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 14:05:42,748][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 14:05:42,788][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 14:05:49,396][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.31.74.227).
+[2017-08-17 14:06:05,472][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - AT#SSLD=1,993,"imap.gmail.com",0,1: 
+[2017-08-17 14:06:08,273][INFO] Cerrando el Comunicador...
+[2017-08-17 14:06:08,335][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-17 14:06:09,713][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 14:06:09,716][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 14:06:34,880][INFO] Abriendo el Comunicador...
+[2017-08-17 14:06:34,890][INFO] Comunicador abierto exitosamente!
+[2017-08-17 14:06:41,003][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 14:06:41,034][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 14:06:41,075][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 14:06:48,978][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.15.10.41).
+[2017-08-17 14:07:05,029][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - AT#SSLD=1,993,"imap.gmail.com",0,1: 
+[2017-08-17 14:07:11,784][INFO] Cerrando el Comunicador...
+[2017-08-17 14:07:11,866][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-17 14:07:12,470][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 14:07:12,471][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-17 14:07:51,400][INFO] Abriendo el Comunicador...
+[2017-08-17 14:07:51,411][INFO] Comunicador abierto exitosamente!
+[2017-08-17 14:07:57,517][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB3.
+[2017-08-17 14:07:57,538][INFO] [GSM] Listo para usarse (ttyUSB3).
+[2017-08-17 14:07:57,588][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-17 14:08:03,539][INFO] [GPRS] Listo para usarse (/dev/ttyUSB3 - 10.9.228.72).
+[2017-08-17 14:08:45,600][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - AT#SSLD=1,993,"imap.gmail.com",0,1: 
+[2017-08-17 14:08:50,816][INFO] Cerrando el Comunicador...
+[2017-08-17 14:08:50,916][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-17 14:08:51,497][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-17 14:08:51,499][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 11:39:59,422][INFO] Abriendo el Comunicador...
+[2017-08-18 11:39:59,441][INFO] Comunicador abierto exitosamente!
+[2017-08-18 11:40:08,578][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 11:40:14,142][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 11:40:23,715][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 11:40:23,716][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 11:40:23,718][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 11:40:26,969][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 11:41:54,867][INFO] Cerrando el Comunicador...
+[2017-08-18 11:41:54,981][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 11:41:54,983][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 11:41:56,327][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 11:41:56,329][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 11:41:56,330][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 11:41:58,987][INFO] Abriendo el Comunicador...
+[2017-08-18 11:41:59,000][INFO] Comunicador abierto exitosamente!
+[2017-08-18 11:42:11,690][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 11:42:15,381][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 11:42:47,828][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 11:42:47,829][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 11:42:47,831][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 11:42:55,362][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 11:43:02,602][INFO] Cerrando el Comunicador...
+[2017-08-18 11:43:03,524][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 11:43:03,526][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 11:43:04,760][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 11:43:04,761][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 11:43:04,762][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 11:45:25,233][INFO] Abriendo el Comunicador...
+[2017-08-18 11:45:25,248][INFO] Comunicador abierto exitosamente!
+[2017-08-18 11:45:33,531][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 11:45:41,790][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 11:45:53,181][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 11:45:53,182][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 11:45:53,184][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 11:46:00,768][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 11:46:15,499][INFO] Cerrando el Comunicador...
+[2017-08-18 11:46:16,267][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 11:46:16,268][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 11:46:16,340][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 11:46:16,342][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 11:46:16,343][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 11:46:25,834][INFO] Abriendo el Comunicador...
+[2017-08-18 11:46:25,847][INFO] Comunicador abierto exitosamente!
+[2017-08-18 11:46:43,632][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 11:46:46,716][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 11:46:54,272][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 11:46:54,273][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 11:46:54,275][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 11:47:01,848][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 11:47:10,391][INFO] Cerrando el Comunicador...
+[2017-08-18 11:47:10,866][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 11:47:10,867][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 11:47:11,154][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 11:47:11,156][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 11:47:11,157][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 11:49:20,104][INFO] Abriendo el Comunicador...
+[2017-08-18 11:49:20,118][INFO] Comunicador abierto exitosamente!
+[2017-08-18 11:49:26,299][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 11:49:30,029][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 11:49:35,407][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 11:49:35,408][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 11:49:35,418][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 11:49:43,238][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 11:52:11,926][INFO] Cerrando el Comunicador...
+[2017-08-18 11:52:12,685][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 11:52:12,686][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 11:52:14,130][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 11:52:14,132][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 11:52:14,134][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 11:52:34,602][INFO] Abriendo el Comunicador...
+[2017-08-18 11:52:34,616][INFO] Comunicador abierto exitosamente!
+[2017-08-18 11:52:34,692][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 11:52:40,204][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 11:52:58,860][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 11:52:58,860][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 11:52:58,863][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 11:53:06,227][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 11:55:13,020][INFO] Cerrando el Comunicador...
+[2017-08-18 11:55:13,668][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 11:55:13,670][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 11:55:13,858][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 11:55:13,860][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 11:55:13,861][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 11:55:16,785][INFO] Abriendo el Comunicador...
+[2017-08-18 11:55:16,795][INFO] Comunicador abierto exitosamente!
+[2017-08-18 11:55:18,913][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 11:55:21,691][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 11:55:46,673][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 11:55:49,046][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 11:55:49,047][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 11:55:49,049][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 11:55:54,482][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 11:56:25,164][INFO] Cerrando el Comunicador...
+[2017-08-18 11:56:25,818][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 11:56:25,819][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 11:56:26,855][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 11:56:26,857][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 11:56:26,858][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 11:56:33,144][INFO] Abriendo el Comunicador...
+[2017-08-18 11:56:33,163][INFO] Comunicador abierto exitosamente!
+[2017-08-18 11:56:36,281][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 11:56:39,293][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 11:56:46,881][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 11:56:46,888][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 11:56:46,890][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 11:56:55,332][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 11:57:03,489][INFO] Cerrando el Comunicador...
+[2017-08-18 11:57:04,680][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 11:57:04,682][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 11:57:05,915][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 11:57:05,917][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 11:57:05,918][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 11:57:25,544][INFO] Abriendo el Comunicador...
+[2017-08-18 11:57:25,565][INFO] Comunicador abierto exitosamente!
+[2017-08-18 11:57:25,632][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 11:57:29,122][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 11:57:34,742][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 11:57:34,743][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 11:57:34,745][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 11:57:42,630][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 11:57:57,862][INFO] Cerrando el Comunicador...
+[2017-08-18 11:57:58,578][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 11:57:58,580][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 11:58:00,101][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 11:58:00,103][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 11:58:00,104][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 11:58:38,221][INFO] Abriendo el Comunicador...
+[2017-08-18 11:58:38,235][INFO] Comunicador abierto exitosamente!
+[2017-08-18 11:58:38,311][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 11:58:50,509][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 11:58:53,461][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 11:58:53,462][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 11:58:53,465][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 11:59:01,098][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:05:16,910][INFO] Cerrando el Comunicador...
+[2017-08-18 12:05:17,379][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:05:17,381][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:05:18,671][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:05:18,673][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:05:18,675][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:07:19,649][INFO] Abriendo el Comunicador...
+[2017-08-18 12:07:19,671][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:07:31,061][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:07:36,795][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 12:07:40,168][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:07:40,169][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:07:40,176][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 12:07:47,863][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:07:52,987][INFO] Cerrando el Comunicador...
+[2017-08-18 12:07:54,182][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:07:54,184][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:07:54,930][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:07:54,932][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:07:54,933][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:08:46,676][INFO] Abriendo el Comunicador...
+[2017-08-18 12:08:46,690][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:08:59,163][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:09:02,397][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 12:09:05,293][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:09:05,294][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:09:05,296][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 12:09:13,767][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:09:16,518][INFO] Cerrando el Comunicador...
+[2017-08-18 12:09:16,703][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:09:16,705][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:09:17,926][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:09:17,928][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:09:17,929][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:09:38,077][INFO] Abriendo el Comunicador...
+[2017-08-18 12:09:38,106][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:09:52,568][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:09:55,186][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 12:09:58,683][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:09:58,685][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:09:58,687][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 12:10:06,092][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:12:14,392][INFO] Cerrando el Comunicador...
+[2017-08-18 12:12:15,657][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:12:15,667][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:12:19,532][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:12:25,117][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - [Errno 104] Connection reset by peer
+[2017-08-18 12:12:27,125][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:12:28,552][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:12:28,557][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:12:28,559][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:12:28,561][INFO] [WIFI] Objeto destruido.
+[2017-08-18 12:12:28,562][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:12:32,187][INFO] Abriendo el Comunicador...
+[2017-08-18 12:12:32,195][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:12:32,277][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:12:37,666][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 12:12:39,928][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:12:39,931][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:12:39,938][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 12:12:49,540][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:13:16,577][INFO] Cerrando el Comunicador...
+[2017-08-18 12:13:17,217][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:13:17,218][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:13:17,729][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:13:17,730][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:13:17,731][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:13:26,731][INFO] Abriendo el Comunicador...
+[2017-08-18 12:13:26,745][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:13:30,889][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:13:36,489][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 12:14:01,044][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:14:01,056][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:14:01,058][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 12:14:09,515][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com): ('The read operation timed out',)
+[2017-08-18 12:14:09,528][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:19:25,561][INFO] Cerrando el Comunicador...
+[2017-08-18 12:19:26,877][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:19:26,878][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:19:28,400][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:19:28,402][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:19:28,404][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:19:41,272][INFO] Abriendo el Comunicador...
+[2017-08-18 12:19:41,291][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:19:51,562][INFO] [WIFI] Listo para usarse (wlan0 - 169.254.27.249).
+[2017-08-18 12:20:03,513][INFO] Cerrando el Comunicador...
+[2017-08-18 12:20:03,906][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:20:03,908][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:20:04,227][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:20:04,228][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:20:04,230][INFO] [WIFI] Objeto destruido.
+[2017-08-18 12:20:04,231][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:20:05,094][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:20:05,097][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:20:18,419][INFO] Abriendo el Comunicador...
+[2017-08-18 12:20:18,429][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:20:18,506][INFO] [WIFI] Listo para usarse (wlan0 - 169.254.27.249).
+[2017-08-18 12:20:20,792][INFO] Cerrando el Comunicador...
+[2017-08-18 12:20:21,505][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:20:21,507][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:20:22,652][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:20:22,654][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:20:22,656][INFO] [WIFI] Objeto destruido.
+[2017-08-18 12:20:22,657][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:20:23,027][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:20:23,032][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:22:16,772][INFO] Abriendo el Comunicador...
+[2017-08-18 12:22:16,786][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:22:16,855][INFO] [WIFI] Listo para usarse (wlan0 - 169.254.27.249).
+[2017-08-18 12:22:20,721][INFO] Cerrando el Comunicador...
+[2017-08-18 12:22:21,364][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:22:21,365][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:22:23,157][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:22:23,159][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:22:23,160][INFO] [WIFI] Objeto destruido.
+[2017-08-18 12:22:23,161][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:22:24,380][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:22:24,381][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:22:37,785][INFO] Abriendo el Comunicador...
+[2017-08-18 12:22:37,796][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:22:37,878][INFO] [WIFI] Listo para usarse (wlan0 - 169.254.27.249).
+[2017-08-18 12:22:42,396][INFO] Cerrando el Comunicador...
+[2017-08-18 12:22:43,878][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:22:43,880][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:22:44,196][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:22:44,197][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:22:44,199][INFO] [WIFI] Objeto destruido.
+[2017-08-18 12:22:44,200][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:22:45,401][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:22:45,404][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:23:50,665][INFO] Abriendo el Comunicador...
+[2017-08-18 12:23:50,679][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:23:50,747][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:23:53,878][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 12:23:58,364][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:23:58,366][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:23:58,368][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 12:24:07,539][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 12:24:07,546][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:24:21,558][INFO] Cerrando el Comunicador...
+[2017-08-18 12:24:22,194][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:24:22,196][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:24:23,609][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:24:23,611][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:24:23,612][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:26:28,114][INFO] Abriendo el Comunicador...
+[2017-08-18 12:26:28,128][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:26:28,220][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:26:30,882][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 12:27:02,862][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:27:02,863][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:27:02,867][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 12:27:10,757][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 12:27:10,765][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:27:13,281][INFO] Cerrando el Comunicador...
+[2017-08-18 12:27:14,657][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:27:14,659][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:27:15,494][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:27:15,496][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:27:15,497][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:28:20,381][INFO] Abriendo el Comunicador...
+[2017-08-18 12:28:20,390][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:28:33,984][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:28:39,270][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 12:28:45,599][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 12:28:45,601][DEBUG] [EMAIL] timeout : timed out.
+[2017-08-18 12:28:49,121][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:28:49,122][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:28:49,124][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 12:28:53,558][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 12:28:53,565][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:29:02,582][INFO] Cerrando el Comunicador...
+[2017-08-18 12:29:03,922][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:29:03,925][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:29:05,994][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:29:05,996][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:29:05,997][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:29:21,261][INFO] Abriendo el Comunicador...
+[2017-08-18 12:29:21,274][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:29:38,882][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:29:41,413][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 12:30:12,021][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:30:12,022][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:30:12,024][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 12:30:20,475][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 12:30:20,485][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:30:52,326][INFO] Cerrando el Comunicador...
+[2017-08-18 12:30:52,809][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:30:52,810][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:30:54,290][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:30:54,292][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:30:54,294][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:31:02,485][INFO] Abriendo el Comunicador...
+[2017-08-18 12:31:02,501][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:31:14,161][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 12:31:17,055][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 12:32:20,365][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 12:32:20,366][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 12:32:20,368][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 12:32:27,229][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 12:32:27,232][DEBUG] [EMAIL] SSLError : ('The read operation timed out',)
+[2017-08-18 12:32:27,238][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 12:35:13,150][INFO] Cerrando el Comunicador...
+[2017-08-18 12:35:14,578][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:35:14,586][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:35:15,603][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:35:15,605][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:35:15,606][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:35:22,200][INFO] Abriendo el Comunicador...
+[2017-08-18 12:35:22,214][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:35:45,540][INFO] Cerrando el Comunicador...
+[2017-08-18 12:35:46,296][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:35:46,297][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:35:46,849][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:35:46,850][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:35:46,851][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:35:49,409][INFO] Abriendo el Comunicador...
+[2017-08-18 12:35:49,423][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:36:22,993][INFO] Cerrando el Comunicador...
+[2017-08-18 12:36:24,040][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:36:24,042][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:36:30,106][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:36:30,108][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:36:30,109][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:36:38,583][INFO] Abriendo el Comunicador...
+[2017-08-18 12:36:38,601][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:36:49,372][INFO] Cerrando el Comunicador...
+[2017-08-18 12:36:50,702][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:36:50,704][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:36:54,840][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:36:54,842][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:36:54,844][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:37:06,327][INFO] Abriendo el Comunicador...
+[2017-08-18 12:37:06,348][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:37:51,708][INFO] Cerrando el Comunicador...
+[2017-08-18 12:37:52,961][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:37:52,963][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:37:54,753][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:37:54,755][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:37:54,756][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:38:25,352][INFO] Abriendo el Comunicador...
+[2017-08-18 12:38:25,366][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:38:29,750][INFO] Cerrando el Comunicador...
+[2017-08-18 12:38:29,965][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:38:29,966][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:38:31,669][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:38:31,670][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:38:31,671][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:39:09,482][INFO] Abriendo el Comunicador...
+[2017-08-18 12:39:09,496][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:39:45,302][INFO] Cerrando el Comunicador...
+[2017-08-18 12:39:45,614][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:39:45,615][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:39:50,103][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 12:39:50,106][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 12:39:50,107][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 12:39:56,333][INFO] Abriendo el Comunicador...
+[2017-08-18 12:39:56,347][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:40:11,511][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 12:40:11,532][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 12:40:28,938][INFO] Cerrando el Comunicador...
+[2017-08-18 12:40:29,459][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:40:29,460][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:42:51,780][INFO] Abriendo el Comunicador...
+[2017-08-18 12:42:51,795][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:42:56,399][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 12:43:12,117][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 12:43:12,138][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 12:43:21,210][INFO] Cerrando el Comunicador...
+[2017-08-18 12:43:21,909][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:43:21,911][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:44:01,640][INFO] Abriendo el Comunicador...
+[2017-08-18 12:44:01,654][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:44:06,263][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 12:44:06,283][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 12:44:36,798][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.175.85.113).
+[2017-08-18 12:45:12,376][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - AT#SSLD=1,993,"imap.gmail.com",0,1: 
+[2017-08-18 12:45:36,405][INFO] Cerrando el Comunicador...
+[2017-08-18 12:45:36,495][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 12:45:37,752][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:45:37,753][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 12:58:08,988][INFO] Abriendo el Comunicador...
+[2017-08-18 12:58:09,024][INFO] Comunicador abierto exitosamente!
+[2017-08-18 12:58:15,589][INFO] Cerrando el Comunicador...
+[2017-08-18 12:58:16,659][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 12:58:16,661][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:13:17,111][INFO] Abriendo el Comunicador...
+[2017-08-18 13:13:17,126][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:13:29,375][INFO] Cerrando el Comunicador...
+[2017-08-18 13:13:30,728][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:13:30,729][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:13:48,835][INFO] Abriendo el Comunicador...
+[2017-08-18 13:13:48,844][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:14:04,155][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 13:14:04,175][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 13:14:06,264][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 13:14:06,266][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 13:14:06,267][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 13:14:08,837][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 13:14:08,857][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 13:14:10,934][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 13:14:10,936][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 13:14:10,937][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 13:14:13,044][INFO] Abriendo el Comunicador...
+[2017-08-18 13:14:13,060][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:14:20,212][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 13:14:20,232][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 13:14:34,380][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 13:14:34,410][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 13:14:40,319][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.22.105.143).
+[2017-08-18 13:16:42,192][INFO] Cerrando el Comunicador...
+[2017-08-18 13:16:42,279][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 13:16:43,186][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:16:43,187][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:17:45,609][INFO] Abriendo el Comunicador...
+[2017-08-18 13:17:45,619][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:17:51,731][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 13:17:51,757][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 13:17:58,224][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.81.65.216).
+[2017-08-18 13:18:33,769][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - AT#SSLD=1,993,"imap.gmail.com",0,1: OK
+
+[2017-08-18 13:18:41,509][INFO] Cerrando el Comunicador...
+[2017-08-18 13:18:41,574][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 13:18:42,718][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:18:42,720][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:26:32,618][INFO] Abriendo el Comunicador...
+[2017-08-18 13:26:32,650][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:26:51,479][INFO] Cerrando el Comunicador...
+[2017-08-18 13:26:52,243][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:26:52,244][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:27:14,115][INFO] Abriendo el Comunicador...
+[2017-08-18 13:27:14,130][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:27:26,251][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 13:27:27,772][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 13:27:38,209][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.30.150.50).
+[2017-08-18 13:28:07,791][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 13:28:27,390][INFO] Cerrando el Comunicador...
+[2017-08-18 13:28:27,482][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 13:28:27,743][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:28:27,745][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:28:29,685][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 13:28:29,686][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 13:28:44,639][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 13:28:47,331][INFO] [EMAIL] Objeto destruido.
+[2017-08-18 13:28:47,334][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 13:28:49,192][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 13:37:41,454][INFO] Abriendo el Comunicador...
+[2017-08-18 13:37:41,467][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:37:59,072][INFO] Cerrando el Comunicador...
+[2017-08-18 13:37:59,580][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:37:59,581][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:38:13,870][INFO] Abriendo el Comunicador...
+[2017-08-18 13:38:13,884][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:38:47,382][INFO] Cerrando el Comunicador...
+[2017-08-18 13:38:50,724][INFO] Abriendo el Comunicador...
+[2017-08-18 13:38:50,738][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:42:26,522][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 13:43:59,422][INFO] Abriendo el Comunicador...
+[2017-08-18 13:43:59,431][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:44:29,936][INFO] Cerrando el Comunicador...
+[2017-08-18 13:44:31,037][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:44:31,040][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:44:37,471][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 13:44:37,473][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 13:44:37,475][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 13:44:46,419][INFO] Abriendo el Comunicador...
+[2017-08-18 13:44:46,431][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:45:01,557][INFO] Abriendo el Comunicador...
+[2017-08-18 13:45:01,578][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:47:48,566][INFO] Abriendo el Comunicador...
+[2017-08-18 13:47:48,578][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:47:57,506][INFO] Cerrando el Comunicador...
+[2017-08-18 13:47:57,695][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:47:57,697][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:48:47,134][INFO] Abriendo el Comunicador...
+[2017-08-18 13:48:47,152][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:48:51,771][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 13:48:51,793][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 13:48:58,310][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.37.191.223).
+[2017-08-18 13:49:03,832][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - unicode strings are not supported, please encode to bytes: u'AT#SSLD=1,993,"imap.gmail.com",0,1\r'
+[2017-08-18 13:49:13,815][INFO] Cerrando el Comunicador...
+[2017-08-18 13:49:13,904][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 13:49:14,231][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:49:14,233][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:52:59,056][INFO] Abriendo el Comunicador...
+[2017-08-18 13:52:59,069][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:53:03,684][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 13:53:03,704][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 13:53:19,913][INFO] Cerrando el Comunicador...
+[2017-08-18 13:53:20,182][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:53:20,184][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:53:20,831][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 13:53:20,833][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 13:53:20,834][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 13:53:26,600][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 13:53:29,420][INFO] Abriendo el Comunicador...
+[2017-08-18 13:53:29,436][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:53:34,047][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 13:53:34,066][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 13:53:40,094][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.52.55.130).
+[2017-08-18 13:53:49,048][WARNING] [EMAIL] Fallo en el socket SSL - unicode strings are not supported, please encode to bytes: u'. LOGIN client01.datalogger@gmail.com client01dl\r\n\x1a\r'.
+[2017-08-18 13:53:49,055][ERROR] [EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - unicode strings are not supported, please encode to bytes: u'. LOGIN client01.datalogger@gmail.com client01dl\r\n\x1a\r'
+[2017-08-18 13:53:53,813][INFO] Cerrando el Comunicador...
+[2017-08-18 13:53:53,904][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 13:53:55,047][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:53:55,049][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 13:56:20,054][INFO] Abriendo el Comunicador...
+[2017-08-18 13:56:20,067][INFO] Comunicador abierto exitosamente!
+[2017-08-18 13:56:24,683][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 13:56:24,704][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 13:56:33,302][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.35.54.179).
+[2017-08-18 13:56:44,603][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 13:56:46,939][WARNING] [EMAIL] Fallo en el socket SSL - startswith first arg must be str, unicode, or tuple, not NoneType.
+[2017-08-18 13:56:46,942][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 13:56:46,945][DEBUG] [EMAIL] TypeError : startswith first arg must be str, unicode, or tuple, not NoneType
+[2017-08-18 13:56:47,064][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 13:56:51,062][INFO] Cerrando el Comunicador...
+[2017-08-18 13:56:51,158][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 13:56:51,576][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 13:56:51,578][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 14:00:14,673][INFO] Abriendo el Comunicador...
+[2017-08-18 14:00:14,684][INFO] Comunicador abierto exitosamente!
+[2017-08-18 14:00:19,297][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 14:00:19,318][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 14:00:31,749][INFO] Cerrando el Comunicador...
+[2017-08-18 14:00:32,770][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 14:00:32,772][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 14:00:34,542][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 14:00:34,544][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 14:00:34,545][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 14:00:38,761][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 14:00:51,390][INFO] Abriendo el Comunicador...
+[2017-08-18 14:00:51,403][INFO] Comunicador abierto exitosamente!
+[2017-08-18 14:00:56,012][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 14:00:56,035][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 14:01:04,105][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.136.151.65).
+[2017-08-18 14:01:13,983][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 14:01:58,709][WARNING] [EMAIL] Fallo en el socket SSL - AT#SSLRECV=1,1000: SSLSRING: 1,115
+.
+[2017-08-18 14:01:58,711][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 14:01:58,712][DEBUG] [EMAIL] RuntimeError : AT#SSLRECV=1,1000: SSLSRING: 1,115
+
+[2017-08-18 14:01:58,832][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 14:52:12,317][INFO] Abriendo el Comunicador...
+[2017-08-18 14:52:12,329][INFO] Comunicador abierto exitosamente!
+[2017-08-18 14:52:21,521][INFO] Cerrando el Comunicador...
+[2017-08-18 14:52:24,131][INFO] Abriendo el Comunicador...
+[2017-08-18 14:52:24,149][INFO] Comunicador abierto exitosamente!
+[2017-08-18 14:52:28,765][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 14:52:28,790][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 14:52:35,687][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.52.115.5).
+[2017-08-18 14:52:46,597][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 14:53:11,972][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-08-18 14:56:28,880][INFO] Abriendo el Comunicador...
+[2017-08-18 14:56:28,892][INFO] Comunicador abierto exitosamente!
+[2017-08-18 14:56:33,500][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 14:56:33,521][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 14:56:45,129][INFO] Cerrando el Comunicador...
+[2017-08-18 14:56:45,502][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 14:56:45,504][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 14:57:07,699][INFO] Abriendo el Comunicador...
+[2017-08-18 14:57:07,714][INFO] Comunicador abierto exitosamente!
+[2017-08-18 14:57:12,324][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 14:57:12,350][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 14:57:20,198][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.39.201.27).
+[2017-08-18 14:57:29,801][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 14:57:41,551][WARNING] [EMAIL] Fallo en el socket SSL - AT#SSLRECV=1,1000: SSLSRING: 1,115
+.
+[2017-08-18 14:57:41,553][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 14:57:41,560][DEBUG] [EMAIL] RuntimeError : AT#SSLRECV=1,1000: SSLSRING: 1,115
+
+[2017-08-18 14:57:41,674][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 14:57:46,536][INFO] Cerrando el Comunicador...
+[2017-08-18 14:57:46,628][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 14:57:46,726][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 14:57:46,728][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 15:00:02,962][INFO] Abriendo el Comunicador...
+[2017-08-18 15:00:02,981][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:00:07,595][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:00:07,615][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:00:15,397][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.104.175).
+[2017-08-18 15:00:24,963][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 15:01:08,888][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-08-18 15:01:13,831][ERROR] [GSM] Error al enviar el mensaje de texto a 3517502317.
+[2017-08-18 15:01:13,832][DEBUG] [COMMUNICATOR-GSM] Falló. Reintentando con otro medio.
+[2017-08-18 15:07:39,628][INFO] Abriendo el Comunicador...
+[2017-08-18 15:07:39,645][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:07:44,248][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:07:44,274][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:07:51,057][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.180.236.220).
+[2017-08-18 15:08:01,952][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 15:08:13,821][WARNING] [EMAIL] Fallo en el socket SSL - AT#SSLRECV=1,1000 -> SSLSRING: 1,115
+.
+[2017-08-18 15:08:13,823][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 15:08:13,824][DEBUG] [EMAIL] RuntimeError : AT#SSLRECV=1,1000 -> SSLSRING: 1,115
+
+[2017-08-18 15:08:13,944][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 15:08:14,699][INFO] Cerrando el Comunicador...
+[2017-08-18 15:08:14,781][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 15:08:15,657][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 15:08:15,659][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 15:08:58,278][INFO] Abriendo el Comunicador...
+[2017-08-18 15:08:58,293][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:09:02,897][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:09:02,920][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:09:08,962][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.134.147.57).
+[2017-08-18 15:09:18,501][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 15:09:55,798][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-08-18 15:10:22,850][WARNING] [EMAIL] Mensaje no enviado: AT#SSLO=1: No hubo respuesta.
+[2017-08-18 15:10:27,096][INFO] Cerrando el Comunicador...
+[2017-08-18 15:10:27,201][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 15:10:27,402][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 15:10:27,404][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 15:34:05,512][INFO] Abriendo el Comunicador...
+[2017-08-18 15:34:05,527][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:34:10,145][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:34:10,166][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:34:17,096][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.140.154.52).
+[2017-08-18 15:34:17,723][INFO] Cerrando el Comunicador...
+[2017-08-18 15:34:19,131][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 15:34:19,132][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 15:34:19,133][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 15:34:19,134][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 15:34:24,239][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 15:36:27,935][INFO] Abriendo el Comunicador...
+[2017-08-18 15:36:27,944][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:36:32,557][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:36:32,588][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:36:38,928][INFO] Cerrando el Comunicador...
+[2017-08-18 15:41:09,193][INFO] Abriendo el Comunicador...
+[2017-08-18 15:41:35,783][INFO] Abriendo el Comunicador...
+[2017-08-18 15:42:04,191][INFO] Abriendo el Comunicador...
+[2017-08-18 15:43:37,280][INFO] Abriendo el Comunicador...
+[2017-08-18 15:44:34,996][INFO] Abriendo el Comunicador...
+[2017-08-18 15:48:30,082][INFO] Abriendo el Comunicador...
+[2017-08-18 15:48:30,102][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:50:18,269][INFO] Abriendo el Comunicador...
+[2017-08-18 15:50:18,292][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:50:22,900][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:50:22,933][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:50:30,963][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.70.10.20).
+[2017-08-18 15:50:42,316][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 15:50:46,482][INFO] Cerrando el Comunicador...
+[2017-08-18 15:50:46,583][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 15:50:46,874][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 15:50:46,875][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 15:50:54,133][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 15:50:54,135][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 15:50:56,457][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 15:50:56,730][INFO] [EMAIL] Objeto destruido.
+[2017-08-18 15:50:56,731][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 15:50:57,760][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 15:51:54,749][INFO] Abriendo el Comunicador...
+[2017-08-18 15:51:54,766][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:51:59,382][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:51:59,404][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:52:10,302][INFO] Cerrando el Comunicador...
+[2017-08-18 15:52:14,233][INFO] Abriendo el Comunicador...
+[2017-08-18 15:52:14,245][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:52:18,853][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:52:18,874][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:52:25,255][INFO] Cerrando el Comunicador...
+[2017-08-18 15:52:26,341][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 15:52:26,342][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 15:54:08,364][INFO] Abriendo el Comunicador...
+[2017-08-18 15:54:08,376][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:54:12,990][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:54:13,013][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:54:19,025][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.65.75.237).
+[2017-08-18 15:54:28,814][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 15:54:58,094][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-08-18 15:55:33,175][WARNING] [EMAIL] Mensaje no enviado: cannot concatenate 'str' and 'float' objects
+[2017-08-18 15:55:37,879][INFO] Cerrando el Comunicador...
+[2017-08-18 15:55:38,013][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 15:55:38,709][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 15:55:38,710][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 15:55:39,039][DEBUG] [COMMUNICATOR-EMAIL] Falló. Reintentando con otro medio.
+[2017-08-18 15:56:44,049][INFO] Abriendo el Comunicador...
+[2017-08-18 15:56:44,065][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:56:48,678][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:56:48,701][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:56:52,135][INFO] Cerrando el Comunicador...
+[2017-08-18 15:57:15,377][INFO] Abriendo el Comunicador...
+[2017-08-18 15:57:15,391][INFO] Comunicador abierto exitosamente!
+[2017-08-18 15:57:19,999][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 15:57:20,020][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 15:57:26,673][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.65.176.184).
+[2017-08-18 15:57:36,301][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 15:57:56,848][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-08-18 15:58:28,686][INFO] [EMAIL] Mensaje enviado a 'juanrom02@gmail.com'
+[2017-08-18 15:58:45,898][INFO] Cerrando el Comunicador...
+[2017-08-18 15:58:46,002][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 15:58:46,452][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 15:58:46,453][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:06:44,978][INFO] Abriendo el Comunicador...
+[2017-08-18 16:06:44,994][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:06:49,607][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:06:49,628][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:06:55,516][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.12.232.152).
+[2017-08-18 16:07:11,763][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:07:12,177][WARNING] [EMAIL] Fallo en el socket SSL - +CME ERROR: SSL not connected.
+[2017-08-18 16:07:12,179][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 16:07:12,181][DEBUG] [EMAIL] Exception : +CME ERROR: SSL not connected
+[2017-08-18 16:07:12,311][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 16:07:32,600][INFO] Cerrando el Comunicador...
+[2017-08-18 16:07:32,702][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 16:07:33,007][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 16:07:33,009][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:12:45,859][INFO] Abriendo el Comunicador...
+[2017-08-18 16:12:45,885][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:12:50,495][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:12:50,516][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:12:56,819][INFO] Cerrando el Comunicador...
+[2017-08-18 16:13:15,576][INFO] Abriendo el Comunicador...
+[2017-08-18 16:13:15,599][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:13:20,204][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:13:20,224][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:13:27,051][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.77.211.74).
+[2017-08-18 16:13:36,560][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:13:52,713][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-08-18 16:14:25,977][INFO] [EMAIL] Mensaje enviado a 'juanrom02@gmail.com'
+[2017-08-18 16:15:03,276][DEBUG] [EMAIL] Ha(n) llegado 1 nuevo(s) mensaje(s) de correo electronico!
+[2017-08-18 16:15:06,254][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 16:15:06,256][DEBUG] [EMAIL] Exception : AT#SSLO=1: No hubo respuesta.
+[2017-08-18 16:15:06,386][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 16:15:11,063][INFO] Cerrando el Comunicador...
+[2017-08-18 16:15:11,149][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 16:15:12,269][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 16:15:12,271][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:16:02,174][INFO] Abriendo el Comunicador...
+[2017-08-18 16:16:02,188][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:16:06,805][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:16:06,827][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:16:13,514][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.23.90.113).
+[2017-08-18 16:16:23,190][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:16:27,318][DEBUG] [EMAIL] Ha(n) llegado 1 nuevo(s) mensaje(s) de correo electronico!
+[2017-08-18 16:16:57,703][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 16:16:57,705][DEBUG] [EMAIL] IndexError : list index out of range
+[2017-08-18 16:16:57,824][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 16:17:04,684][INFO] Cerrando el Comunicador...
+[2017-08-18 16:17:04,791][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 16:17:05,212][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 16:17:05,213][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:17:26,728][INFO] Abriendo el Comunicador...
+[2017-08-18 16:17:26,750][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:17:31,363][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:17:31,385][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:17:41,778][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.69.206.233).
+[2017-08-18 16:17:51,756][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:17:56,003][DEBUG] [EMAIL] Ha(n) llegado 1 nuevo(s) mensaje(s) de correo electronico!
+[2017-08-18 16:18:26,383][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 16:18:26,385][DEBUG] [EMAIL] IndexError : list index out of range
+[2017-08-18 16:18:26,517][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 16:18:30,551][INFO] Cerrando el Comunicador...
+[2017-08-18 16:18:30,643][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 16:18:31,268][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 16:18:31,269][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:19:22,830][INFO] Abriendo el Comunicador...
+[2017-08-18 16:19:22,845][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:19:27,453][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:19:27,474][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:19:33,504][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.51.38.139).
+[2017-08-18 16:19:44,059][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:19:48,500][DEBUG] [EMAIL] Ha(n) llegado 1 nuevo(s) mensaje(s) de correo electronico!
+[2017-08-18 16:20:18,572][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 16:20:18,574][DEBUG] [EMAIL] IndexError : list index out of range
+[2017-08-18 16:20:18,667][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 16:20:22,214][INFO] Cerrando el Comunicador...
+[2017-08-18 16:20:22,321][INFO] [COMMUNICATOR] La red GPRS ha sido desconectada correctamente!
+[2017-08-18 16:20:22,860][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 16:20:22,862][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:21:02,024][INFO] Abriendo el Comunicador...
+[2017-08-18 16:21:02,037][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:21:06,655][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:21:06,683][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:21:29,648][INFO] Cerrando el Comunicador...
+[2017-08-18 16:24:01,679][INFO] Abriendo el Comunicador...
+[2017-08-18 16:24:01,693][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:24:06,298][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:24:06,328][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:24:12,383][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.67.44.134).
+[2017-08-18 16:24:22,167][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:24:31,942][DEBUG] [EMAIL] Ha(n) llegado 1 nuevo(s) mensaje(s) de correo electronico!
+[2017-08-18 16:25:01,435][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 16:25:01,437][DEBUG] [EMAIL] IndexError : list index out of range
+[2017-08-18 16:25:01,542][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 16:25:03,935][INFO] Cerrando el Comunicador...
+[2017-08-18 16:25:05,438][ERROR] [COMMUNICATOR] Se produjo un error al intentar desconectarse de la red GPRS!
+[2017-08-18 16:25:06,220][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 16:25:06,222][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:30:06,232][INFO] Abriendo el Comunicador...
+[2017-08-18 16:30:06,239][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:30:10,855][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:30:10,876][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:30:35,538][INFO] Cerrando el Comunicador...
+[2017-08-18 16:31:20,548][INFO] Abriendo el Comunicador...
+[2017-08-18 16:31:20,570][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:31:25,174][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:31:25,195][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:31:31,274][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.36.99.77).
+[2017-08-18 16:31:40,918][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:32:15,581][DEBUG] [EMAIL] Ha(n) llegado 1 nuevo(s) mensaje(s) de correo electronico!
+[2017-08-18 16:32:26,521][DEBUG] [EMAIL] Procesando correo de 'juanrom02@gmail.com'
+[2017-08-18 16:32:26,544][INFO] [EMAIL] Ha llegado una nueva instancia de mensaje!
+[2017-08-18 16:32:35,376][INFO] Cerrando el Comunicador...
+[2017-08-18 16:32:35,524][WARNING] [EMAIL] Fallo en el socket SSL - AT#SSLRECV=1,1000 -> OK
+.
+[2017-08-18 16:32:35,525][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 16:32:35,527][DEBUG] [EMAIL] RuntimeError : AT#SSLRECV=1,1000 -> OK
+
+[2017-08-18 16:32:35,636][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 16:33:37,027][INFO] Abriendo el Comunicador...
+[2017-08-18 16:33:37,036][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:33:41,668][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:33:41,689][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:34:40,777][INFO] Abriendo el Comunicador...
+[2017-08-18 16:34:40,794][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:34:45,395][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:34:45,423][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:34:51,277][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.8.241.73).
+[2017-08-18 16:35:01,228][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:35:26,153][DEBUG] [EMAIL] Ha(n) llegado 1 nuevo(s) mensaje(s) de correo electronico!
+[2017-08-18 16:35:38,920][DEBUG] [EMAIL] Procesando correo de 'juanrom02@gmail.com'
+[2017-08-18 16:35:38,926][INFO] [EMAIL] Ha llegado una nueva instancia de mensaje!
+[2017-08-18 16:35:43,930][INFO] Cerrando el Comunicador...
+[2017-08-18 16:35:43,949][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 16:35:43,950][DEBUG] [EMAIL] SerialException : device reports readiness to read but returned no data (device disconnected or multiple access on port?)
+[2017-08-18 16:35:44,059][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 16:38:30,114][INFO] Abriendo el Comunicador...
+[2017-08-18 16:38:30,129][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:38:34,738][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:38:34,758][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:38:41,397][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.10.177.173).
+[2017-08-18 16:38:51,290][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:40:03,796][DEBUG] [EMAIL] Ha(n) llegado 1 nuevo(s) mensaje(s) de correo electronico!
+[2017-08-18 16:40:15,367][DEBUG] [EMAIL] Procesando correo de 'juanrom02@gmail.com'
+[2017-08-18 16:40:15,377][INFO] [EMAIL] Ha llegado una nueva instancia de mensaje!
+[2017-08-18 16:40:21,273][INFO] Cerrando el Comunicador...
+[2017-08-18 16:40:21,275][ERROR] [COMMUNICATOR] Se produjo un error al intentar desconectarse de la red GPRS!
+[2017-08-18 16:40:22,747][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 16:40:22,749][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:40:23,308][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 16:40:23,310][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 16:40:30,765][WARNING] [EMAIL] Fallo en el socket SSL - AT#SSLRECV=1,1000 -> OK
+.
+[2017-08-18 16:40:30,766][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 16:40:30,767][DEBUG] [EMAIL] RuntimeError : AT#SSLRECV=1,1000 -> OK
+
+[2017-08-18 16:40:30,771][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 16:41:42,020][INFO] Abriendo el Comunicador...
+[2017-08-18 16:41:42,033][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:41:46,639][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:41:46,660][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:41:53,032][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.7.45.108).
+[2017-08-18 16:42:02,501][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:42:14,952][INFO] Cerrando el Comunicador...
+[2017-08-18 16:42:14,956][ERROR] [COMMUNICATOR] Se produjo un error al intentar desconectarse de la red GPRS!
+[2017-08-18 16:42:15,138][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 16:42:15,139][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:42:17,067][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 16:42:17,069][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 16:42:19,600][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 16:42:19,872][INFO] [EMAIL] Objeto destruido.
+[2017-08-18 16:42:19,873][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 16:42:20,676][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 16:42:56,095][INFO] Abriendo el Comunicador...
+[2017-08-18 16:42:56,121][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:43:00,732][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:43:00,755][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:43:06,866][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.91.61.180).
+[2017-08-18 16:43:16,795][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:43:36,326][INFO] Cerrando el Comunicador...
+[2017-08-18 16:43:40,260][ERROR] [COMMUNICATOR] Se produjo un error al intentar desconectarse de la red GPRS!
+[2017-08-18 16:43:41,231][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 16:43:41,233][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:43:41,734][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 16:43:41,735][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 16:54:06,712][INFO] Abriendo el Comunicador...
+[2017-08-18 16:54:06,737][INFO] Comunicador abierto exitosamente!
+[2017-08-18 16:54:11,337][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 16:54:11,359][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 16:54:18,117][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.160.226.223).
+[2017-08-18 16:54:27,753][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 16:54:30,083][INFO] Cerrando el Comunicador...
+[2017-08-18 16:54:30,816][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 16:54:30,818][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 16:54:42,414][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:08:28,763][INFO] Abriendo el Comunicador...
+[2017-08-18 17:08:28,777][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:08:33,398][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:08:33,425][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:08:37,720][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.167.184.58").
+[2017-08-18 17:08:43,313][INFO] Cerrando el Comunicador...
+[2017-08-18 17:09:37,554][INFO] Abriendo el Comunicador...
+[2017-08-18 17:09:37,575][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:09:42,184][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:09:42,217][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:09:48,894][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.87.101.86).
+[2017-08-18 17:09:58,990][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 17:10:02,149][INFO] Cerrando el Comunicador...
+[2017-08-18 17:10:03,204][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:10:03,206][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:10:13,091][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:10:13,093][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:10:15,649][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 17:10:15,937][INFO] [EMAIL] Objeto destruido.
+[2017-08-18 17:10:15,938][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:10:16,700][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 17:10:19,992][INFO] Abriendo el Comunicador...
+[2017-08-18 17:10:20,009][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:10:24,618][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:10:24,645][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:10:28,919][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.87.101.86).
+[2017-08-18 17:10:36,428][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 17:10:39,302][INFO] Cerrando el Comunicador...
+[2017-08-18 17:10:39,601][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:10:39,603][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:10:52,553][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 17:10:52,554][DEBUG] [EMAIL] RuntimeError : .
+[2017-08-18 17:10:54,559][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:10:54,561][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:10:54,562][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:10:59,986][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 17:11:00,287][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 17:11:38,737][INFO] Abriendo el Comunicador...
+[2017-08-18 17:11:38,758][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:11:47,869][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:11:49,391][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:11:57,291][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 100.87.101.86).
+[2017-08-18 17:12:10,825][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 17:13:10,717][DEBUG] [EMAIL] Ha(n) llegado 1 nuevo(s) mensaje(s) de correo electronico!
+[2017-08-18 17:13:14,120][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 17:13:14,122][DEBUG] [EMAIL] IndexError : list index out of range
+[2017-08-18 17:13:14,212][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 17:13:18,971][INFO] Cerrando el Comunicador...
+[2017-08-18 17:13:19,278][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:13:19,279][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:14:08,362][INFO] Abriendo el Comunicador...
+[2017-08-18 17:14:08,382][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:14:17,508][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:14:19,033][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:14:30,706][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.168.15.187).
+[2017-08-18 17:15:00,451][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 17:15:19,933][DEBUG] [EMAIL] Ha(n) llegado 1 nuevo(s) mensaje(s) de correo electronico!
+[2017-08-18 17:15:40,178][DEBUG] [EMAIL] Procesando correo de 'juanrom02@gmail.com'
+[2017-08-18 17:15:40,193][INFO] [EMAIL] Ha llegado una nueva instancia de mensaje!
+[2017-08-18 17:16:06,278][WARNING] [EMAIL] Fallo en el socket SSL - AT#SSLRECV=1,1000: OK
+.
+[2017-08-18 17:16:06,280][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 17:16:06,281][DEBUG] [EMAIL] RuntimeError : AT#SSLRECV=1,1000: OK
+
+[2017-08-18 17:16:06,409][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 17:16:23,296][INFO] Cerrando el Comunicador...
+[2017-08-18 17:16:23,418][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:16:23,420][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:17:06,220][INFO] Abriendo el Comunicador...
+[2017-08-18 17:17:06,242][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:17:15,361][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:17:16,893][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:17:28,062][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.1.19.120).
+[2017-08-18 17:17:52,314][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 17:17:55,702][WARNING] [EMAIL] Fallo en el socket SSL - +CME ERROR: SSL not connected
+.
+[2017-08-18 17:17:55,704][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 17:17:55,711][DEBUG] [EMAIL] Exception : +CME ERROR: SSL not connected
+
+[2017-08-18 17:17:55,826][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 17:18:30,500][INFO] Abriendo el Comunicador...
+[2017-08-18 17:18:30,519][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:18:39,634][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:18:41,157][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:18:52,760][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.3.151.230).
+[2017-08-18 17:19:23,436][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 17:19:47,603][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-08-18 17:21:56,389][INFO] [EMAIL] Mensaje enviado a 'juanrom02@gmail.com'
+[2017-08-18 17:22:35,471][INFO] Cerrando el Comunicador...
+[2017-08-18 17:22:35,746][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:22:35,747][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:22:58,793][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:22:58,795][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:23:16,092][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 17:23:18,107][INFO] [EMAIL] Objeto destruido.
+[2017-08-18 17:23:18,109][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:23:19,967][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 17:43:43,081][INFO] Abriendo el Comunicador...
+[2017-08-18 17:43:43,108][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:43:52,223][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:43:53,755][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:43:53,808][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:43:56,085][INFO] Cerrando el Comunicador...
+[2017-08-18 17:44:18,008][INFO] Abriendo el Comunicador...
+[2017-08-18 17:44:18,021][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:44:22,630][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:44:22,652][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:44:22,713][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:44:25,327][INFO] Cerrando el Comunicador...
+[2017-08-18 17:44:25,617][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:25,619][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:27,805][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:27,806][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:27,824][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 17:44:27,826][DEBUG] [EMAIL] IOError : [Errno 5] Input/output error
+[2017-08-18 17:44:27,891][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 17:44:27,885][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:27,899][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:27,900][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:27,901][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:28,002][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:28,004][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:28,009][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:44:28,031][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:28,039][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:28,076][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:28,078][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:28,080][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:28,081][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:28,106][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:28,110][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:28,113][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:28,115][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:28,128][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:28,130][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:28,167][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:28,169][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:28,175][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:28,176][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:28,182][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:44:28,184][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:44:28,934][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:44:28,936][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:28,937][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:28,980][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:44:28,982][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:28,983][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:28,994][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:44:28,996][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:28,998][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:29,381][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:44:29,382][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:29,385][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:44:29,391][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:29,703][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:44:29,706][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:29,708][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:29,743][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 17:44:29,746][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 17:44:29,793][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:44:29,803][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:29,805][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:29,950][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:44:30,080][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:44:30,401][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:44:31,076][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:44:31,078][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:31,079][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:31,933][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 17:44:32,134][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:44:32,136][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:32,137][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:32,221][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:44:32,455][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:44:32,457][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:32,458][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:34,271][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:44:34,273][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:44:34,274][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:44:37,588][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:44:38,750][INFO] Abriendo el Comunicador...
+[2017-08-18 17:44:38,762][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:44:44,194][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 17:44:44,219][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:44:44,240][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:44:44,310][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:44:50,301][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.3.151.230).
+[2017-08-18 17:47:04,984][INFO] Abriendo el Comunicador...
+[2017-08-18 17:47:05,005][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:47:12,634][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:47:12,655][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:47:12,710][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 17:47:30,498][INFO] Cerrando el Comunicador...
+[2017-08-18 17:47:30,634][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:47:30,636][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:50:13,315][INFO] Abriendo el Comunicador...
+[2017-08-18 17:50:13,327][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:50:24,930][INFO] Cerrando el Comunicador...
+[2017-08-18 17:50:25,402][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:50:25,403][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:50:52,581][INFO] Abriendo el Comunicador...
+[2017-08-18 17:50:52,594][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:51:03,288][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:51:03,308][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:51:07,227][INFO] Abriendo el Comunicador...
+[2017-08-18 17:51:07,239][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:51:21,083][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 17:51:31,131][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 17:51:40,583][INFO] Abriendo el Comunicador...
+[2017-08-18 17:51:40,595][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:51:45,207][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB2.
+[2017-08-18 17:51:45,228][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-18 17:51:45,283][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:51:52,070][INFO] [GPRS] Listo para usarse (/dev/ttyUSB2 - 10.138.115.188).
+[2017-08-18 17:51:54,319][INFO] Cerrando el Comunicador...
+[2017-08-18 17:51:58,777][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:51:58,778][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:52:03,679][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 17:52:05,207][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 17:52:05,209][DEBUG] [EMAIL] IOError : [Errno 5] Input/output error
+[2017-08-18 17:52:05,211][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 17:52:10,169][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 17:52:10,171][DEBUG] [EMAIL] SSLError : ('The read operation timed out',)
+[2017-08-18 17:52:10,255][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 17:52:18,844][INFO] Abriendo el Comunicador...
+[2017-08-18 17:52:18,857][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:52:23,472][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB2.
+[2017-08-18 17:52:23,494][INFO] [GSM] Listo para usarse (ttyUSB2).
+[2017-08-18 17:52:23,545][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-08-18 17:52:27,274][INFO] Cerrando el Comunicador...
+[2017-08-18 17:54:23,435][INFO] [GPRS] Listo para usarse (/dev/ttyUSB2 - 10.138.115.188).
+[2017-08-18 17:54:23,494][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:54:23,495][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:54:27,821][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 17:54:27,823][INFO] [GSM] Objeto destruido.
+[2017-08-18 17:54:27,824][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 17:54:27,825][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 17:55:06,126][INFO] Abriendo el Comunicador...
+[2017-08-18 17:55:06,145][INFO] Comunicador abierto exitosamente!
+[2017-08-18 17:55:13,779][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 17:55:13,804][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 17:55:13,866][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 17:55:23,682][INFO] Cerrando el Comunicador...
+[2017-08-18 17:55:24,269][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 17:55:24,271][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 17:55:44,017][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 17:55:46,025][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 17:56:15,954][WARNING] [EMAIL] Fallo en el socket SSL - . SELECT INBOX
+ -> OK
+.
+[2017-08-18 17:56:15,956][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 17:56:15,957][DEBUG] [EMAIL] RuntimeError : . SELECT INBOX
+ -> OK
+
+[2017-08-18 17:56:15,962][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:02:56,132][INFO] Abriendo el Comunicador...
+[2017-08-18 18:02:56,150][INFO] Comunicador abierto exitosamente!
+[2017-08-18 18:03:03,793][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 18:03:03,816][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 18:03:03,866][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:03:08,246][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:03:25,251][INFO] Cerrando el Comunicador...
+[2017-08-18 18:03:26,269][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 18:03:26,270][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 18:03:39,827][WARNING] [EMAIL] Fallo en el socket SSL - . SELECT INBOX
+ -> OK
+.
+[2017-08-18 18:03:39,828][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 18:03:39,829][DEBUG] [EMAIL] RuntimeError : . SELECT INBOX
+ -> OK
+
+[2017-08-18 18:03:39,832][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:13:05,391][INFO] Abriendo el Comunicador...
+[2017-08-18 18:13:05,409][INFO] Comunicador abierto exitosamente!
+[2017-08-18 18:13:13,042][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 18:13:13,068][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 18:13:13,128][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:13:19,143][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:13:21,242][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.138.115.188).
+[2017-08-18 18:13:38,843][INFO] Cerrando el Comunicador...
+[2017-08-18 18:13:40,005][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 18:13:40,007][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 18:13:41,163][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 18:13:41,761][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:13:42,058][INFO] [EMAIL] Objeto destruido.
+[2017-08-18 18:13:42,059][INFO] [GPRS] Objeto destruido.
+[2017-08-18 18:13:43,179][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 18:13:43,180][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 18:13:43,182][INFO] [WIFI] Objeto destruido.
+[2017-08-18 18:13:43,201][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 18:13:43,203][INFO] [GSM] Objeto destruido.
+[2017-08-18 18:13:43,204][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 18:13:43,205][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 18:22:39,758][INFO] Abriendo el Comunicador...
+[2017-08-18 18:22:39,771][INFO] Comunicador abierto exitosamente!
+[2017-08-18 18:22:44,383][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 18:22:44,406][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 18:22:44,456][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:22:48,663][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:22:50,767][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.138.115.188).
+[2017-08-18 18:23:14,641][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 18:23:14,643][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 18:23:14,650][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 18:23:24,304][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 18:23:24,306][DEBUG] [EMAIL] SSLError : ('The read operation timed out',)
+[2017-08-18 18:23:24,311][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:23:54,495][INFO] Cerrando el Comunicador...
+[2017-08-18 18:23:54,793][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 18:23:54,795][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 18:25:49,232][INFO] Abriendo el Comunicador...
+[2017-08-18 18:25:49,244][INFO] Comunicador abierto exitosamente!
+[2017-08-18 18:25:53,851][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 18:25:53,873][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 18:25:53,930][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:25:58,355][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:26:00,457][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.138.115.188).
+[2017-08-18 18:26:12,081][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 18:26:12,082][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 18:26:12,092][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 18:26:19,795][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 18:26:19,797][DEBUG] [EMAIL] SSLError : ('The read operation timed out',)
+[2017-08-18 18:26:19,801][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:26:26,120][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:27:03,447][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:27:15,677][INFO] Cerrando el Comunicador...
+[2017-08-18 18:27:16,268][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 18:27:16,269][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 18:27:16,301][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 18:27:18,137][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:27:18,443][INFO] [EMAIL] Objeto destruido.
+[2017-08-18 18:27:18,445][INFO] [GPRS] Objeto destruido.
+[2017-08-18 18:27:18,469][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 18:27:18,474][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 18:27:18,478][INFO] [WIFI] Objeto destruido.
+[2017-08-18 18:27:19,542][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 18:27:19,543][INFO] [GSM] Objeto destruido.
+[2017-08-18 18:27:19,544][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 18:27:19,545][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 18:31:49,725][INFO] Abriendo el Comunicador...
+[2017-08-18 18:31:49,739][INFO] Comunicador abierto exitosamente!
+[2017-08-18 18:32:01,871][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:32:06,502][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:32:10,509][INFO] Cerrando el Comunicador...
+[2017-08-18 18:32:10,852][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 18:32:10,853][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 18:32:13,125][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 18:32:13,145][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 18:32:15,284][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 18:32:15,796][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:32:15,822][INFO] [EMAIL] Objeto destruido.
+[2017-08-18 18:32:16,903][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 18:32:16,907][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 18:32:16,910][INFO] [WIFI] Objeto destruido.
+[2017-08-18 18:32:21,858][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 18:32:21,860][INFO] [GSM] Objeto destruido.
+[2017-08-18 18:32:21,862][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 18:32:21,863][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 18:32:34,376][INFO] Abriendo el Comunicador...
+[2017-08-18 18:32:34,389][INFO] Comunicador abierto exitosamente!
+[2017-08-18 18:32:38,993][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 18:32:39,018][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 18:32:39,061][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:32:42,116][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:32:44,216][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.138.115.188).
+[2017-08-18 18:32:57,226][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 18:32:57,227][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 18:32:57,229][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 18:33:05,815][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 18:33:05,817][DEBUG] [EMAIL] SSLError : ('The read operation timed out',)
+[2017-08-18 18:33:05,825][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:33:14,267][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:33:27,870][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:34:01,306][INFO] Cerrando el Comunicador...
+[2017-08-18 18:34:01,417][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 18:34:01,419][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 18:34:05,777][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 18:34:07,995][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:34:08,272][INFO] [EMAIL] Objeto destruido.
+[2017-08-18 18:34:08,274][INFO] [GPRS] Objeto destruido.
+[2017-08-18 18:34:08,423][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 18:34:08,428][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 18:34:08,431][INFO] [WIFI] Objeto destruido.
+[2017-08-18 18:34:09,351][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 18:34:09,354][INFO] [GSM] Objeto destruido.
+[2017-08-18 18:34:09,355][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 18:34:09,356][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 18:41:06,702][INFO] Abriendo el Comunicador...
+[2017-08-18 18:41:06,714][INFO] Comunicador abierto exitosamente!
+[2017-08-18 18:41:11,318][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 18:41:11,336][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 18:41:15,608][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.138.115.188).
+[2017-08-18 18:41:24,219][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:41:45,345][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:41:51,804][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:42:07,311][INFO] Cerrando el Comunicador...
+[2017-08-18 18:42:08,232][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 18:42:08,233][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 18:42:08,235][INFO] [GPRS] Objeto destruido.
+[2017-08-18 18:42:09,382][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 18:42:09,386][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 18:42:09,389][INFO] [WIFI] Objeto destruido.
+[2017-08-18 18:42:13,457][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 18:42:13,460][INFO] [GSM] Objeto destruido.
+[2017-08-18 18:42:13,461][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 18:42:13,462][INFO] Comunicador cerrado exitosamente!
+[2017-08-18 18:42:32,774][INFO] Abriendo el Comunicador...
+[2017-08-18 18:42:32,787][INFO] Comunicador abierto exitosamente!
+[2017-08-18 18:42:37,393][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-08-18 18:42:37,413][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-08-18 18:42:37,456][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:42:42,340][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:42:44,446][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.138.115.188).
+[2017-08-18 18:42:51,055][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 18:42:51,059][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 18:42:51,061][INFO] [WIFI] Se ha desconectado el medio (wlan0 - 192.168.1.104).
+[2017-08-18 18:42:59,566][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 18:42:59,568][DEBUG] [EMAIL] SSLError : ('The read operation timed out',)
+[2017-08-18 18:42:59,576][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:43:03,301][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:43:17,194][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.104).
+[2017-08-18 18:43:23,634][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:43:26,450][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:48:35,827][INFO] [EMAIL] Se ha desconectado el medio (client01.datalogger@gmail.com).
+[2017-08-18 18:48:35,829][DEBUG] [EMAIL] error : [Errno 101] Network is unreachable.
+[2017-08-18 18:48:37,031][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:48:41,188][INFO] [EMAIL] Listo para usarse (client01.datalogger@gmail.com).
+[2017-08-18 18:49:57,718][INFO] Cerrando el Comunicador...
+[2017-08-18 18:49:58,440][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-08-18 18:49:58,442][INFO] [TRANSMITTER] Objeto destruido.
+[2017-08-18 18:50:00,516][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-08-18 18:50:01,236][WARNING] [EMAIL] Función 'receive' terminada.
+[2017-08-18 18:50:02,637][INFO] [EMAIL] Objeto destruido.
+[2017-08-18 18:50:02,640][INFO] [GPRS] Objeto destruido.
+[2017-08-18 18:50:02,688][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-08-18 18:50:02,693][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-08-18 18:50:02,696][INFO] [WIFI] Objeto destruido.
+[2017-08-18 18:50:02,990][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-08-18 18:50:02,993][INFO] [GSM] Objeto destruido.
+[2017-08-18 18:50:02,994][INFO] [CONTROLLER] Objeto destruido.
+[2017-08-18 18:50:02,995][INFO] Comunicador cerrado exitosamente!

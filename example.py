@@ -148,20 +148,21 @@ def askClients():
 def askMedia():
 	selectMedia = raw_input('¿Desea elegir un medio de comunicación preferido? [S/n] ')
 	if selectMedia is 'S' or selectMedia is 's' or len(selectMedia) is 0:
-                availableMedia = 'Lista de medios disponibles:'
-                if communicator.controllerInstance.availableGsm:
-                        availableMedia = availableMedia + ' GSM,'
-                if communicator.controllerInstance.availableGprs:
-                        availableMedia = availableMedia + ' GPRS,'
-                if communicator.controllerInstance.availableWifi:
-                        availableMedia = availableMedia + ' WIFI,'
-                if communicator.controllerInstance.availableEthernet:
-                        availableMedia = availableMedia + ' ETHERNET,'
-                if communicator.controllerInstance.availableBluetooth:
-                        availableMedia = availableMedia + ' BLUETOOTH,'
-                if communicator.controllerInstance.availableEmail:
-                        availableMedia = availableMedia + ' EMAIL,'
-
+		availableMedia = 'Lista de medios disponibles:'
+		if communicator.controllerInstance.availableGsm:
+				availableMedia = availableMedia + ' GSM,'
+		if communicator.controllerInstance.availableGprs:
+				availableMedia = availableMedia + ' GPRS,'
+		if communicator.controllerInstance.availableWifi:
+				availableMedia = availableMedia + ' WIFI,'
+		if communicator.controllerInstance.availableEthernet:
+				availableMedia = availableMedia + ' ETHERNET,'
+		if communicator.controllerInstance.availableBluetooth:
+				availableMedia = availableMedia + ' BLUETOOTH,'
+		if communicator.controllerInstance.availableEmail:
+				availableMedia = availableMedia + ' EMAIL,'
+		availableMedia = availableMedia[:-1]
+		availableMedia += '.'
 		print availableMedia
 		return True
 	elif selectMedia is 'N' or selectMedia is 'n':

@@ -41,6 +41,9 @@ class Controller(threading.Thread):
 	telit_lock = threading.Lock()
 
 	isActive = False
+	email_mode = 1
+	
+	pinito = time.time() #DBG
 
 	def __init__(self, _REFRESH_TIME):
 		threading.Thread.__init__(self, name = 'ControllerThread')
@@ -48,19 +51,50 @@ class Controller(threading.Thread):
 
 	def close(self):
 		# Esperamos que terminen los hilos receptores
-		self.gsmInstance.isActive = False
-		self.gprsInstance.isActive = False
-		self.wifiInstance.isActive = False
-		self.ethernetInstance.isActive = False
-		self.bluetoothInstance.isActive = False
-		self.emailInstance.isActive = False
-		for receptorThread in threading.enumerate():
-			if receptorThread.getName() in threadNameList and receptorThread.isAlive():
-				receptorThread.join()
+		self.closeInstance(self.emailInstance)
+		self.closeInstance(self.gprsInstance)
+		self.closeInstance(self.wifiInstance)
+		self.closeInstance(self.ethernetInstance)
+		self.closeInstance(self.bluetoothInstance)
+		self.closeInstance(self.gsmInstance)
+		#~ self.gsmInstance.isActive = False
+		#~ self.gprsInstance.isActive = False
+		#~ self.wifiInstance.isActive = False
+		#~ self.ethernetInstance.isActive = False
+		#~ self.bluetoothInstance.isActive = False
+		#~ self.emailInstance.isActive = False
+		#~ 
+		#~ 
+		#~ for receptorThread in threading.enumerate():
+			#~ if receptorThread.getName() in threadNameList and receptorThread.isAlive():
+				#~ receptorThread.join()
+		#~ # Destruimos todas las instancias de comunicación
+		#~ if self.emailInstance.successfulConnection:
+			#~ self.emailInstance.close()
+		#~ if self.gsmInstance.successfulConnection:
+			#~ self.gsmInstance.close()
+		#~ if self.gprsInstance.successfulConnection:
+			#~ self.gprsInstance.close()
+		#~ if self.wifiInstance.successfulConnection:
+			#~ self.wifiInstance.close()
+		#~ if self.ethernetInstance.successfulConnection:
+			#~ self.ethernetInstance.close()
+		#~ if self.bluetoothInstance.successfulConnection:
+			#~ self.bluetoothInstance.close()
 		logger.write('INFO', '[CONTROLLER] Objeto destruido.')
+	
+	def closeInstance(self, instance):
+		if instance.isActive:
+			instance.isActive = False
+			if instance.thread.isAlive():
+				instance.thread.join()
+			instance.close()
+		else:
+			return 
 			
 	def run(self):
 		self.isActive = True
+		self.pinito = time.time() #DBG
 		self.gsmInstance.threadName = gsmThreadName
 		self.gprsInstance.threadName = gprsThreadName
 		self.gprsInstance.state = 'UNKNOWN'
@@ -84,6 +118,8 @@ class Controller(threading.Thread):
 			self.availableEthernet = self.verifyNetworkConnection(self.ethernetInstance)
 			self.availableBluetooth = self.verifyBluetoothConnection()
 			self.availableEmail = self.verifyEmailConnection()
+			if self.modemInstance.incoming_call:
+				self.modemInstance.answerVoiceCall()
 			time.sleep(self.REFRESH_TIME)
 		logger.write('WARNING', '[CONTROLLER] Función \'%s\' terminada.' % inspect.stack()[0][3])	
 
@@ -111,24 +147,27 @@ class Controller(threading.Thread):
 				if self.gsmInstance.connectAT('/dev/' + ttyUSBx):
 					self.gsmInstance.thread.start()
 					logger.write('INFO', '[GSM] Listo para usarse (' + ttyUSBx + ').')
-					if not self.gsmInstance.telitConnected:
-						ponOut, ponErr = subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
-						if ponErr != '':
-							logger.write('WARNING', '[GPRS] La conexion automatica ha fallado: %s' % ponErr )
-						else:
-							time.sleep(5)
-					else:
-						try:
-							self.telit_lock.acquire()
-							self.gsmInstance.sendAT('AT#SGACT=1,1','OK', 5)
-							self.telit_lock.release()
-						except RuntimeError:
-							self.telit_lock.release()
-							logger.write('WARNING', '[GPRS] La conexion automatica ha fallado: timeout de AT#SGACT')
-						except:
-							self.telit_lock.release()
-							pass
-					return True
+					end = time.time()
+					print ('GSM listo demora ' + str(end - self.pinito) + '\r\n') #DBG
+					#~ if not self.gsmInstance.telitConnected:
+						#~ ponOut, ponErr = subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+						#~ if ponErr != '':
+							#~ logger.write('WARNING', '[GPRS] La conexion automatica ha fallado: %s' % ponErr )
+						#~ else:
+							#~ time.sleep(5)
+					#~ else:
+						#~ try:
+							#~ self.telit_lock.acquire()
+							#~ self.gsmInstance.sendAT('AT#SGACT=1,1','OK', 5)
+							#~ self.telit_lock.release()
+						#~ except RuntimeError:
+							#~ self.telit_lock.release()
+							#~ logger.write('WARNING', '[GPRS] La conexion automatica ha fallado - timeout de AT#SGACT')
+						#~ except Exception as message:
+							#~ logger.write('WARNING', '[GPRS] La conexion automatica ha fallado - %s' % message)
+							#~ self.telit_lock.release()
+							#~ pass
+					#~ return True
 				# Cuando se intenta una conexion sin exito (connect = False), debe cerrarse y probar con la siguiente
 				else:
 					self.gsmInstance.successfulConnection = None
@@ -148,6 +187,43 @@ class Controller(threading.Thread):
 		return False
 	
 	def verifyNetworkConnection(self, instance):
+		if self.gsmInstance.isActive and instance == self.gprsInstance:
+			if not self.verifyGprsConnection():
+				return False
+			elif self.gsmInstance.telitConnected:
+				return True
+		#~ if self.gsmInstance.telitConnected and instance == self.gprsInstance:
+			#~ try:
+				#~ if not instance.isActive:
+					#~ self.telit_lock.acquire()
+					#~ address = self.gsmInstance.sendAT('AT#SGACT=1,1','OK', 5)
+					#~ self.telit_lock.release()
+					#~ instance.localAddress = address[-3][7:-2]
+					#~ print instance.localAddress
+					#~ instance.localInterface = self.gsmInstance.localInterface
+					#~ info = instance.localInterface + ' - ' + instance.localAddress
+					#~ logger.write('INFO', '[%s] Listo para usarse (%s).' % (instance.MEDIA_NAME, info))
+					#~ return True
+				#~ else:
+					#~ self.telit_lock.acquire()
+					#~ active = self.gsmInstance.sendAT('AT#SGACT?','OK', 5)	
+					#~ if active[-4][-1] == '0':
+						#~ raise
+					#~ self.telit_lock.release()
+			#~ except:
+				#~ self.telit_lock.release()
+				#~ if instance.isActive:
+					#~ instance.localInterface = None
+					#~ instance.localAddress = None
+					#~ #DBG: Falta successfulConnection para los sockets TCP y UDP
+					#~ logger.write('INFO', '[%s] Se ha desconectado el medio (%s).' % (instance.MEDIA_NAME, info))
+				#~ return False
+		#~ if self.gsmInstance.isActive and instance = self.gprsInstance and not instance.isActive:
+			#~ ponOut, ponErr = subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+			#~ if ponErr == '':
+				#~ time.sleep(5)
+			#~ else:
+				#~ return False
 		for networkInterface in os.popen('ip link show').readlines():
 			matchedPattern = instance.pattern.search(networkInterface)
 			if matchedPattern is not None and networkInterface.find('state ' + instance.state) > 0:
@@ -178,6 +254,48 @@ class Controller(threading.Thread):
 		if instance.localInterface is not None:
 			self.closeConnection(instance)
 		return False
+		
+	def verifyGprsConnection(self):
+		if self.gsmInstance.telitConnected:
+			try:
+				if not self.gprsInstance.isActive:
+					self.telit_lock.acquire()
+					is_active = self.gsmInstance.sendAT('AT#CGPADDR=1')
+					address = is_active[-3].split(',')[-1][1:-3]
+					if address != '':
+						self.gprsInstance.localAddress = address
+					else:
+						address = self.gsmInstance.sendAT('AT#SGACT=1,1','OK', 5)
+						self.gprsInstance.localAddress = address[-3][8:-2]
+					self.telit_lock.release()
+					self.gprsInstance.localInterface = self.gsmInstance.localInterface
+					info = self.gprsInstance.localInterface + ' - ' + self.gprsInstance.localAddress
+					logger.write('INFO', '[%s] Listo para usarse (%s).' % (self.gprsInstance.MEDIA_NAME, info))
+					end = time.time()
+					print ('GPRS listo demora ' + str(end - self.pinito) + '\r\n') #DBG
+					self.gprsInstance.isActive = True
+				else:
+					self.telit_lock.acquire()
+					active = self.gsmInstance.sendAT('AT#SGACT?','OK', 5)
+					if active[-4][-3] == '0':
+						raise
+					self.telit_lock.release()
+				return True
+			except:
+				self.telit_lock.release()
+				if self.gprsInstance.isActive:
+					self.gprsInstance.localInterface = None
+					self.gprsInstance.localAddress = None
+					#DBG: Falta successfulConnection para los sockets TCP y UDP
+					info = self.gprsInstance.localInterface + ' - ' + self.gprsInstance.localAddress
+					logger.write('INFO', '[%s] Se ha desconectado el medio (%s).' % (instance.MEDIA_NAME, info))
+				return False
+		elif not self.gprsInstance.isActive:
+			ponOut, ponErr = subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+			if ponErr == '':
+				time.sleep(5)
+			else:
+				return False
 		
 	def verifyAndroidStatus(self):
 		self.wifiInstance.pattern = re.compile('usb[0-9]+')
@@ -257,22 +375,34 @@ class Controller(threading.Thread):
 	def verifyEmailConnection(self):
 		TEST_REMOTE_SERVER = 'www.gmail.com'
 		try:
-			if self.gsmInstance.telitConnected and not self.emailInstance.thread.is_alive():
+			if self.availableWifi or self.availableEthernet:
+				remoteHost = socket.gethostbyname(TEST_REMOTE_SERVER)
+				testSocket = socket.create_connection((remoteHost, 80), 2) # Se determina si es alcanzable
+				if self.email_mode == 2 and self.emailInstance.thread.isAlive():
+					self.emailInstance.isActive = False
+					self.emailInstance.thread.join()
+				self.email_mode = 1			
+			elif self.gsmInstance.telitConnected and self.availableGprs:
 				self.telit_lock.acquire()
-				result = self.gsmInstance.sendAT('AT#PING="%s"' % TEST_REMOTE_SERVER, '#PING: 04', 20)
+				result = self.gsmInstance.sendAT('AT#PING="%s"' % TEST_REMOTE_SERVER, '#PING: 04', 21)
 				self.telit_lock.release()
 				ping = result[-3].split(',')
 				if ping[-1].startswith('255'):
 					raise RuntimeError
-			elif not self.gsmInstance.telitConnected:
+				self.email_mode = 2
+			elif self.availableGprs:
 				remoteHost = socket.gethostbyname(TEST_REMOTE_SERVER)
 				testSocket = socket.create_connection((remoteHost, 80), 2) # Se determina si es alcanzable
+			else:
+				return False
 			# Comprobamos si aún no intentamos conectarnos con los servidores de GMAIL (por eso el 'None')
 			if self.emailInstance.successfulConnection is False:
 				# Si no se produce ningún error durante la configuración, ponemos a recibir
-				if self.emailInstance.connect():				
+				if self.emailInstance.connect(self.email_mode):				
 					self.emailInstance.thread.start()
 					logger.write('INFO', '[EMAIL] Listo para usarse (' + self.emailInstance.emailAccount + ').')
+					end = time.time()
+					print ('EMAIL listo demora ' + str(end - self.pinito) + '\r\n') #DBG
 					return True
 				# Si se produce un error durante la configuración, devolvemos 'False'
 				else:
@@ -284,10 +414,11 @@ class Controller(threading.Thread):
 			else:
 				return False
 		# No hay conexión a Internet (TEST_REMOTE_SERVER no es alcanzable), por lo que se vuelve a intentar
-		except (socket.error, RuntimeError, serial.serialutil.SerialException, socket.gaierror) as DNSError:
+		except (socket.error, RuntimeError, serial.serialutil.SerialException, socket.gaierror) as error:
 			print traceback.format_exc()
 			if self.emailInstance.isActive:
 				logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailInstance.emailAccount)
+				logger.write('DEBUG', '[EMAIL] %s : %s.' % (type(error).__name__, error))
 				self.emailInstance.successfulConnection = None
 				self.emailInstance.isActive = False
 				self.emailInstance.thread = threading.Thread(target = self.emailInstance.receive, name = emailThreadName)
