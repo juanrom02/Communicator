@@ -49,7 +49,6 @@ class Modem(object):
 	def sendAT(self, atCommand, expected = 'OK', wait = 0, mode = 1):
 		start = time.time()
 		end = start + wait
-		self.modemInstance.reset_input_buffer()
 		if mode == 0:
 			self.modemInstance.write(atCommand) 
 		elif mode == 1:
@@ -68,11 +67,13 @@ class Modem(object):
 				if modemOutput.startswith(expected):
 					#print totalOutput
 					if expected == '+CLIP':
-						self.callerID = self.getTelephoneNumber(expected)
+						self.callerID = self.getTelephoneNumber(regex.findall("(.*)", modemOutput.split(',')[0])[0])
+						if self.callerID == '':
+							self.callerID = 'desconocido'
 						logger.write('INFO', '[GSM] El número %s está llamando.' % self.callerID)
 						self.incoming_call = True
 					return totalOutput
-				elif modemOutput.startswith(('. BAD', 'ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
+				elif modemOutput.startswith(('. BAD', '. NO ', 'ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
 					errorMessage = modemOutput.replace('\r\n', '')
 					raise Exception(errorMessage)
 				elif modemOutput.startswith('NO CARRIER') and atCommand.startswith('ATD') and atCommand.endswith(';'):
@@ -137,8 +138,8 @@ class Gsm(Modem):
 	MEDIA_NAME = 'GSM'
 	thread = None
 	threadName = None
-	
 	telit_lock = None
+	ftpInstance = None
 
 	def __init__(self, _receptionQueue):
 			Modem.__init__(self)
@@ -440,10 +441,14 @@ class Gsm(Modem):
 	def send(self, message, telephoneNumber):
 			# Comprobación de envío de texto plano
 			if isinstance(message, messageClass.Message) and hasattr(message, 'plainText'):
-					return self.sendMessage(message.plainText, telephoneNumber, False)
+					return self.sendMessage(message.plainText, telephoneNumber)
 			# Comprobación de envío de archivo
 			elif isinstance(message, messageClass.Message) and hasattr(message, 'fileName'):
-					logger.write('ERROR', '[GSM] Imposible enviar \'%s\' por este medio!' % message.fileName)
+					logger.write('WARNING', '[GSM] Imposible enviar \'%s\' por este medio. Archivo subido al servidor FTP.' % message.fileName)				
+					ftpHost = JSON_CONFIG["FTP"]["FTP_SERVER"]
+					if self.ftpInstance.send(message):
+						aviso = 'El comunicador 2.0 ha subido el archivo ' + message.fileName + ' para usted, al servidor FTP ' + ftpHost + '.'
+						return self.sendMessage(aviso,  telephoneNumber)
 					return False
 			# Entonces se trata de enviar una instancia de mensaje
 			else:
@@ -452,7 +457,7 @@ class Gsm(Modem):
 					serializedMessage = 'INSTANCE' + pickle.dumps(message)
 					return self.sendMessage(serializedMessage, telephoneNumber, True)
 
-	def sendMessage(self, plainText, telephoneNumber, isInstance):
+	def sendMessage(self, plainText, telephoneNumber, isInstance = False):
 		try:
 			#############################
 			timeCounter = 0
@@ -622,20 +627,20 @@ class Gsm(Modem):
 			return smsIndex
 
 	def getTelephoneNumber(self, telephoneNumber):
-			############################### QUITAMOS EL CODIGO DE PAIS ###############################
-			# Ejemplo de telephoneNumber: +543512641040 | +5493512560536 | 876966 | 100 | PromRecarga
-			if telephoneNumber.startswith('+549'):
-					telephoneNumber = telephoneNumber.replace('+549', '')
-					# Ejemplo de telephoneNumber: 3512560536
-					return int(telephoneNumber)
-			elif telephoneNumber.startswith('+54'):
-					telephoneNumber = telephoneNumber.replace('+54', '')
-					# Ejemplo de telephoneNumber: 3512641040
-					return int(telephoneNumber)
-			################################### FIN CODIGO DE PAIS ###################################
-			else:
-					# Entonces es 876966 | 100 | PromRecarga
-					return telephoneNumber
+		############################### QUITAMOS EL CODIGO DE PAIS ###############################
+		# Ejemplo de telephoneNumber: +543512641040 | +5493512560536 | 876966 | 100 | PromRecarga
+		if telephoneNumber.startswith('+549'):
+			telephoneNumber = telephoneNumber.replace('+549', '')
+			# Ejemplo de telephoneNumber: 3512560536
+			return int(telephoneNumber)
+		elif telephoneNumber.startswith('+54'):
+			telephoneNumber = telephoneNumber.replace('+54', '')
+			# Ejemplo de telephoneNumber: 3512641040
+			return int(telephoneNumber)
+		################################### FIN CODIGO DE PAIS ###################################
+		else:
+			# Entonces es 876966 | 100 | PromRecarga
+			return telephoneNumber
 
 	def sendOutput(self, telephoneNumber, smsMessage):
 			try:
@@ -728,3 +733,16 @@ class Gsm(Modem):
 			print traceback.format_exc()
 			return False
 			
+	#~ def sendAudio(self, fileName):
+		#~ self.sendAT('AT#SPCM=1,1', 'CONNECT', 1)
+		#~ archivo = open(fileName, 'rb')
+		#~ end = False
+		#~ while not end:
+			#~ chunk = archivo.read()
+			#~ if chunk == '':
+				#~ time.sleep(2)
+				#~ end = True
+				#~ self.sendAT('+++', 'OK', 10, 0)
+			#~ else:
+				#~ self.
+		

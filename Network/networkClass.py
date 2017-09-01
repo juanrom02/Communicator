@@ -36,7 +36,8 @@ class Network(object):
 	successfulConnection = None
 	receptionQueue = None
 	isActive = False
-
+	internetConnection = False
+	
 	def __init__(self, _receptionQueue, _MEDIA_NAME):
 		self.receptionQueue = _receptionQueue
 		self.MEDIA_NAME = _MEDIA_NAME

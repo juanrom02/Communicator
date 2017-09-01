@@ -95,7 +95,7 @@ class Email(object):
 	def connect(self, mode = 1):
 		self.mode = mode
 		try:
-			if mode == 1:
+			if mode in [1,2]:
 				self.smtpServer = smtplib.SMTP_SSL(self.smtpHost, self.smtpPort, timeout = 30) # Establecemos servidor y puerto SMTP
 				self.imapServer = imaplib.IMAP4_SSL(self.imapHost, self.imapPort) # Establecemos servidor y puerto IMAP
 				self.smtpServer.ehlo()
@@ -248,7 +248,7 @@ class Email(object):
 				emailIdsList = list()
 				# Mientras no se haya recibido ningun correo electronico, el temporizador no haya expirado y no se haya detectado movimiento...
 				while len(emailIdsList) == 0 and self.isActive:
-					if self.mode == 1:
+					if self.mode in [1,2]:
 						self.imapServer.recent() # Actualizamos la Bandeja de Entrada
 						result, emailIds = self.imapServer.uid('search', None, '(UNSEEN)') # Buscamos emails sin leer (nuevos)
 						emailIdsList = emailIds[0].split()
@@ -265,7 +265,7 @@ class Email(object):
 					logger.write('DEBUG', '[EMAIL] Ha(n) llegado ' + str(emailAmount) + ' nuevo(s) mensaje(s) de correo electronico!')
 					# Recorremos los emails recibidos...
 					for emailId in emailIdsList:
-						if self.mode == 1:
+						if self.mode in [1,2]:
 							result, emailData = self.imapServer.uid('fetch', emailId, '(RFC822)')
 							# Retorna un objeto 'message', y podemos acceder a los items de su cabecera como un diccionario.'
 							#~ print emailData[0][1]

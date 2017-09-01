@@ -4,20 +4,21 @@ from pydub import AudioSegment
 import json
 import tempfile
 
-import logger
-import gsmClass
+#~ import logger
+#~ import gsmClass
+#~ 
+#~ JSON_FILE = 'config.json'
+#~ JSON_CONFIG = json.load(open(JSON_FILE))
 
-JSON_FILE = 'config.json'
-JSON_CONFIG = json.load(open(JSON_FILE))
-
-class Audio(Object):
+class Audio(object):
 	
 	language = None
 	
 	def __init__(self):
-		self.language = JSON_FILE['AUDIO']['LANGUAGE']
-		if self.language not in gTTS.LANGUAGES:
-			logger.write('WARNING', '[AUDIO] El idioma no esta soportado. Revise el archivo de configuracion')
+		self.language = 'es' #DBG
+		#self.language = JSON_FILE['AUDIO']['LANGUAGE']
+		#~ if self.language not in gTTS.LANGUAGES:
+			#~ logger.write('WARNING', '[AUDIO] El idioma no esta soportado. Revise el archivo de configuracion')
 	
 	def text_to_audio(self, text):
 		tts = gTTS(text= text, lang= self.language)

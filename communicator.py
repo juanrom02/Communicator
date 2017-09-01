@@ -13,7 +13,6 @@ import pexpect
 import threading
 import gc #DBG
 import traceback #DBG
-import traceback #DBG
 
 currentDirectory = os.getcwd() 
 if not currentDirectory.endswith('Communicator'):
@@ -23,11 +22,13 @@ sys.path.append(os.path.abspath('Email/'))
 sys.path.append(os.path.abspath('Modem/'))
 sys.path.append(os.path.abspath('Network/'))
 sys.path.append(os.path.abspath('Bluetooth/'))
+sys.path.append(os.path.abspath('File Transfer/'))
 
 import emailClass
 import modemClass
 import networkClass
 import bluetoothClass
+import ftpClass
 
 import logger
 import contactList
@@ -45,6 +46,7 @@ gprsInstance = networkClass.Network
 wifiInstance = networkClass.Network
 ethernetInstance = networkClass.Network
 bluetoothInstance = bluetoothClass.Bluetooth
+ftpInstance = ftpClass.Ftp
 
 controllerInstance = controllerClass.Controller    # Instancia que controla los medios
 transmitterInstance = transmitterClass.Transmitter # Instancia para la transmisión de paquetes
@@ -62,7 +64,7 @@ def open():
 	global alreadyOpen
 	global receptionQueue, transmissionQueue
 	global controllerInstance, transmitterInstance
-	global gsmInstance, gprsInstance, wifiInstance, ethernetInstance, bluetoothInstance, emailInstance
+	global gsmInstance, gprsInstance, wifiInstance, ethernetInstance, bluetoothInstance, emailInstance, ftpInstance
 
 	if not alreadyOpen:
 		logger.write('INFO', 'Abriendo el Comunicador...')
@@ -78,18 +80,22 @@ def open():
 		ethernetInstance = networkClass.Network(receptionQueue, 'ETHERNET')
 		bluetoothInstance = bluetoothClass.Bluetooth(receptionQueue)
 		emailInstance = emailClass.Email(receptionQueue)
+		ftpInstance = ftpClass.Ftp(receptionQueue)
 		# Creamos la instancia que levantará las conexiones
 		REFRESH_TIME = JSON_CONFIG["COMMUNICATOR"]["REFRESH_TIME"]
-		controllerInstance = controllerClass.Controller(REFRESH_TIME)
 		controllerInstance.gsmInstance = gsmInstance
 		controllerInstance.gprsInstance = gprsInstance
 		controllerInstance.wifiInstance = wifiInstance
 		controllerInstance.ethernetInstance = ethernetInstance
 		controllerInstance.bluetoothInstance = bluetoothInstance
 		controllerInstance.emailInstance = emailInstance
+		controllerInstance.ftpInstance = ftpInstance
+		controllerInstance = controllerClass.Controller(REFRESH_TIME)
 		
 		emailInstance.gsmInstance = gsmInstance
 		emailInstance.controllerInstance = controllerInstance
+		
+		gsmInstance.ftpInstance = ftpInstance
 		# Creamos la instancia para la transmisión de paquetes
 		transmitterInstance = transmitterClass.Transmitter(transmissionQueue)
 		transmitterInstance.gsmInstance = gsmInstance
@@ -98,6 +104,7 @@ def open():
 		transmitterInstance.ethernetInstance = ethernetInstance
 		transmitterInstance.bluetoothInstance = bluetoothInstance
 		transmitterInstance.emailInstance = emailInstance
+		transmitterInstance.ftpInstance = ftpInstance
 		# Ponemos en marcha el controlador de medios de comunicación y la transmisión de mensajes
 		controllerInstance.start()
 		transmitterInstance.start()
@@ -148,7 +155,7 @@ def send(message, receiver = None, media = None):
 				if receiver is not None:
 					tmpMessage = message
 					# Creamos la instancia general de un mensaje
-					message = messageClass.Message('', receiver, 10)
+					message = messageClass.Message('client01', receiver, 10)
 					# Verificamos si el mensaje es una ruta a un archivo (path relativo o path absoluto)...
 					if os.path.isfile(tmpMessage):
 						# Insertamos el campo 'fileName'

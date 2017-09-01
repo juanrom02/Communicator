@@ -20,8 +20,9 @@ def main():
 	print '\t\t4 - Llamar a un número'
 	print '\t\t5 - Atender la llamada'
 	print '\t\t6 - Colgar la llamada'
-	print '\t\t7 - Conectar GPRS'
-	print '\t\t8 - Desconectar GPRS'
+	#~ print '\t\t7 - Conectar GPRS'
+	#~ print '\t\t8 - Desconectar GPRS'
+	print '\t\t7 - Descargar archivo del servidor FTP'
 	print '\t\tq - Salir'
 	print '\t\to - DEBUG: Abrir Comunicador'
 	print '\t\tc - DEBUG: Cerrar Comunicador\n'
@@ -105,12 +106,23 @@ def main():
 			# Opcion 6 - Colgar la llamada
 			elif optionSelected is '6':
 				communicator.hangUpVoiceCall()
-			# Opcion 7 - Conectar GPRS
+			#~ # Opcion 7 - Conectar GPRS
+			#~ elif optionSelected is '7':
+				#~ communicator.connectGprs()
+			#~ # Opcion 8 - Desconectar GPRS
+			#~ elif optionSelected is '8':
+				#~ communicator.disconnectGprs()
 			elif optionSelected is '7':
-				communicator.connectGprs()
-			# Opcion 8 - Desconectar GPRS
-			elif optionSelected is '8':
-				communicator.disconnectGprs()
+				communicator.ftpInstance.connect()
+				lista = communicator.ftpInstance.ftpServer.nlst()
+				fileName = raw_input('Nombre del archivo a descargar: ')
+				if fileName not in lista:
+					showLista = raw_input('El archivo no existe. Desea ver una lista de los archivos disponibles?[S/n]')
+					if showLista in ['s','S']:
+						for item in lista:
+							print item
+				else:
+					communicator.ftpInstance.receive(fileName)
 			elif optionSelected is 'q':
 				endMain = True
 			elif optionSelected is 'o':
@@ -120,7 +132,7 @@ def main():
 			# Opcion inválida
 			else:
 				print 'Opción inválida!'
-		except KeyboardInterrupt:
+		except:
 			endMain = True
 
 	communicator.close()
@@ -161,6 +173,8 @@ def askMedia():
 				availableMedia = availableMedia + ' BLUETOOTH,'
 		if communicator.controllerInstance.availableEmail:
 				availableMedia = availableMedia + ' EMAIL,'
+		if communicator.controllerInstance.availableFtp:
+				availableMedia = availableMedia + ' FTP,'
 		availableMedia = availableMedia[:-1]
 		availableMedia += '.'
 		print availableMedia

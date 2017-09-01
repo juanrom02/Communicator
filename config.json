@@ -31,6 +31,14 @@
 	"SMTP_PORT"   : 465,
 	"IMAP_PORT"   : 993
 	},
+"FTP":
+	{
+	"FTP_SERVER"	: "181.28.14.17",
+	"FTP_PORT"	: 21,
+	"USER"		: "client01dl",
+	"PASSWORD"	: "client01dl",
+	"DIRECTORY"	: "volume9"
+	},
 "MODEM":
 	{
 	"TIME_OUT"  : 1.5,
@@ -39,11 +47,12 @@
 "PRIORITY_LEVELS":
 	{
 	"GSM"       : 4,
-	"GPRS"      : 3,
+	"GPRS"      : 5,
 	"WIFI"      : 6,
-	"ETHERNET"  : 5,
-	"BLUETOOTH" : 2,
-	"EMAIL"     : 1
+	"ETHERNET"  : 7,
+	"BLUETOOTH" : 3,
+	"EMAIL"     : 2,
+	"FTP"	    : 1
 	},
 "LOGGER":
 	{
