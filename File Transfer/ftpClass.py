@@ -7,6 +7,9 @@ import pickle
 import logger
 import os
 import shutil
+import threading
+import serial
+import socket
 import traceback #DBG
 
 import messageClass
@@ -28,6 +31,10 @@ class Ftp(object):
 	communicatorName = None
 	receptionQueue = None
 	
+	gsmInstance = None
+	telit_lock = None
+	ftp_mode = 1
+	
 	isActive = False
 	
 	def __init__(self, _receptionQueue):
@@ -41,16 +48,23 @@ class Ftp(object):
 		
 	def connect(self):
 		try:
-			self.ftpServer = ftplib.FTP(self.ftpHost, self.ftpUser, self.ftpPassword, timeout = 10)
-			self.ftpServer.cwd(self.ftpDirectory)
+			if self.ftp_mode == 2:
+				self.telit_lock.acquire()
+				ftpOpen = 'AT#FTPOPEN="%s:%s","%s","%s",1' % (self.ftpHost, self.ftpPort, self.ftpUser, self.ftpPassword)
+				self.gsmInstance.sendAT(ftpOpen.encode('utf-8'), wait=5)
+				self.gsmInstance.sendAT(('AT#FTPCWD="%s"' % self.ftpDirectory).encode('utf-8'), wait=5)
+			else:
+				self.ftpServer = ftplib.FTP(self.ftpHost, self.ftpUser, self.ftpPassword, timeout = 10)
+				self.ftpServer.cwd(self.ftpDirectory)
 			return True
-		except (socket.timeout, ftplib.error_perm):
+		except (socket.timeout, ftplib.error_perm, serial.serialutil.SerialException):
 			if self.isActive:
+				print traceback.format_exc()
 				logger.write('WARNING', '[FTP] La conexion con el servidor ha fallado (%s).' % self.ftpHost)
 				self.isActive = False
 			raise	
 		
-	def send(self, message):
+	def send(self, message, changeName = True):
 		try:
 			timestamp = time.localtime()
 			day = str(timestamp.tm_year).zfill(4) + str(timestamp.tm_mon).zfill(2) + str(timestamp.tm_mday).zfill(2)
@@ -72,19 +86,31 @@ class Ftp(object):
 				absoluteFilePath = os.path.abspath(message.fileName)
 				archivo = open(absoluteFilePath, 'rb')
 				fileDirectory, fileName = os.path.split(absoluteFilePath)
-				nombre = message.receiver + '.-' + fileName + '.-' + message.sender + '.-' + day + '.-' + hour 
+				if changeName:
+					nombre = message.receiver + '.-' + fileName + '.-' + message.sender + '.-' + day + '.-' + hour 
+				else:
+					nombre = fileName
 				return self.sendFile(archivo, nombre)
 			return self.sendFile(tf)
 		except:
 			print traceback.format_exc()	
+			return False
 		
 	def sendFile(self, archivo, nombre = None):
 		try:
 			self.connect()
 			if nombre == None:
 				fileDirectory, nombre = os.path.split(archivo.name)
-			self.ftpServer.storbinary('STOR ' + nombre, archivo)
-			self.ftpServer.quit()
+			if self.ftp_mode == 2:
+				self.gsmInstance.sendAT(('AT#FTPPUT="%s"' % nombre).encode('utf-8'), 'CONNECT', 5)
+				self.gsmInstance.sendAT(archivo.read(), None, mode=0)
+				time.sleep(2)
+				self.gsmInstance.sendAT('+++', 'NO CARRIER', 10, 0)
+				self.gsmInstance.sendAT('AT#FTPCLOSE'.encode('utf-8'), wait=5)
+				self.telit_lock.release()
+			else:
+				self.ftpServer.storbinary('STOR ' + nombre, archivo)
+				self.ftpServer.quit()
 			archivo.close()
 			logger.write('INFO','[FTP] Mensaje subido al servidor.')
 			return True
@@ -98,9 +124,12 @@ class Ftp(object):
 		try:
 			tf = tempfile.NamedTemporaryFile(delete = False)
 			tf.name = fileName
-			#self.connect()
-			print fileName
-			self.ftpServer.retrbinary('RETR %s' % fileName, tf.write)
+			if self.ftp_mode == 2:
+				self.gsmInstance.sendAT(('AT#FTPGET="%s"' % fileName).encode('utf-8'), 'CONNECT', 5)
+				output = self.gsmInstance.sendAT('', 'NO CARRIER', 30, 0)
+				tf.write(''.join(output[:-1]))
+			else:
+				self.ftpServer.retrbinary('RETR %s' % fileName, tf.write)
 			tf.seek(0)
 			origin = ''
 			if fileName.startswith(self.communicatorName):
@@ -113,6 +142,7 @@ class Ftp(object):
 				logger.write('INFO','[FTP] Mensaje %s recibido correctamente!' % origin)
 			elif fileName.startswith('instance'):
 				serializedMessage = tf.read()
+				print serializedMessage
 				messageInstance = pickle.loads(serializedMessage[len('INSTANCE'):])
 				self.receptionQueue.put((messageInstance.priority, messageInstance))
 				logger.write('INFO','[FTP] Instancia %s recibida correctamente!' % origin)
@@ -134,14 +164,6 @@ class Ftp(object):
 		except:
 			print traceback.format_exc()
 			tf.close()
-			raise
-		
-	def remove(self, fileName):
-		try:
-			self.connect()
-			self.ftpServer.delete(fileName)
-			self.ftpServer.quit()
-		except:
 			raise
 		
 		

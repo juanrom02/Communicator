@@ -11,6 +11,7 @@ import traceback
 import pexpect
 import serial
 import json
+import regex
 
 import logger
 
@@ -63,6 +64,7 @@ class Controller(threading.Thread):
 		self.emailInstance.threadName = emailThreadName
 		self.gsmInstance.telit_lock = self.telit_lock
 		self.emailInstance.telit_lock = self.telit_lock
+		self.ftpInstance.telit_lock = self.telit_lock
 		self.communicatorName = str(JSON_CONFIG["COMMUNICATOR"]["NAME"])
 		self.REFRESH_TIME = _REFRESH_TIME
 
@@ -463,12 +465,29 @@ class Controller(threading.Thread):
 			
 	def verifyFtpConnection(self):
 		try:
-			self.ftpInstance.connect()
-			lista = self.ftpInstance.ftpServer.nlst()
-			for item in lista:
-				if item.startswith(self.communicatorName):
-					self.ftpInstance.receive(item)
-			self.ftpInstance.ftpServer.quit()
+			if self.ethernetInstance.internetConnection or self.wifiInstance.internetConnection:
+				self.ftpInstance.ftp_mode = 1
+				self.ftpInstance.connect()
+				lista = self.ftpInstance.ftpServer.nlst()
+				for item in lista:
+					if item.startswith(self.communicatorName):
+						self.ftpInstance.receive(item)
+						self.ftpServer.delete(item)
+			elif self.gsmInstance.telitConnected:
+				self.ftpInstance.ftp_mode = 2			
+				self.ftpInstance.connect()
+				self.gsmInstance.sendAT('AT#FTPTYPE=0', wait = 5)
+				lista = self.gsmInstance.sendAT('AT#FTPLIST', 'NO CARRIER', 10) 
+				for item in lista:
+					name = regex.findall('(' + self.communicatorName + '.*)', item)
+					if name:
+						self.ftpInstance.receive(name[0][:-1])
+						self.gsmInstance.sendAT(('AT#FTPDELE="%s"'%name[0][:-1]).encode('utf-8'), wait = 5)
+			if self.ftpInstance.ftp_mode == 1:
+				self.ftpInstance.ftpServer.quit()
+			else:
+				self.gsmInstance.sendAT('AT#FTPCLOSE', wait=5)
+				self.telit_lock.release()
 			logger.write('INFO', '[FTP] Servidor disponible (%s).' % self.ftpInstance.ftpHost)
 			self.ftpInstance.isActive = True
 			return True

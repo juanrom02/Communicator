@@ -1339,3 +1339,896 @@
 [2017-09-01 19:40:28,930][INFO] [WIFI] Objeto destruido.
 [2017-09-01 19:40:28,931][INFO] [CONTROLLER] Objeto destruido.
 [2017-09-01 19:40:28,932][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 17:21:16,309][INFO] Abriendo el Comunicador...
+[2017-09-04 17:21:16,327][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:21:23,966][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:21:23,986][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:21:24,046][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.115).
+[2017-09-04 17:21:24,174][INFO] [WIFI] Conexion a Internet disponible.
+[2017-09-04 17:21:28,586][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.133.69.11).
+[2017-09-04 17:21:29,008][INFO] Cerrando el Comunicador...
+[2017-09-04 17:21:29,922][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:21:29,924][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:21:30,110][INFO] [GPRS] Se ha perdido la conexion a Internet.
+[2017-09-04 17:21:32,145][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 17:21:32,147][INFO] [GPRS] Objeto destruido.
+[2017-09-04 17:21:33,070][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-09-04 17:21:33,074][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-09-04 17:21:33,077][INFO] [WIFI] Objeto destruido.
+[2017-09-04 17:23:08,761][INFO] Abriendo el Comunicador...
+[2017-09-04 17:23:08,775][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:23:37,226][INFO] Cerrando el Comunicador...
+[2017-09-04 17:23:37,372][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:23:37,373][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:24:01,748][INFO] Abriendo el Comunicador...
+[2017-09-04 17:24:01,764][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:24:08,885][INFO] Cerrando el Comunicador...
+[2017-09-04 17:24:09,038][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:24:09,040][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:24:17,173][INFO] Abriendo el Comunicador...
+[2017-09-04 17:24:17,185][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:24:21,012][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.115).
+[2017-09-04 17:24:21,039][INFO] [WIFI] Conexion a Internet disponible.
+[2017-09-04 17:24:22,521][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-09-04 17:24:23,298][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:24:23,318][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:24:23,372][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-09-04 17:24:23,956][INFO] [FTP] Archivo Tareas.docx descargado correctamente!
+[2017-09-04 17:24:24,336][INFO] [FTP] Instancia de client04 recibida correctamente!
+[2017-09-04 17:24:24,582][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 17:24:24,583][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 17:24:24,584][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 17:24:24,603][INFO] [FTP] Mensaje de client04 recibido correctamente!
+[2017-09-04 17:24:24,672][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 17:24:26,679][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 17:24:27,027][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-09-04 17:24:27,030][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-09-04 17:24:27,032][INFO] [WIFI] Objeto destruido.
+[2017-09-04 17:24:27,033][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 17:24:27,034][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 17:24:29,307][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.133.167.154).
+[2017-09-04 17:24:34,535][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:24:45,667][INFO] Cerrando el Comunicador...
+[2017-09-04 17:24:45,824][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:24:45,826][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:25:45,284][INFO] Abriendo el Comunicador...
+[2017-09-04 17:25:45,303][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:25:49,909][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:25:49,930][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:25:49,986][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.115).
+[2017-09-04 17:25:50,110][INFO] [WIFI] Conexion a Internet disponible.
+[2017-09-04 17:25:52,003][WARNING] [FTP] El archivo Tareas.docx ya existe! Imposible descargar.
+[2017-09-04 17:25:52,535][INFO] [FTP] Instancia de client04 recibida correctamente!
+[2017-09-04 17:25:52,998][INFO] [FTP] Mensaje de client04 recibido correctamente!
+[2017-09-04 17:25:53,069][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 17:26:20,844][INFO] Cerrando el Comunicador...
+[2017-09-04 17:26:21,425][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:26:21,426][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:27:03,851][INFO] Abriendo el Comunicador...
+[2017-09-04 17:27:03,868][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:27:09,974][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:27:09,996][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:27:15,923][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.45.159).
+[2017-09-04 17:27:21,108][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:27:24,911][INFO] Cerrando el Comunicador...
+[2017-09-04 17:27:26,452][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:27:26,454][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:28:16,906][INFO] Abriendo el Comunicador...
+[2017-09-04 17:28:16,920][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:28:21,529][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:28:21,552][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:28:34,004][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.121.9).
+[2017-09-04 17:28:39,218][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:30:24,338][INFO] Cerrando el Comunicador...
+[2017-09-04 17:30:24,551][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:30:24,552][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:44:31,044][INFO] Abriendo el Comunicador...
+[2017-09-04 17:44:31,071][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:44:35,673][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:44:35,695][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:44:39,975][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.121.9).
+[2017-09-04 17:44:45,034][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:44:52,373][INFO] Cerrando el Comunicador...
+[2017-09-04 17:44:53,667][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:44:53,669][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:45:19,815][INFO] Abriendo el Comunicador...
+[2017-09-04 17:45:19,841][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:45:24,433][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:45:24,454][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:45:30,443][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.132.102.237).
+[2017-09-04 17:45:35,651][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:45:42,111][INFO] Cerrando el Comunicador...
+[2017-09-04 17:45:42,448][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:45:42,450][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:47:22,335][INFO] Abriendo el Comunicador...
+[2017-09-04 17:47:22,348][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:47:26,954][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:47:26,974][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:47:32,912][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.178.51).
+[2017-09-04 17:47:38,131][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:47:45,316][INFO] Cerrando el Comunicador...
+[2017-09-04 17:47:46,445][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:47:46,448][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:48:07,122][INFO] Abriendo el Comunicador...
+[2017-09-04 17:48:07,139][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:48:11,739][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:48:11,759][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:48:20,511][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.199.177).
+[2017-09-04 17:48:26,251][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:48:45,113][INFO] Cerrando el Comunicador...
+[2017-09-04 17:48:46,265][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:48:46,266][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:49:28,115][INFO] Abriendo el Comunicador...
+[2017-09-04 17:49:28,128][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:49:32,734][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:49:32,755][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:49:58,367][INFO] Cerrando el Comunicador...
+[2017-09-04 17:49:59,740][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:49:59,742][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:51:18,649][INFO] Abriendo el Comunicador...
+[2017-09-04 17:51:18,667][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:51:23,271][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:51:23,292][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:51:30,756][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.132.89.95).
+[2017-09-04 17:51:35,984][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:51:44,245][INFO] Cerrando el Comunicador...
+[2017-09-04 17:51:45,756][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:51:45,758][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:52:25,437][INFO] Abriendo el Comunicador...
+[2017-09-04 17:52:25,449][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:52:30,065][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:52:30,095][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:52:37,001][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.132.194.212).
+[2017-09-04 17:52:42,216][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:52:51,242][INFO] Cerrando el Comunicador...
+[2017-09-04 17:52:52,555][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:52:52,556][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:53:45,722][INFO] Abriendo el Comunicador...
+[2017-09-04 17:53:45,734][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:53:51,845][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:53:51,877][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:53:59,420][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.133.39.48).
+[2017-09-04 17:54:04,641][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:54:14,923][INFO] Cerrando el Comunicador...
+[2017-09-04 17:54:15,854][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:54:15,855][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 17:58:04,116][INFO] Abriendo el Comunicador...
+[2017-09-04 17:58:04,128][INFO] Comunicador abierto exitosamente!
+[2017-09-04 17:58:10,391][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 17:58:10,411][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 17:58:16,887][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.87.216).
+[2017-09-04 17:58:22,137][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 17:59:08,959][INFO] Cerrando el Comunicador...
+[2017-09-04 17:59:10,246][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 17:59:10,248][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:01:03,191][INFO] Abriendo el Comunicador...
+[2017-09-04 18:01:03,210][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:01:21,038][INFO] Cerrando el Comunicador...
+[2017-09-04 18:01:21,323][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:01:21,325][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:01:29,098][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 18:02:13,750][INFO] Abriendo el Comunicador...
+[2017-09-04 18:02:13,759][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:02:18,382][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:02:18,404][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:02:24,564][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.134.47.9).
+[2017-09-04 18:02:29,823][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:04:32,944][INFO] Cerrando el Comunicador...
+[2017-09-04 18:04:33,403][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:04:33,405][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:05:30,189][INFO] Abriendo el Comunicador...
+[2017-09-04 18:05:30,203][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:05:34,806][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:05:34,834][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:05:42,871][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.239.76).
+[2017-09-04 18:05:48,076][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:06:02,607][INFO] [FTP] Archivo Tareas.docx descargado correctamente!
+[2017-09-04 18:06:13,353][INFO] Cerrando el Comunicador...
+[2017-09-04 18:06:13,824][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:06:13,825][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:11:43,849][INFO] Abriendo el Comunicador...
+[2017-09-04 18:11:43,869][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:11:49,980][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:11:50,003][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:11:55,911][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.119.2).
+[2017-09-04 18:12:01,123][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:12:15,768][WARNING] [FTP] El archivo Tareas.docx ya existe! Imposible descargar.
+[2017-09-04 18:12:21,406][INFO] Cerrando el Comunicador...
+[2017-09-04 18:12:22,957][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:12:22,959][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:13:36,359][INFO] Abriendo el Comunicador...
+[2017-09-04 18:13:36,372][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:13:42,483][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:13:42,509][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:13:48,829][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.131.58.228).
+[2017-09-04 18:13:54,034][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:16:08,013][INFO] Cerrando el Comunicador...
+[2017-09-04 18:16:09,517][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:16:09,519][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:16:26,016][INFO] Abriendo el Comunicador...
+[2017-09-04 18:16:26,028][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:16:30,637][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:16:30,667][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:16:37,981][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.132.119.115).
+[2017-09-04 18:16:43,246][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:18:45,919][INFO] Cerrando el Comunicador...
+[2017-09-04 18:18:47,133][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:18:47,135][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:18:49,411][INFO] Abriendo el Comunicador...
+[2017-09-04 18:18:49,424][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:18:55,538][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:18:55,564][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:19:02,672][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.134.83.2).
+[2017-09-04 18:19:07,917][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:19:21,472][INFO] Cerrando el Comunicador...
+[2017-09-04 18:19:22,549][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:19:22,551][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:20:20,051][INFO] Abriendo el Comunicador...
+[2017-09-04 18:20:20,062][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:20:24,674][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:20:24,699][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:20:30,646][INFO] Cerrando el Comunicador...
+[2017-09-04 18:20:32,162][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:20:32,164][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:20:38,556][INFO] Abriendo el Comunicador...
+[2017-09-04 18:20:38,568][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:20:44,685][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:20:44,714][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:20:51,382][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.43.79).
+[2017-09-04 18:20:56,591][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:21:44,427][INFO] Abriendo el Comunicador...
+[2017-09-04 18:21:44,439][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:21:50,547][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:21:50,568][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:21:56,743][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.203.51).
+[2017-09-04 18:22:01,941][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:22:09,883][INFO] Cerrando el Comunicador...
+[2017-09-04 18:22:10,020][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:22:10,021][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:28:46,644][INFO] Abriendo el Comunicador...
+[2017-09-04 18:28:46,657][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:28:52,765][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:28:52,788][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:29:06,390][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.133.136.215).
+[2017-09-04 18:29:06,406][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:29:23,687][INFO] Cerrando el Comunicador...
+[2017-09-04 18:29:24,269][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:29:24,270][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:29:31,130][INFO] Abriendo el Comunicador...
+[2017-09-04 18:29:31,145][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:29:35,753][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:29:35,775][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:29:41,737][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.133.163.12).
+[2017-09-04 18:29:46,895][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:29:55,785][INFO] Cerrando el Comunicador...
+[2017-09-04 18:29:56,738][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:29:56,739][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:30:44,189][INFO] Abriendo el Comunicador...
+[2017-09-04 18:30:44,201][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:30:48,810][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:30:48,841][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:30:59,434][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.3.101).
+[2017-09-04 18:31:05,144][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:31:11,465][INFO] Cerrando el Comunicador...
+[2017-09-04 18:31:12,821][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:31:12,823][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:33:29,211][INFO] Abriendo el Comunicador...
+[2017-09-04 18:33:29,219][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:33:33,834][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:33:33,856][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:33:57,597][INFO] Cerrando el Comunicador...
+[2017-09-04 18:33:57,839][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:33:57,841][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:34:01,341][INFO] Abriendo el Comunicador...
+[2017-09-04 18:34:01,353][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:34:20,130][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:34:20,152][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:34:27,168][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.129.165.111).
+[2017-09-04 18:34:32,401][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:34:36,233][INFO] [FTP] Mensaje de client04 recibido correctamente!
+[2017-09-04 18:34:36,637][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 18:35:01,512][INFO] Cerrando el Comunicador...
+[2017-09-04 18:35:02,967][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:35:02,969][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:35:23,545][INFO] Abriendo el Comunicador...
+[2017-09-04 18:35:23,562][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:35:29,669][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:35:29,691][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:35:37,677][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.134.250.120).
+[2017-09-04 18:35:43,143][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:35:46,913][INFO] [FTP] Mensaje de client04 recibido correctamente!
+[2017-09-04 18:35:47,297][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 18:36:04,811][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 18:39:16,109][INFO] Cerrando el Comunicador...
+[2017-09-04 18:39:16,964][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:39:16,966][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:39:30,627][INFO] Abriendo el Comunicador...
+[2017-09-04 18:39:30,644][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:39:35,256][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:39:35,277][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:39:49,021][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.133.116.66).
+[2017-09-04 18:39:49,042][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:39:57,808][INFO] Cerrando el Comunicador...
+[2017-09-04 18:40:37,242][INFO] Abriendo el Comunicador...
+[2017-09-04 18:40:37,267][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:40:41,866][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:40:41,891][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:40:48,515][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.133.169.27).
+[2017-09-04 18:40:53,719][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:40:57,570][INFO] [FTP] Mensaje de client04 recibido correctamente!
+[2017-09-04 18:40:58,012][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 18:41:26,738][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 18:42:02,308][INFO] Cerrando el Comunicador...
+[2017-09-04 18:42:02,854][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:42:02,855][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:44:43,724][INFO] Abriendo el Comunicador...
+[2017-09-04 18:44:43,746][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:44:48,346][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:44:48,367][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:45:00,768][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.129.187.16).
+[2017-09-04 18:45:07,477][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:45:12,662][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 18:45:33,063][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 18:46:24,294][INFO] Cerrando el Comunicador...
+[2017-09-04 18:46:25,667][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:46:25,669][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:46:45,681][INFO] Abriendo el Comunicador...
+[2017-09-04 18:46:45,693][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:46:50,300][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:46:50,320][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:46:57,012][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.131.151.29).
+[2017-09-04 18:47:02,261][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:47:05,121][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 18:47:22,993][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 18:47:24,026][DEBUG] [COMMUNICATOR-FTP] Fallo. Reintentando con otro medio.
+[2017-09-04 18:47:52,395][INFO] Cerrando el Comunicador...
+[2017-09-04 18:47:53,140][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:47:53,141][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:49:27,414][INFO] Abriendo el Comunicador...
+[2017-09-04 18:49:27,432][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:49:32,038][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:49:32,058][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:49:38,634][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.134.54.145).
+[2017-09-04 18:49:43,802][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:49:46,578][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 18:50:01,328][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 18:50:12,849][DEBUG] [COMMUNICATOR-FTP] Fallo. Reintentando con otro medio.
+[2017-09-04 18:50:23,687][INFO] Cerrando el Comunicador...
+[2017-09-04 18:50:23,979][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:50:23,981][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:51:22,702][INFO] Abriendo el Comunicador...
+[2017-09-04 18:51:22,716][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:51:27,320][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:51:27,350][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:51:33,325][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.134.198.254).
+[2017-09-04 18:51:38,570][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:51:41,402][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 18:51:58,395][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 18:52:11,864][DEBUG] [COMMUNICATOR-FTP] Fallo. Reintentando con otro medio.
+[2017-09-04 18:52:27,235][INFO] Cerrando el Comunicador...
+[2017-09-04 18:52:28,523][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:52:28,525][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:55:35,691][INFO] Abriendo el Comunicador...
+[2017-09-04 18:55:35,704][INFO] Comunicador abierto exitosamente!
+[2017-09-04 18:55:40,312][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 18:55:40,341][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 18:55:40,392][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-09-04 18:55:46,491][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.246.65).
+[2017-09-04 18:55:51,660][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 18:55:55,451][INFO] [FTP] Archivo client04.-instance.-hector.-20170904.-185158 descargado correctamente!
+[2017-09-04 18:55:55,830][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 18:56:00,001][INFO] [COMMUNICATOR] La cola de mensajes esta vacía!
+[2017-09-04 18:57:11,001][INFO] Cerrando el Comunicador...
+[2017-09-04 18:57:11,808][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 18:57:11,809][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 18:57:12,201][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 18:57:12,203][INFO] [GPRS] Objeto destruido.
+[2017-09-04 18:57:13,254][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 18:57:13,256][INFO] [GSM] Objeto destruido.
+[2017-09-04 18:57:13,258][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 18:57:13,259][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 19:00:16,219][INFO] Abriendo el Comunicador...
+[2017-09-04 19:00:16,241][INFO] Comunicador abierto exitosamente!
+[2017-09-04 19:00:20,843][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 19:00:20,872][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 19:00:20,926][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-09-04 19:00:25,191][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.246.65).
+[2017-09-04 19:00:29,056][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 19:00:39,003][INFO] Cerrando el Comunicador...
+[2017-09-04 19:00:40,352][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:00:40,354][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:02:25,800][INFO] Abriendo el Comunicador...
+[2017-09-04 19:02:25,818][INFO] Comunicador abierto exitosamente!
+[2017-09-04 19:02:31,925][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 19:02:31,948][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 19:02:37,985][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.134.144.240).
+[2017-09-04 19:02:43,248][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 19:02:45,989][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 19:03:02,481][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 19:03:07,192][INFO] [FTP] Mensaje subido al servidor.
+[2017-09-04 19:03:31,228][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 19:03:36,905][INFO] [FTP] Mensaje subido al servidor.
+[2017-09-04 19:03:45,683][INFO] Cerrando el Comunicador...
+[2017-09-04 19:03:46,348][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:03:46,350][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:03:48,162][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 19:03:48,165][INFO] [GPRS] Objeto destruido.
+[2017-09-04 19:03:53,620][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 19:03:53,622][INFO] [GSM] Objeto destruido.
+[2017-09-04 19:03:53,624][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 19:03:53,624][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 19:04:07,100][INFO] Abriendo el Comunicador...
+[2017-09-04 19:04:07,113][INFO] Comunicador abierto exitosamente!
+[2017-09-04 19:04:11,718][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 19:04:11,737][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 19:04:16,016][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.134.144.240).
+[2017-09-04 19:04:18,827][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 19:04:28,109][WARNING] [FTP] El archivo certificado_alumno_regular.pdf ya existe! Imposible descargar.
+[2017-09-04 19:04:29,465][INFO] [FTP] Mensaje de client01 recibido correctamente!
+[2017-09-04 19:04:29,844][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 19:05:35,902][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 19:05:40,854][INFO] [FTP] Mensaje subido al servidor.
+[2017-09-04 19:06:18,274][INFO] Cerrando el Comunicador...
+[2017-09-04 19:06:19,528][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:06:19,530][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:06:19,606][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 19:06:19,609][INFO] [GPRS] Objeto destruido.
+[2017-09-04 19:06:24,573][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 19:06:24,574][INFO] [GSM] Objeto destruido.
+[2017-09-04 19:06:24,576][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 19:06:24,576][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 19:07:07,608][INFO] Abriendo el Comunicador...
+[2017-09-04 19:07:07,616][INFO] Comunicador abierto exitosamente!
+[2017-09-04 19:07:13,739][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 19:07:13,765][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 19:07:13,822][ERROR] [WIFI] [Errno 98] Address already in use.
+[2017-09-04 19:07:15,453][INFO] Cerrando el Comunicador...
+[2017-09-04 19:07:25,200][INFO] Cerrando el Comunicador...
+[2017-09-04 19:07:25,321][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:07:25,322][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:07:25,322][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:07:25,323][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:07:25,334][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:07:25,335][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:07:27,135][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 19:07:27,147][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 19:07:27,148][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 19:08:30,418][INFO] Abriendo el Comunicador...
+[2017-09-04 19:08:30,452][INFO] Comunicador abierto exitosamente!
+[2017-09-04 19:08:39,594][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 19:08:39,615][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 19:08:39,675][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.115).
+[2017-09-04 19:08:39,690][INFO] [WIFI] Conexion a Internet disponible.
+[2017-09-04 19:08:40,772][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 19:08:47,748][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.246.221).
+[2017-09-04 19:08:53,053][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 19:09:14,972][INFO] Cerrando el Comunicador...
+[2017-09-04 19:09:15,549][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:09:15,551][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:09:17,445][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 19:09:17,447][INFO] [GPRS] Objeto destruido.
+[2017-09-04 19:09:18,734][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-09-04 19:09:18,738][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-09-04 19:09:18,741][INFO] [WIFI] Objeto destruido.
+[2017-09-04 19:09:20,863][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 19:09:20,865][INFO] [GSM] Objeto destruido.
+[2017-09-04 19:09:20,867][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 19:09:20,868][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 19:10:19,985][INFO] Abriendo el Comunicador...
+[2017-09-04 19:10:19,997][INFO] Comunicador abierto exitosamente!
+[2017-09-04 19:10:20,068][INFO] [WIFI] Listo para usarse (wlan0 - 192.168.1.115).
+[2017-09-04 19:10:20,102][INFO] [WIFI] Conexion a Internet disponible.
+[2017-09-04 19:10:21,538][INFO] [FTP] Instancia de hector recibida correctamente!
+[2017-09-04 19:10:21,596][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 19:15:08,692][INFO] Cerrando el Comunicador...
+[2017-09-04 19:15:09,729][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:15:09,731][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:15:11,790][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 19:15:12,912][WARNING] [WIFI-TCP] Función 'receiveTCP' terminada.
+[2017-09-04 19:15:12,913][WARNING] [WIFI-UDP] Función 'receiveUDP' terminada.
+[2017-09-04 19:15:12,917][INFO] [WIFI] Objeto destruido.
+[2017-09-04 19:15:12,918][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 19:15:12,919][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 19:15:20,914][INFO] Abriendo el Comunicador...
+[2017-09-04 19:15:20,928][INFO] Comunicador abierto exitosamente!
+[2017-09-04 19:15:25,534][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 19:15:25,555][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 19:15:29,853][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.246.221).
+[2017-09-04 19:15:32,104][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 19:15:39,753][INFO] Cerrando el Comunicador...
+[2017-09-04 19:15:40,540][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:15:40,541][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:37:54,011][INFO] Abriendo el Comunicador...
+[2017-09-04 19:37:54,030][INFO] Comunicador abierto exitosamente!
+[2017-09-04 19:38:03,172][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 19:38:03,202][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 19:38:11,890][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.140.254).
+[2017-09-04 19:38:17,485][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 19:38:26,823][INFO] Cerrando el Comunicador...
+[2017-09-04 19:38:27,160][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:38:27,162][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:39:09,747][INFO] Abriendo el Comunicador...
+[2017-09-04 19:39:09,763][INFO] Comunicador abierto exitosamente!
+[2017-09-04 19:39:41,051][INFO] Cerrando el Comunicador...
+[2017-09-04 19:39:41,372][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:39:41,374][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:40:23,869][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 19:40:23,888][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 19:40:25,952][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 19:40:25,954][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 19:40:25,955][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 19:40:29,126][INFO] Abriendo el Comunicador...
+[2017-09-04 19:40:29,139][INFO] Comunicador abierto exitosamente!
+[2017-09-04 19:40:33,745][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 19:40:33,765][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 19:40:40,503][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.202.23).
+[2017-09-04 19:40:45,691][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 19:40:49,628][INFO] [FTP] Instancia de hector recibida correctamente!
+[2017-09-04 19:40:50,018][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 19:41:07,733][INFO] Cerrando el Comunicador...
+[2017-09-04 19:41:08,264][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 19:41:08,265][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 19:41:08,689][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 19:41:08,691][INFO] [GPRS] Objeto destruido.
+[2017-09-04 19:41:13,201][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 19:41:13,203][INFO] [GSM] Objeto destruido.
+[2017-09-04 19:41:13,204][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 19:41:13,205][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 20:33:46,264][INFO] Abriendo el Comunicador...
+[2017-09-04 20:33:46,279][INFO] Comunicador abierto exitosamente!
+[2017-09-04 20:33:50,883][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 20:33:50,905][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 20:33:55,159][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.202.23).
+[2017-09-04 20:34:01,533][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 20:34:05,529][INFO] [FTP] Instancia de hector recibida correctamente!
+[2017-09-04 20:34:05,922][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 20:34:58,250][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 20:34:58,275][WARNING] [GSM] Imposible enviar 'Attachments/certificado_alumno_regular.pdf' por este medio. Archivo subido al servidor FTP.
+[2017-09-04 20:35:04,231][INFO] [FTP] Mensaje subido al servidor.
+[2017-09-04 20:35:07,702][ERROR] [GSM] Error al enviar el mensaje de texto a 3517502317.
+[2017-09-04 20:35:07,709][DEBUG] [COMMUNICATOR-GSM] Falló. Reintentando con otro medio.
+[2017-09-04 20:35:21,939][INFO] Cerrando el Comunicador...
+[2017-09-04 20:35:22,393][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 20:35:22,396][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 20:38:10,998][INFO] Abriendo el Comunicador...
+[2017-09-04 20:38:11,011][INFO] Comunicador abierto exitosamente!
+[2017-09-04 20:38:17,121][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 20:38:17,141][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 20:38:23,177][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.134.125.21).
+[2017-09-04 20:38:28,407][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 20:38:33,293][WARNING] [FTP] El archivo certificado_alumno_regular.pdf ya existe! Imposible descargar.
+[2017-09-04 20:38:34,724][INFO] [FTP] Instancia de hector recibida correctamente!
+[2017-09-04 20:38:35,106][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 20:41:15,679][INFO] Cerrando el Comunicador...
+[2017-09-04 20:41:17,145][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 20:41:17,147][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 20:41:19,761][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 20:41:19,765][INFO] [GPRS] Objeto destruido.
+[2017-09-04 20:41:23,603][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 20:41:23,605][INFO] [GSM] Objeto destruido.
+[2017-09-04 20:41:23,605][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 20:41:23,606][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 20:50:14,026][INFO] Abriendo el Comunicador...
+[2017-09-04 20:50:14,036][INFO] Comunicador abierto exitosamente!
+[2017-09-04 20:50:18,649][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 20:50:18,676][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 20:50:22,957][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.134.125.21).
+[2017-09-04 20:50:26,782][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 20:50:37,563][INFO] Cerrando el Comunicador...
+[2017-09-04 20:50:38,149][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 20:50:38,150][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 20:50:42,587][INFO] Abriendo el Comunicador...
+[2017-09-04 20:50:42,600][INFO] Comunicador abierto exitosamente!
+[2017-09-04 20:50:47,210][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 20:50:47,230][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 20:50:55,646][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.128.133.215).
+[2017-09-04 20:51:01,461][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 20:51:05,410][INFO] [FTP] Instancia de hector recibida correctamente!
+[2017-09-04 20:51:05,796][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 20:51:34,113][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 20:51:34,131][WARNING] [GSM] Imposible enviar 'Attachments/certificado_alumno_regular.pdf' por este medio. Archivo subido al servidor FTP.
+[2017-09-04 20:51:39,875][INFO] [FTP] Mensaje subido al servidor.
+[2017-09-04 20:51:43,604][ERROR] [GSM] Error al enviar el mensaje de texto a 3512652884.
+[2017-09-04 20:51:43,606][DEBUG] [COMMUNICATOR-GSM] Falló. Reintentando con otro medio.
+[2017-09-04 20:51:48,077][INFO] Cerrando el Comunicador...
+[2017-09-04 20:51:49,227][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 20:51:49,229][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 20:55:23,822][INFO] Abriendo el Comunicador...
+[2017-09-04 20:55:23,835][INFO] Comunicador abierto exitosamente!
+[2017-09-04 20:55:29,947][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 20:55:29,970][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 20:55:36,432][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.221.206).
+[2017-09-04 20:55:41,738][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 20:56:12,289][INFO] Cerrando el Comunicador...
+[2017-09-04 20:56:13,457][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 20:56:13,458][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 20:58:00,639][INFO] Abriendo el Comunicador...
+[2017-09-04 20:58:00,659][INFO] Comunicador abierto exitosamente!
+[2017-09-04 20:58:05,262][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 20:58:05,282][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 20:58:11,237][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.133.37.104).
+[2017-09-04 20:58:16,461][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 20:58:19,813][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 20:58:41,305][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 20:58:45,083][INFO] Cerrando el Comunicador...
+[2017-09-04 20:58:45,907][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 20:58:45,909][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 20:58:47,314][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 20:58:47,316][INFO] [GPRS] Objeto destruido.
+[2017-09-04 20:58:51,217][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 20:58:51,219][INFO] [GSM] Objeto destruido.
+[2017-09-04 20:58:51,220][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 20:58:51,220][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 20:59:12,381][INFO] Abriendo el Comunicador...
+[2017-09-04 20:59:12,396][INFO] Comunicador abierto exitosamente!
+[2017-09-04 20:59:18,509][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 20:59:18,527][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 20:59:22,761][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.133.37.104).
+[2017-09-04 20:59:26,483][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 20:59:31,268][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 21:00:04,481][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 21:00:04,486][WARNING] [GSM] Imposible enviar 'certificado_alumno_regular.pdf' por este medio. Archivo subido al servidor FTP.
+[2017-09-04 21:00:10,129][INFO] [FTP] Mensaje subido al servidor.
+[2017-09-04 21:00:16,623][ERROR] [GSM] Error al enviar el mensaje de texto a 3512652884.
+[2017-09-04 21:00:16,625][DEBUG] [COMMUNICATOR-GSM] Falló. Reintentando con otro medio.
+[2017-09-04 21:00:37,196][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 21:01:54,618][INFO] Cerrando el Comunicador...
+[2017-09-04 21:01:55,316][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 21:01:55,322][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 21:04:02,869][INFO] Abriendo el Comunicador...
+[2017-09-04 21:04:02,881][INFO] Comunicador abierto exitosamente!
+[2017-09-04 21:04:08,999][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 21:04:09,018][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 21:04:23,309][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.129.83.30).
+[2017-09-04 21:04:23,324][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 21:04:40,817][INFO] Cerrando el Comunicador...
+[2017-09-04 21:04:41,983][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 21:04:41,984][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 21:05:29,872][INFO] Abriendo el Comunicador...
+[2017-09-04 21:05:29,881][INFO] Comunicador abierto exitosamente!
+[2017-09-04 21:05:34,492][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 21:05:34,519][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 21:05:40,573][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.130.186).
+[2017-09-04 21:05:45,770][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 21:05:48,636][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 21:06:15,326][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 21:06:15,370][WARNING] [GSM] Imposible enviar 'certificado_alumno_regular.pdf' por este medio. Archivo subido al servidor FTP.
+[2017-09-04 21:06:20,949][INFO] [FTP] Mensaje subido al servidor.
+[2017-09-04 21:06:28,064][INFO] [GSM] Mensaje de texto enviado a 3512652884.
+[2017-09-04 21:09:32,808][INFO] Cerrando el Comunicador...
+[2017-09-04 21:09:33,507][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 21:09:33,508][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 21:09:35,164][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 21:09:35,167][INFO] [GPRS] Objeto destruido.
+[2017-09-04 21:09:36,067][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 21:09:36,069][INFO] [GSM] Objeto destruido.
+[2017-09-04 21:09:36,071][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 21:09:36,072][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 21:09:43,527][INFO] Abriendo el Comunicador...
+[2017-09-04 21:09:43,546][INFO] Comunicador abierto exitosamente!
+[2017-09-04 21:10:02,327][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 21:10:02,346][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 21:10:06,627][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.130.186).
+[2017-09-04 21:10:10,203][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 21:10:14,781][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 21:13:21,532][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 21:13:25,949][INFO] [GSM] Mensaje de texto enviado a 3512652884.
+[2017-09-04 21:14:22,926][INFO] Cerrando el Comunicador...
+[2017-09-04 21:14:23,140][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 21:14:23,141][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 21:14:24,601][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 21:14:24,603][INFO] [GPRS] Objeto destruido.
+[2017-09-04 21:14:28,446][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 21:14:28,448][INFO] [GSM] Objeto destruido.
+[2017-09-04 21:14:28,449][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 21:14:28,450][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 21:20:46,203][INFO] Abriendo el Comunicador...
+[2017-09-04 21:20:46,216][INFO] Comunicador abierto exitosamente!
+[2017-09-04 21:20:50,825][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 21:20:50,847][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 21:20:55,114][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.130.186).
+[2017-09-04 21:20:58,205][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 21:21:03,067][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 21:21:33,679][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 21:21:37,505][INFO] [GSM] Mensaje de texto enviado a 3512652884.
+[2017-09-04 21:21:49,082][INFO] Cerrando el Comunicador...
+[2017-09-04 21:21:50,301][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 21:21:50,302][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 21:21:51,621][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 21:21:51,623][INFO] [GPRS] Objeto destruido.
+[2017-09-04 21:21:54,196][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 21:21:54,198][INFO] [GSM] Objeto destruido.
+[2017-09-04 21:21:54,200][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 21:21:54,201][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 21:31:14,466][INFO] Abriendo el Comunicador...
+[2017-09-04 21:31:14,480][INFO] Comunicador abierto exitosamente!
+[2017-09-04 21:31:19,091][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 21:31:19,114][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 21:31:23,363][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.130.186).
+[2017-09-04 21:31:28,179][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 21:31:33,477][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 21:32:07,067][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 21:32:11,942][INFO] [GSM] Mensaje de texto enviado a 3512652884.
+[2017-09-04 21:32:22,349][INFO] Cerrando el Comunicador...
+[2017-09-04 21:32:23,694][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 21:32:23,696][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 21:32:25,006][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 21:32:25,009][INFO] [GPRS] Objeto destruido.
+[2017-09-04 21:32:25,275][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 21:32:25,286][INFO] [GSM] Objeto destruido.
+[2017-09-04 21:32:25,288][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 21:32:25,290][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 22:21:34,495][INFO] Abriendo el Comunicador...
+[2017-09-04 22:21:34,508][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:21:48,559][INFO] Cerrando el Comunicador...
+[2017-09-04 22:21:49,627][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:21:49,629][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 22:21:50,182][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 22:21:50,184][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 22:21:50,185][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 22:22:17,108][INFO] Abriendo el Comunicador...
+[2017-09-04 22:22:17,116][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:22:23,235][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 22:22:23,257][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 22:22:29,410][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.228.61).
+[2017-09-04 22:22:34,613][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 22:22:37,165][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 22:22:46,088][INFO] Cerrando el Comunicador...
+[2017-09-04 22:22:47,209][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:22:47,210][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 22:22:47,616][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 22:22:47,618][INFO] [GPRS] Objeto destruido.
+[2017-09-04 22:22:50,612][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 22:22:50,614][INFO] [GSM] Objeto destruido.
+[2017-09-04 22:22:50,615][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 22:22:50,616][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 22:23:48,784][INFO] Abriendo el Comunicador...
+[2017-09-04 22:23:48,797][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:23:54,918][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 22:23:54,940][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 22:23:59,194][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.228.61).
+[2017-09-04 22:24:01,451][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 22:24:03,993][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 22:24:32,767][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 22:24:37,551][INFO] [FTP] Mensaje subido al servidor.
+[2017-09-04 22:25:16,830][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 22:25:22,871][INFO] [FTP] Mensaje subido al servidor.
+[2017-09-04 22:25:42,640][INFO] [COMMUNICATOR] Mensaje almacenado en la cola esperando ser enviado...
+[2017-09-04 22:25:47,862][INFO] [FTP] Mensaje subido al servidor.
+[2017-09-04 22:26:09,804][INFO] Cerrando el Comunicador...
+[2017-09-04 22:26:11,304][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:26:11,306][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 22:26:13,046][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 22:26:13,048][INFO] [GPRS] Objeto destruido.
+[2017-09-04 22:26:15,338][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 22:26:15,340][INFO] [GSM] Objeto destruido.
+[2017-09-04 22:26:15,342][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 22:26:15,342][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 22:27:27,108][INFO] Abriendo el Comunicador...
+[2017-09-04 22:27:27,121][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:27:31,730][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 22:27:31,751][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 22:27:36,013][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.228.61).
+[2017-09-04 22:27:40,037][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 22:27:44,646][INFO] [FTP] Archivo Client01.-certificado_alumno_regular.pdf.-client04.-20170904.-222516 descargado correctamente!
+[2017-09-04 22:27:46,191][INFO] [FTP] Archivo Client01.-instance.-client04.-20170904.-222542 descargado correctamente!
+[2017-09-04 22:27:47,712][INFO] [FTP] Archivo Client01.-text.-client04.-20170904.-222432 descargado correctamente!
+[2017-09-04 22:27:48,253][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 22:28:14,615][INFO] Cerrando el Comunicador...
+[2017-09-04 22:28:15,207][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:28:15,209][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 22:28:26,675][INFO] [GPRS] Se ha perdido la conexion a Internet.
+[2017-09-04 22:28:28,727][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 22:28:28,730][INFO] [GPRS] Objeto destruido.
+[2017-09-04 22:30:19,943][INFO] Abriendo el Comunicador...
+[2017-09-04 22:30:19,967][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:30:26,067][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 22:30:26,087][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 22:30:32,610][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.243.96).
+[2017-09-04 22:30:37,806][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 22:30:42,332][INFO] [FTP] Archivo Client01.-certificado_alumno_regular.pdf.-client04.-20170904.-222516 descargado correctamente!
+[2017-09-04 22:30:43,806][INFO] [FTP] Archivo Client01.-instance.-client04.-20170904.-222542 descargado correctamente!
+[2017-09-04 22:30:45,285][INFO] [FTP] Archivo Client01.-text.-client04.-20170904.-222432 descargado correctamente!
+[2017-09-04 22:30:45,788][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 22:30:51,524][INFO] Cerrando el Comunicador...
+[2017-09-04 22:30:53,075][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:30:53,076][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 22:30:53,300][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 22:30:53,302][INFO] [GPRS] Objeto destruido.
+[2017-09-04 22:30:56,306][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 22:30:56,308][INFO] [GSM] Objeto destruido.
+[2017-09-04 22:30:56,309][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 22:30:56,310][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 22:31:48,466][INFO] Abriendo el Comunicador...
+[2017-09-04 22:31:48,479][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:31:53,088][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 22:31:53,108][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 22:31:57,397][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.243.96).
+[2017-09-04 22:31:59,929][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 22:32:04,996][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 22:32:12,482][INFO] Cerrando el Comunicador...
+[2017-09-04 22:32:12,649][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:32:12,650][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 22:32:15,280][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 22:32:15,283][INFO] [GPRS] Objeto destruido.
+[2017-09-04 22:32:15,499][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 22:32:15,501][INFO] [GSM] Objeto destruido.
+[2017-09-04 22:32:15,503][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 22:32:15,504][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 22:32:52,595][INFO] Abriendo el Comunicador...
+[2017-09-04 22:32:52,609][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:32:58,717][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 22:32:58,736][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 22:33:03,028][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.243.96).
+[2017-09-04 22:33:05,519][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 22:33:15,409][INFO] [FTP] Archivo certificado_alumno_regular.pdf descargado correctamente!
+[2017-09-04 22:33:51,727][INFO] Cerrando el Comunicador...
+[2017-09-04 22:33:52,729][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:33:52,730][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 22:34:25,931][INFO] Abriendo el Comunicador...
+[2017-09-04 22:34:25,944][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:34:30,552][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 22:34:30,571][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 22:34:37,167][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.6.73).
+[2017-09-04 22:34:42,372][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 22:35:09,756][INFO] Cerrando el Comunicador...
+[2017-09-04 22:35:11,030][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:35:11,031][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 22:35:49,901][INFO] Abriendo el Comunicador...
+[2017-09-04 22:35:49,915][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:35:54,518][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 22:35:54,538][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 22:36:02,083][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.132.229.228).
+[2017-09-04 22:36:23,681][INFO] [GPRS] Se ha perdido la conexion a Internet.
+[2017-09-04 22:36:37,725][INFO] Abriendo el Comunicador...
+[2017-09-04 22:36:37,738][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:37:13,436][INFO] Cerrando el Comunicador...
+[2017-09-04 22:37:13,853][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:37:13,854][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 22:37:21,700][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 22:37:21,702][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 22:37:21,703][INFO] Comunicador cerrado exitosamente!
+[2017-09-04 22:37:41,202][INFO] Abriendo el Comunicador...
+[2017-09-04 22:37:41,214][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:39:13,711][INFO] Abriendo el Comunicador...
+[2017-09-04 22:39:13,723][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:39:18,328][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 22:39:18,349][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 22:39:24,737][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.133.171.155).
+[2017-09-04 22:39:29,926][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 22:44:35,719][INFO] Cerrando el Comunicador...
+[2017-09-04 22:44:36,415][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:44:36,417][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 22:45:00,784][INFO] Abriendo el Comunicador...
+[2017-09-04 22:45:00,799][INFO] Comunicador abierto exitosamente!
+[2017-09-04 22:45:06,904][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 22:45:06,926][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 22:45:13,697][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.135.105.135).
+[2017-09-04 22:45:19,082][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 22:46:11,230][INFO] Cerrando el Comunicador...
+[2017-09-04 22:46:11,393][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 22:46:11,395][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 23:35:48,778][INFO] Abriendo el Comunicador...
+[2017-09-04 23:35:48,792][INFO] Comunicador abierto exitosamente!
+[2017-09-04 23:35:54,904][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 23:35:54,933][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 23:36:01,752][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.130.41.134).
+[2017-09-04 23:36:06,931][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 23:38:35,284][INFO] Abriendo el Comunicador...
+[2017-09-04 23:38:35,299][INFO] Comunicador abierto exitosamente!
+[2017-09-04 23:38:39,911][DEBUG] [GSM] Telit UL865-NAR conectada en /dev/ttyUSB1.
+[2017-09-04 23:38:39,934][INFO] [GSM] Listo para usarse (ttyUSB1).
+[2017-09-04 23:38:46,630][INFO] [GPRS] Listo para usarse (/dev/ttyUSB1 - 10.129.234.36).
+[2017-09-04 23:38:51,804][INFO] [GPRS] Conexion a Internet disponible.
+[2017-09-04 23:38:55,408][INFO] [FTP] Instancia de client04 recibida correctamente!
+[2017-09-04 23:38:56,954][INFO] [FTP] Mensaje de client04 recibido correctamente!
+[2017-09-04 23:38:58,930][INFO] [FTP] Servidor disponible (181.28.14.17).
+[2017-09-04 23:39:08,860][INFO] Cerrando el Comunicador...
+[2017-09-04 23:39:09,906][WARNING] [TRANSMITTER] Funcion 'run' terminada.
+[2017-09-04 23:39:09,908][INFO] [TRANSMITTER] Objeto destruido.
+[2017-09-04 23:39:13,886][WARNING] [CONTROLLER] Función 'run' terminada.
+[2017-09-04 23:39:13,894][INFO] [GPRS] Objeto destruido.
+[2017-09-04 23:39:16,897][WARNING] [GSM] Función 'receiveAT' terminada.
+[2017-09-04 23:39:16,900][INFO] [GSM] Objeto destruido.
+[2017-09-04 23:39:16,901][INFO] [CONTROLLER] Objeto destruido.
+[2017-09-04 23:39:16,902][INFO] Comunicador cerrado exitosamente!

@@ -12,6 +12,7 @@ import regex
 import traceback
 import threading
 import pexpect
+import os
 from tempfile import mkstemp
 from shutil import move
 from os import fdopen, remove
@@ -47,17 +48,16 @@ class Modem(object):
 			self.modemInstance.baudrate = JSON_CONFIG["MODEM"]["BAUD_RATE"]
 
 	def sendAT(self, atCommand, expected = 'OK', wait = 0, mode = 1):
-		start = time.time()
-		end = start + wait
+		end = time.time() + wait
 		if mode == 0:
 			self.modemInstance.write(atCommand) 
 		elif mode == 1:
 			self.modemInstance.write(atCommand + '\r')
 		elif mode == 2:
 			self.modemInstance.write(atCommand + '\r\n')
-		#print atCommand
+		print atCommand
 		totalOutput = list()
-		while True:
+		while True and expected != None:
 			modemOutput = self.modemInstance.readline()
 			if modemOutput == '':
 				if wait == 0:
@@ -65,7 +65,7 @@ class Modem(object):
 			else:
 				totalOutput.append(modemOutput)
 				if modemOutput.startswith(expected):
-					#print totalOutput
+					print totalOutput
 					if expected == '+CLIP':
 						self.callerID = self.getTelephoneNumber(regex.findall("(.*)", modemOutput.split(',')[0])[0])
 						if self.callerID == '':
@@ -75,6 +75,7 @@ class Modem(object):
 					return totalOutput
 				elif modemOutput.startswith(('. BAD', '. NO ', 'ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
 					errorMessage = modemOutput.replace('\r\n', '')
+					print modemOutput #DBG
 					raise Exception(errorMessage)
 				elif modemOutput.startswith('NO CARRIER') and atCommand.startswith('ATD') and atCommand.endswith(';'):
 					raise
@@ -444,10 +445,11 @@ class Gsm(Modem):
 					return self.sendMessage(message.plainText, telephoneNumber)
 			# Comprobación de envío de archivo
 			elif isinstance(message, messageClass.Message) and hasattr(message, 'fileName'):
-					logger.write('WARNING', '[GSM] Imposible enviar \'%s\' por este medio. Archivo subido al servidor FTP.' % message.fileName)				
+					fileDirectory, fileName = os.path.split(message.fileName)
+					logger.write('WARNING', '[GSM] Imposible enviar \'%s\' por este medio. Archivo subido al servidor FTP.' % fileName)				
 					ftpHost = JSON_CONFIG["FTP"]["FTP_SERVER"]
-					if self.ftpInstance.send(message):
-						aviso = 'El comunicador 2.0 ha subido el archivo ' + message.fileName + ' para usted, al servidor FTP ' + ftpHost + '.'
+					if self.ftpInstance.send(message, False):
+						aviso = 'El comunicador 2.0 ha subido el archivo ' + fileName + ' para usted, al servidor FTP ' + ftpHost + '.'
 						return self.sendMessage(aviso,  telephoneNumber)
 					return False
 			# Entonces se trata de enviar una instancia de mensaje
@@ -466,9 +468,6 @@ class Gsm(Modem):
 			smsLine = list()
 			index = 1
 			#############################
-			print 'plainText'
-			print repr(plainText)
-
 			if self.androidConnected:
 				#Para enviar un SMS de multiples lineas, debo enviar una a la vez
 				smsLine = plainText.split('\n')
@@ -511,26 +510,19 @@ class Gsm(Modem):
 				sms.csca = smsc[0]
 				pdus = sms.to_pdu()
 				amount = len(pdus)
-				print amount
-
 				for pdu in pdus:
 						# Enviamos los comandos AT correspondientes para efectuar el envío el mensaje de texto
-						info01 = self.sendAT('AT+CMGS=' + str(pdu.length)) # Envío la longitud del paquete PDU
+						info01 = self.sendAT('AT+CMGS=' + str(pdu.length), '>') # Envío la longitud del paquete PDU
 						# ------------------ Caso de envío EXITOSO ------------------
 						# Ejemplo de info01[0]: AT+CMGS=38\r\n
 						# Ejemplo de info01[1]: >
 						# Comprobamos que el módulo esté listo para mandar el mensaje
-						for i in info01:
-							if i.startswith('>'):
-								try:
-									info02 = self.sendAT(str(pdu.pdu) + ascii.ctrl('z'), 'OK', 10, 1)   # Mensaje de texto terminado en Ctrl+z
-									self.successfulSending = True
-								except RuntimeError:
-									self.successfulSending = False
-								break
-							elif i.startswith('ERROR'):
-								self.successfulSending = False
-								break
+						try:
+							info02 = self.sendAT(str(pdu.pdu) + ascii.ctrl('z'), 'OK', 10, 1)   # Mensaje de texto terminado en Ctrl+z
+							self.successfulSending = True
+						except RuntimeError:
+							self.successfulSending = False
+						break
 						# Agregamos la respuesta de la red a la lista
 						self.successfulList.append(self.successfulSending)
 						if self.successfulSending:
@@ -550,9 +542,10 @@ class Gsm(Modem):
 			else:
 				logger.write('INFO', '[GSM] Mensaje de texto enviado a %s.' % str(telephoneNumber))
 				# Borramos el mensaje enviado almacenado en la memoria
+				print info02[-3]
 				smsIndex = self.getSmsIndex(info02[-3])
 				self.telit_lock.acquire()
-				self.removeSms(smsIndex)
+				self.sendAT('AT+CMGD=1,2')
 				self.telit_lock.release()
 				#self.removeAllSms() #DEBUG: Es necesario?
 				return True
@@ -609,7 +602,6 @@ class Gsm(Modem):
 	def removeAllSms(self):
 			try:
 					self.telit_lock.acquire()
-					self.sendAT('AT+CMGD=1,4') # Elimina todos los mensajes en memoria
 					self.telit_lock.release()
 					return True
 			except:
@@ -618,12 +610,15 @@ class Gsm(Modem):
 	def getSmsIndex(self, atOutput):
 			# Ejemplo de 'atOutput' (para un mensaje enviado) : +CMGS: 17
 			# Ejemplo de 'atOutput' (para un mensaje recibido): +CMGL: 2
-			# Quitamos el comando AT, dejando solamente el índice del mensaje en memoria
+			# Quitamos el comando AT, dejando solamente el índice del mensaje en 
+			print atOutput
 			if atOutput.startswith('+CMGS'):
+					print 'a'
 					atOutput = atOutput.replace('+CMGS: ', '')
 			elif atOutput.startswith('+CMGL'):
 					atOutput = atOutput.replace('+CMGL: ', '')
 			smsIndex = int(atOutput)
+			print smsIndex
 			return smsIndex
 
 	def getTelephoneNumber(self, telephoneNumber):

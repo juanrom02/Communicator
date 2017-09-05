@@ -96,6 +96,7 @@ def open():
 		emailInstance.controllerInstance = controllerInstance
 		
 		gsmInstance.ftpInstance = ftpInstance
+		ftpInstance.gsmInstance = gsmInstance
 		# Creamos la instancia para la transmisión de paquetes
 		transmitterInstance = transmitterClass.Transmitter(transmissionQueue)
 		transmitterInstance.gsmInstance = gsmInstance
