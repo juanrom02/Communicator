@@ -50,6 +50,8 @@ class Ftp(object):
 		try:
 			if self.ftp_mode == 2:
 				self.telit_lock.acquire()
+				while self.gsmInstance.active_call:
+					self.telit_lock.wait()
 				ftpOpen = 'AT#FTPOPEN="%s:%s","%s","%s",1' % (self.ftpHost, self.ftpPort, self.ftpUser, self.ftpPassword)
 				self.gsmInstance.sendAT(ftpOpen.encode('utf-8'), wait=5)
 				self.gsmInstance.sendAT(('AT#FTPCWD="%s"' % self.ftpDirectory).encode('utf-8'), wait=5)

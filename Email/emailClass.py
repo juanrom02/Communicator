@@ -32,6 +32,7 @@ from email.mime.image import MIMEImage
 import logger
 import contactList
 import messageClass
+from modemClass import ATCommandError
 
 JSON_FILE = 'config.json'
 JSON_CONFIG = json.load(open(JSON_FILE))
@@ -81,6 +82,8 @@ class Email(object):
 		try:
 			if self.gsmInstance.telitConnected: 
 				self.telit_lock.acquire()
+				while self.gsmInstance.active_call:
+					self.telit_lock.wait()
 				self.gsmInstance.sendAT('AT#SSLH=1')
 				self.telit_lock.release()
 			else:
@@ -106,23 +109,17 @@ class Email(object):
 				self.imapServer.select('INBOX')                         # Seleccionamos la Bandeja de Entrada
 			else:
 				self.telit_lock.acquire()
+				while self.gsmInstance.active_call:
+					self.telit_lock.wait()
 				self.telitIMAPConnect()
 				self.telit_lock.release()
 			self.successfulConnection = True
 			return True
 		# Error con los servidores (probablemente estén mal escritos o los puertos son incorrectos)
-		except Exception as errorMessage:
+		except (Exception, ATCommandError):
 			print traceback.format_exc()
-			logger.write('ERROR', '[EMAIL] Error al intentar conectar con los servidores SMTP e IMAP - %s' % errorMessage)
+			logger.write('ERROR', '[EMAIL] Error al intentar conectar con los servidores SMTP e IMAP.')
 			self.successfulConnection = False
-			return False
-			
-	def testConnection(self):
-		try:
-			self.smtpServer.noop()
-			self.imapServer.noop()
-			return True
-		except:
 			return False
 		
 	def sendSSLCommand(self, command, expected = None):
@@ -131,11 +128,7 @@ class Email(object):
 			self.gsmInstance.sendAT((command + '\r\n\x1A').encode('utf-8'), 'SSLSRING', 30)
 			response = self.gsmInstance.sendAT('AT#SSLRECV=1,1000', expected, 5)
 			return response
-		except serial.serialutil.SerialException:
-			raise
-		except Exception as message:
-			print traceback.format_exc()
-			logger.write('WARNING', '[EMAIL] Fallo en el socket SSL - %s.' %message)
+		except (serial.serialutil.SerialException, ATCommandError):
 			raise
 		
 	def telitIMAPConnect(self):
@@ -209,7 +202,8 @@ class Email(object):
 		try:
 			if self.gsmInstance.telitConnected:
 				self.telit_lock.acquire()
-				ponito = time.time() #DBG
+				while self.gsmInstance.active_call:
+					self.telit_lock.wait()
 				self.sendSSLCommand('. LOGOUT', 'NO CARRIER')
 				self.gsmInstance.sendAT(('AT#SSLD=1,%s,"%s",0,1' % (self.smtpPort,self.smtpHost)).encode('utf-8'),'SSLSRING', 10)
 				self.gsmInstance.sendAT('AT#SSLRECV=1,1000'.encode('utf-8'), '220', 10)
@@ -225,8 +219,6 @@ class Email(object):
 				self.gsmInstance.sendAT('+++', 'OK', 10, 0)
 				self.sendSSLCommand('ABC', '502')
 				self.sendSSLCommand('QUIT', '221')
-				end = time.time()
-				print ('Envio de MAIL demora ' + str(end - ponito) + '\r\n') #DBG
 			else:
 				self.smtpServer.sendmail(mime['From'], mime['To'], mime.as_string())
 			logger.write('INFO', '[EMAIL] Mensaje enviado a \'%s\'' % mime['To'])
@@ -234,6 +226,8 @@ class Email(object):
 		except Exception as errorMessage:
 			logger.write('WARNING', '[EMAIL] Mensaje no enviado: %s' % str(errorMessage))
 			return False
+		except ATCommandError:
+			logger.write('ERROR', '[EMAIL] Mensaje no enviado: fallo en los comandos AT.')
 		finally:
 			if self.gsmInstance.telitConnected:
 				self.gsmInstance.sendAT('AT#SSLH=1')
@@ -254,6 +248,8 @@ class Email(object):
 						emailIdsList = emailIds[0].split()
 					else:
 						self.telit_lock.acquire()
+						while self.gsmInstance.active_call:
+							self.telit_lock.wait()
 						self.punito = time.time() #DBG
 						self.sendSSLCommand('. SELECT INBOX', '. OK')
 						result = self.sendSSLCommand('. SEARCH UNSEEN', '. OK')
@@ -267,18 +263,20 @@ class Email(object):
 					for emailId in emailIdsList:
 						if self.mode in [1,2]:
 							result, emailData = self.imapServer.uid('fetch', emailId, '(RFC822)')
+							emailReceived = email.message_from_string(emailData[0][1])
 							# Retorna un objeto 'message', y podemos acceder a los items de su cabecera como un diccionario.'
 							#~ print emailData[0][1]
 							#~ emailReceived = email.message_from_string(emailData[0][1])
 						else:
 							self.telit_lock.acquire()
+							while self.gsmInstance.active_call:
+								self.telit_lock.wait()
 							self.gsmInstance.sendAT('AT#SSLO=1')
 							fetch = self.gsmInstance.sendAT(('. FETCH %s RFC822' % emailId).encode('utf-8'), '. OK', 30, 2)
-							emailData = ''
 							emailData = ''.join(fetch[1:-2])
 							self.gsmInstance.sendAT('+++', 'OK', 10, 0)
 							self.telit_lock.release()
-						emailReceived = email.message_from_string(emailData)
+							emailReceived = email.message_from_string(emailData)
 						sourceName = self.getSourceName(emailReceived)     # Almacenamos el nombre del remitente
 						sourceEmail = self.getSourceEmail(emailReceived)   # Almacenamos el correo del remitente
 						emailSubject = self.getEmailSubject(emailReceived) # Almacenamos el asunto correspondiente
@@ -318,7 +316,10 @@ class Email(object):
 		except (serial.serialutil.SerialException, Exception) as message:
 			logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailAccount)
 			logger.write('DEBUG', '[EMAIL] %s : %s' % (type(message).__name__, message))
+		except ATCommandError:
+			logger.write('WARNING', '[EMAIL] Recepcion fallida: error en los comandos AT.')
 		finally:
+			print traceback.format_exc()
 			self.successfulConnection = False
 			self.isActive = False
 			self.thread = threading.Thread(target = self.receive, name = self.threadName)

@@ -62,7 +62,8 @@
 	},
 "AUDIO":
 	{
-	"LANGUAGE"	: "es"
+	"LANGUAGE"	: "es",
+	"RECORD_SECS"	: 30
 	}
 }
 

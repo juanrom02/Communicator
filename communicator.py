@@ -23,6 +23,7 @@ sys.path.append(os.path.abspath('Modem/'))
 sys.path.append(os.path.abspath('Network/'))
 sys.path.append(os.path.abspath('Bluetooth/'))
 sys.path.append(os.path.abspath('File Transfer/'))
+sys.path.append(os.path.abspath('Audio/'))
 
 import emailClass
 import modemClass
@@ -35,6 +36,7 @@ import contactList
 import messageClass
 import controllerClass
 import transmitterClass
+import callClass
 
 os.chdir(currentDirectory)
 
@@ -47,6 +49,7 @@ wifiInstance = networkClass.Network
 ethernetInstance = networkClass.Network
 bluetoothInstance = bluetoothClass.Bluetooth
 ftpInstance = ftpClass.Ftp
+callInstance = callClass.Call
 
 controllerInstance = controllerClass.Controller    # Instancia que controla los medios
 transmitterInstance = transmitterClass.Transmitter # Instancia para la transmisión de paquetes
@@ -81,6 +84,7 @@ def open():
 		bluetoothInstance = bluetoothClass.Bluetooth(receptionQueue)
 		emailInstance = emailClass.Email(receptionQueue)
 		ftpInstance = ftpClass.Ftp(receptionQueue)
+		callInstance = callClass.Call()
 		# Creamos la instancia que levantará las conexiones
 		REFRESH_TIME = JSON_CONFIG["COMMUNICATOR"]["REFRESH_TIME"]
 		controllerInstance.gsmInstance = gsmInstance
@@ -96,7 +100,12 @@ def open():
 		emailInstance.controllerInstance = controllerInstance
 		
 		gsmInstance.ftpInstance = ftpInstance
+		gsmInstance.callInstance = callInstance
 		ftpInstance.gsmInstance = gsmInstance
+		
+		callInstance.controllerInstance = controllerInstance
+		callInstance.gsmInstance = gsmInstance
+		callInstance.telit_lock = controllerInstance.telit_lock
 		# Creamos la instancia para la transmisión de paquetes
 		transmitterInstance = transmitterClass.Transmitter(transmissionQueue)
 		transmitterInstance.gsmInstance = gsmInstance

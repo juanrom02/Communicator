@@ -45,7 +45,7 @@ class Controller(threading.Thread):
 	emailInstance = None
 	ftpInstance = None
 	
-	telit_lock = threading.Lock()
+	telit_lock = threading.Condition(threading.Lock())
 	internetConnection = None
 	communicatorName = None
 
@@ -122,17 +122,24 @@ class Controller(threading.Thread):
 				self.wifiInstance.state = 'UP'
 				self.availableWifi = self.verifyNetworkConnection(self.wifiInstance)
 				self.gprsInstance.pattern = re.compile('ppp[0-9]+')
-				self.availableGprs = self.verifyNetworkConnection(self.gprsInstance)
+				#self.availableGprs = self.verifyNetworkConnection(self.gprsInstance)
 			self.availableEthernet = self.verifyNetworkConnection(self.ethernetInstance)
 			self.availableBluetooth = self.verifyBluetoothConnection()
 			internetConnection = self.gprsInstance.internetConnection or self.wifiInstance.internetConnection or self.ethernetInstance.internetConnection
-			if internetConnection and not self.ftpInstance.isActive:
-				self.availableFtp = self.verifyFtpConnection()
-			#self.availableEmail = self.verifyEmailConnection()
-			if self.gsmInstance.incoming_call:
-				self.telit_lock.acquire()
+			if internetConnection:
+				#~ if not self.ftpInstance.isActive:
+					#~ self.availableFtp = self.verifyFtpConnection()
+				self.availableEmail = self.verifyEmailConnection()
+			elif not self.gsmInstance.active_call:
+				self.availableFtp = False
+				self.availableEmail = False
+				if self.emailInstance.isActive:
+					logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailInstance.emailAccount)
+					self.emailInstance.successfulConnection = None
+					self.emailInstance.isActive = False
+					self.emailInstance.thread = threading.Thread(target = self.emailInstance.receive, name = emailThreadName)
+			if self.gsmInstance.new_call:
 				self.gsmInstance.answerVoiceCall()
-				self.telit_lock.release()
 			time.sleep(self.REFRESH_TIME)
 		logger.write('WARNING', '[CONTROLLER] Función \'%s\' terminada.' % inspect.stack()[0][3])	
 
@@ -199,11 +206,15 @@ class Controller(threading.Thread):
 	
 	def verifyNetworkConnection(self, instance):
 		try:
-			if self.gsmInstance.isActive and instance == self.gprsInstance:
-				if not self.verifyGprsConnection():
-					return False
-				elif self.gsmInstance.telitConnected:
-					return True
+ 			if self.gsmInstance.isActive and instance == self.gprsInstance:
+				if self.gsmInstance.telitConnected:
+					return self.verifyTelitGprsConnection()
+				elif not self.gprsInstance.isActive:
+					ponOut, ponErr = subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+					if ponErr == '':
+						time.sleep(5)
+					else:
+						return False
 			#~ if self.gsmInstance.telitConnected and instance == self.gprsInstance:
 				#~ try:
 					#~ if not instance.isActive:
@@ -277,13 +288,17 @@ class Controller(threading.Thread):
 				currentStatus = False
 			elif instance == self.gprsInstance and self.gsmInstance.telitConnected:
 				self.telit_lock.acquire()
-				result = self.gsmInstance.sendAT('AT#PING="%s"' % TEST_REMOTE_SERVER, wait = 21)
-				self.telit_lock.release()
-				ping = result[-3].split(',')
-				if ping[-1].startswith('255'):
+				if self.gsmInstance.active_call:
+					self.telit_lock.release()
 					currentStatus = False
-				else:			
-					currentStatus = True
+				else:
+					result = self.gsmInstance.sendAT('AT#PING="%s"' % TEST_REMOTE_SERVER, wait = 21)
+					self.telit_lock.release()
+					ping = result[-3].split(',')
+					if ping[-1].startswith('255'):
+						currentStatus = False
+					else:			
+						currentStatus = True
 			else:
 				remoteHost = socket.gethostbyname(TEST_REMOTE_SERVER)
 				testSocket = socket.create_connection((remoteHost, 80), 2) # Se determina si es alcanzable
@@ -303,46 +318,40 @@ class Controller(threading.Thread):
 			return currentStatus
 			
 		
-	def verifyGprsConnection(self):
-		if self.gsmInstance.telitConnected:
-			try:
-				if not self.gprsInstance.isActive:
-					self.telit_lock.acquire()
-					is_active = self.gsmInstance.sendAT('AT#CGPADDR=1')
-					address = is_active[-3].split(',')[-1][1:-3]
-					if address != '':
-						self.gprsInstance.localAddress = address
-					else:
-						address = self.gsmInstance.sendAT('AT#SGACT=1,1','OK', 5)
-						self.gprsInstance.localAddress = address[-3][8:-2]
-					self.telit_lock.release()
-					self.gprsInstance.localInterface = self.gsmInstance.localInterface
-					info = self.gprsInstance.localInterface + ' - ' + self.gprsInstance.localAddress
-					logger.write('INFO', '[%s] Listo para usarse (%s).' % (self.gprsInstance.MEDIA_NAME, info))
-					end = time.time()
-					self.gprsInstance.isActive = True
-				else:
-					self.telit_lock.acquire()
-					active = self.gsmInstance.sendAT('AT#SGACT?','OK', 5)
-					if active[-4][-3] == '0':
-						raise
-					self.telit_lock.release()
-				return True
-			except:
+	def verifyTelitGprsConnection(self):
+		try:
+			self.telit_lock.acquire()
+			if self.gsmInstance.active_call:
 				self.telit_lock.release()
-				if self.gprsInstance.isActive:
-					self.gprsInstance.localInterface = None
-					self.gprsInstance.localAddress = None
-					#DBG: Falta successfulConnection para los sockets TCP y UDP
-					info = self.gprsInstance.localInterface + ' - ' + self.gprsInstance.localAddress
-					logger.write('INFO', '[%s] Se ha desconectado el medio (%s).' % (instance.MEDIA_NAME, info))
 				return False
-		elif not self.gprsInstance.isActive:
-			ponOut, ponErr = subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
-			if ponErr == '':
-				time.sleep(5)
+			if not self.gprsInstance.isActive:
+				is_active = self.gsmInstance.sendAT('AT#CGPADDR=1')
+				address = is_active[-3].split(',')[-1][1:-3]
+				if address != '':
+					self.gprsInstance.localAddress = address
+				else:
+					address = self.gsmInstance.sendAT('AT#SGACT=1,1','OK', 5)
+					self.gprsInstance.localAddress = address[-3][8:-2]
+				self.telit_lock.release()
+				self.gprsInstance.localInterface = self.gsmInstance.localInterface
+				info = self.gprsInstance.localInterface + ' - ' + self.gprsInstance.localAddress
+				logger.write('INFO', '[%s] Listo para usarse (%s).' % (self.gprsInstance.MEDIA_NAME, info))
+				end = time.time()
+				self.gprsInstance.isActive = True
 			else:
-				return False
+				active = self.gsmInstance.sendAT('AT#SGACT?','OK', 5)
+				if active[-4][-3] == '0':
+					raise
+				self.telit_lock.release()
+			return True
+		except:
+			self.telit_lock.release()
+			if self.gprsInstance.isActive:
+				self.gprsInstance.localInterface = None
+				self.gprsInstance.localAddress = None
+				#DBG: Falta successfulConnection para los sockets TCP y UDP
+				logger.write('INFO', '[%s] Se ha desconectado el medio.' % instance.MEDIA_NAME)
+			return False
 		
 	def verifyAndroidStatus(self):
 		self.wifiInstance.pattern = re.compile('usb[0-9]+')
@@ -474,7 +483,7 @@ class Controller(threading.Thread):
 						self.ftpInstance.receive(item)
 						self.ftpServer.delete(item)
 			elif self.gsmInstance.telitConnected:
-				self.ftpInstance.ftp_mode = 2			
+				self.ftpInstance.ftp_mode = 2
 				self.ftpInstance.connect()
 				self.gsmInstance.sendAT('AT#FTPTYPE=0', wait = 5)
 				lista = self.gsmInstance.sendAT('AT#FTPLIST', 'NO CARRIER', 10) 
