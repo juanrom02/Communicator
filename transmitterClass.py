@@ -14,7 +14,8 @@ JSON_CONFIG = json.load(open(JSON_FILE))
 
 class Transmitter(threading.Thread):
 
-	gsmPriority = 0
+	callPriority = 0
+	smsPriority = 0
 	gprsPriority = 0
 	wifiPriority = 0
 	ethernetPriority = 0
@@ -91,20 +92,27 @@ class Transmitter(threading.Thread):
 			del messageInstance
 
 	def setPriorities(self, receiver, media):
-		self.gsmPriority = 0
+		self.callPriority = 0
+		self.smsPriority = 0
 		self.gprsPriority = 0
 		self.wifiPriority = 0
 		self.ethernetPriority = 0
 		self.emailPriority = 0
 		self.bluetoothPriority = 0
 		self.ftpPriority = 0
-		# Para GSM
+		# Para LLAMADAS
+		if contactList.allowedNumbers.has_key(receiver) and self.gsmInstance.telitConnected:
+			if media == 'VOZ':
+				self.callPriority = 10
+			else:
+				self.callPriority = JSON_CONFIG["PRIORITY_LEVELS"]["VOZ"]
+		# Para SMS
 		if contactList.allowedNumbers.has_key(receiver) and self.gsmInstance.isActive:
 			# En caso de preferencia se da máxima prioridad
-			if media == 'GSM':
-				self.gsmPriority = 10
+			if media == 'SMS':
+				self.smsPriority = 10
 			else:
-				self.gsmPriority = JSON_CONFIG["PRIORITY_LEVELS"]["GSM"]
+				self.smsPriority = JSON_CONFIG["PRIORITY_LEVELS"]["SMS"]
 		# Para GPRS
 		if contactList.allowedHosts.has_key(receiver) and self.gprsInstance.isActive:
 			# En caso de preferencia se da máxima prioridad
@@ -149,13 +157,22 @@ class Transmitter(threading.Thread):
 		
 
 	def send(self, messageInstance):
-		priorities = [self.gprsPriority, self.emailPriority, self.wifiPriority, self.ethernetPriority, self.bluetoothPriority, self.ftpPriority]
-		# Intentamos transmitir por GSM
-		if all(self.gsmPriority != 0 and self.gsmPriority >= x for x in priorities):
+		priorities = [self.callPriority, self.smsPriority, self.gprsPriority, self.emailPriority, self.wifiPriority, self.ethernetPriority, self.bluetoothPriority, self.ftpPriority]
+		# Intentamos transmitir por VOZ
+		if all(self.callPriority != 0 and self.callPriority >= x for x in priorities):
+			destinationNumber = contactList.allowedNumbers[messageInstance.receiver]
+			if not self.gsmInstance.send(messageInstance, destinationNumber, True):
+				logger.write('DEBUG', '[COMMUNICATOR-VOZ] Falló. Reintentando con otro medio.')
+				self.callPriority = 0              # Se descarta para la próxima selección
+				return self.send(messageInstance) # Se reintenta con otro medio
+			else:
+				return True
+		# Intentamos transmitir por SMS
+		if all(self.smsPriority != 0 and self.smsPriority >= x for x in priorities):
 			destinationNumber = contactList.allowedNumbers[messageInstance.receiver]
 			if not self.gsmInstance.send(messageInstance, destinationNumber):
-				logger.write('DEBUG', '[COMMUNICATOR-GSM] Falló. Reintentando con otro medio.')
-				self.gsmPriority = 0              # Se descarta para la próxima selección
+				logger.write('DEBUG', '[COMMUNICATOR-SMS] Falló. Reintentando con otro medio.')
+				self.smsPriority = 0              # Se descarta para la próxima selección
 				return self.send(messageInstance) # Se reintenta con otro medio
 			else:
 				return True

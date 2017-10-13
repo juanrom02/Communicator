@@ -161,8 +161,10 @@ def askMedia():
 	selectMedia = raw_input('¿Desea elegir un medio de comunicación preferido? [S/n] ')
 	if selectMedia is 'S' or selectMedia is 's' or len(selectMedia) is 0:
 		availableMedia = 'Lista de medios disponibles:'
+		if communicator.gsmInstance.telitConnected:
+				availableMedia = availableMedia + ' VOZ,'
 		if communicator.controllerInstance.availableGsm:
-				availableMedia = availableMedia + ' GSM,'
+				availableMedia = availableMedia + ' SMS,'
 		if communicator.controllerInstance.availableGprs:
 				availableMedia = availableMedia + ' GPRS,'
 		if communicator.controllerInstance.availableWifi:

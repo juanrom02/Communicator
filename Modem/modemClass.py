@@ -13,9 +13,11 @@ import traceback
 import threading
 import pexpect
 import os
+import requests
 from tempfile import mkstemp
 from shutil import move
 from os import fdopen, remove
+import inspect #DBG
 
 import logger
 import contactList
@@ -27,9 +29,15 @@ JSON_FILE = 'config.json'
 JSON_CONFIG = json.load(open(JSON_FILE))
 JSON_GPRS = json.load(open('operators.json'))
 
-class NoCarrier(Exception): pass
+class ATCommandError(Exception):
+	def __init__(self, msg = ''):
+		self.msg = msg
 
-class ATCommandError(Exception): pass
+class AtTimeout(ATCommandError): pass
+
+class AtNoCarrier(ATCommandError): pass
+
+class AtNewCall(ATCommandError): pass
 
 class Modem(object):
 
@@ -53,53 +61,67 @@ class Modem(object):
 			self.modemInstance.baudrate = JSON_CONFIG["MODEM"]["BAUD_RATE"]
 
 	def sendAT(self, atCommand, expected = 'OK', wait = 0, mode = 1):
-		end = time.time() + wait
-		if atCommand in ['ATA', '+++']:
-			self.modemInstance.reset_input_buffer()
-		if mode == 0:
-			self.modemInstance.write(atCommand) 
-		elif mode == 1:
-			self.modemInstance.write(atCommand + '\r')
-		elif mode == 2:
-			self.modemInstance.write(atCommand + '\r\n')
-		print atCommand
-		totalOutput = list()
-		#~ if self.modemInstance.in_waiting != 0 and atCommand != '':
-			#~ reception = self.modemInstance.read(self.modemInstance.in_waiting)
-			#~ 
-			#~ self.modemInstance.reset_input_buffer()
-		while True and expected != None:
-			modemOutput = self.modemInstance.readline()
-			if modemOutput == '':
-				if wait == 0:
-					raise Exception("%s: No hubo respuesta." % atCommand)
-			else:
-				totalOutput.append(modemOutput)
-				if modemOutput.startswith(expected):
-					print totalOutput
-					if expected == '+CLIP':
-						self.callerID = self.getTelephoneNumber(regex.findall('"(.*)"', modemOutput.split(',')[0])[0])
-						if self.callerID == '':
-							self.callerID = 'desconocido'
-						logger.write('INFO', '[GSM] El número %s está llamando.' % self.callerID)
-						self.active_call = True
-						self.new_call = True
-					return totalOutput
-				elif modemOutput.startswith(('. BAD', '. NO ', 'ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
-					errorMessage = modemOutput.replace('\r\n', '')
-					logger.write('DEBUG', '[GSM] %s' % errorMessage)
-					raise ATCommandError
-				elif modemOutput.startswith('NO CARRIER'):
-					print totalOutput
-					raise NoCarrier
+			end = time.time() + wait
+			#if atCommand in ['ATA', '+++', 'AT+CMGL=0', 'AT#SGACT?']:
+			#~ if atCommand == '+++':
+				#~ self.modemInstance.reset_input_buffer()
+			if mode == 0:
+				self.modemInstance.write(atCommand) 
+			elif mode == 1:
+				self.modemInstance.write(atCommand + '\r')
+			elif mode == 2:
+				self.modemInstance.write(atCommand + '\r\n')
+			curframe = inspect.currentframe()
+			calframe = inspect.getouterframes(curframe,2)
+			print calframe[1][3] + ': ' + atCommand
+			totalOutput = list()
+			#~ if self.modemInstance.in_waiting != 0 and atCommand != '':
+				#~ reception = self.modemInstance.read(self.modemInstance.in_waiting)
+				#~ 
+				#~ self.modemInstance.reset_input_buffer()
+			while atCommand.startswith('AT') and  atCommand not in ['ATZ', 'ATE1']:
+				modemOutput = self.modemInstance.readline()
+				if modemOutput.startswith(atCommand):
+					totalOutput.append(modemOutput)
+					break
 				elif modemOutput.startswith('RING'):
 					expected = '+CLIP'
 					wait = 0
-			if wait == 0:
-				continue
-			elif time.time() > end:
-				print totalOutput
-				raise RuntimeError("%s -> %s" % (atCommand, totalOutput[-1]))
+					break
+			while True and expected != None:
+				modemOutput = self.modemInstance.readline()
+				if modemOutput == '':
+					if wait == 0:
+						raise AtTimeout("%s" % atCommand)
+				else:
+					totalOutput.append(modemOutput)
+					if modemOutput.startswith(expected):
+						print totalOutput
+						if expected == '+CLIP':
+							self.callerID = self.getTelephoneNumber(regex.findall('"(.*)"', modemOutput.split(',')[0])[0])
+							if self.callerID == '':
+								self.callerID = 'desconocido'
+							logger.write('INFO', '[GSM] El número %s está llamando.' % self.callerID)
+							self.active_call = True
+							self.new_call = True
+						return totalOutput
+					elif modemOutput.startswith(('. BAD', '. NO ', 'ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
+						errorMessage = modemOutput.replace('\r\n', '')
+						logger.write('DEBUG', '[GSM] %s' % errorMessage)
+						raise ATCommandError("%s" % atCommand)
+					elif modemOutput.startswith('NO CARRIER'):
+						print totalOutput
+						raise AtNoCarrier
+					elif modemOutput.startswith('RING'):
+						expected = '+CLIP'
+						wait = 0
+					elif modemOutput.startswith('SSLSRING'):
+						self.modemInstance.write(atCommand + '\r')
+				if wait == 0:
+					continue
+				elif time.time() > end:
+					print totalOutput
+					raise AtTimeout("%s" % atCommand)
 		#~ 
 		#~ if expected != None:
 			#~ totalOutput = []
@@ -153,6 +175,10 @@ class Gsm(Modem):
 	thread = None
 	threadName = None
 	telit_lock = None
+	callerID = None
+	
+	wifiInstance = None
+	ethernetInstance = None
 	ftpInstance = None
 	callInstance = None
 
@@ -168,45 +194,59 @@ class Gsm(Modem):
 
 
 	def connectAT(self, _serialPort):
-			self.localInterface = _serialPort
-			try:
-					self.modemInstance.port = _serialPort
-					self.modemInstance.open()
-					time.sleep(self.modemInstance.timeout)
-					self.sendAT('ATZ')                               # Enviamos un reset
-					self.sendAT('ATE1')     #Habilitamos el echo
-					#En base al modulo conectado, el comportamiento es distinto
-					model = self.sendAT('AT+GMM')
-					if model[1].startswith('UL865-NAR'):
-							self.modemInstance.dsrdtr = True
-							self.modemInstance.dtr = 1
-							logger.write('DEBUG', '[GSM] Telit UL865-NAR conectada en %s.' % _serialPort)
-							self.sendAT('AT#EXECSCR')       #Ejecuto el script de inicio
-							self.telitConnected = True
-					elif model[1].startswith('MF626'):
-							logger.write('DEBUG', '[GSM] Dongle ZTE MF626 conectado en %s.' % _serialPort)
-							self.sendAT('AT+CPMS="SM"')         #Si no le mando esto, el dongle ZTE me manda advertencias cada 2 segundos\;
-							self.sendAT('AT+CMEE=2')                 # Habilitamos reporte de error
-							self.sendAT('AT+CMGF=0')                 # Establecemos el modo PDU para SMS
-							self.sendAT('AT+CNMI=1,2,0,0,0') # Habilitamos notificacion de mensaje entrante
-							self.configPPP('mf626')
-					else:
-							self.sendAT('AT+CMEE=2')                 # Habilitamos reporte de error
-							self.sendAT('AT+CMGF=0')                 # Establecemos el modo PDU para SMS
-							self.sendAT('AT+CLIP=1')                 # Habilitamos identificador de llamadas
-							self.sendAT('AT+CNMI=1,2,0,0,0') # Habilitamos notificacion de mensaje entrante
-							self.configPPP()
-					self.atConnection = True
-					self.callInstance.modemInstance = self.modemInstance
-					return True
-			except:
-				self.atConnection = False
-				return False
+		self.localInterface = _serialPort
+		try:
+			self.modemInstance.port = _serialPort
+			self.modemInstance.open()
+			time.sleep(self.modemInstance.timeout)
+			self.sendAT('ATZ')                               # Enviamos un reset
+			self.sendAT('ATE1')     #Habilitamos el echo
+			#Verificamos conectividad con la red
+			while True:
+				registration = self.sendAT('AT+CREG?')
+				reg_status = regex.findall(",([0-9])\r", registration[1])[0]
+				if reg_status == '1':
+					break
+				elif reg_status == '2':
+					return False
+				else:
+					logger.write('WARNING', '[GSM] El dispositivo no se ha podido registrar en la red.')
+					logger.write('DEBUG', '[GSM] AT+CREG status = %s' % reg_status)
+					return False
+			#En base al modulo conectado, el comportamiento es distinto
+			model = self.sendAT('AT+GMM')
+			if model[1].startswith('UL865-NAR'):
+					self.modemInstance.dsrdtr = True
+					self.modemInstance.dtr = 1
+					logger.write('DEBUG', '[GSM] Telit UL865-NAR conectada en %s.' % _serialPort)
+					self.sendAT('AT#EXECSCR')       #Ejecuto el script de inicio
+					#~ self.sendAT('AT+IPR=230400')
+					#~ self.modemInstance.baudrate = 230400
+					self.telitConnected = True
+					self.configPPP()
+			elif model[1].startswith('MF626'):
+					logger.write('DEBUG', '[GSM] Dongle ZTE MF626 conectado en %s.' % _serialPort)
+					self.sendAT('AT+CPMS="SM"')         #Si no le mando esto, el dongle ZTE me manda advertencias cada 2 segundos\;
+					self.sendAT('AT+CMEE=2')                 # Habilitamos reporte de error
+					self.sendAT('AT+CMGF=0')                 # Establecemos el modo PDU para SMS
+					self.sendAT('AT+CNMI=1,2,0,0,0') # Habilitamos notificacion de mensaje entrante
+					self.configPPP('mf626')
+			else:
+					self.sendAT('AT+CMEE=2')                 # Habilitamos reporte de error
+					self.sendAT('AT+CMGF=0')                 # Establecemos el modo PDU para SMS
+					self.sendAT('AT+CLIP=1')                 # Habilitamos identificador de llamadas
+					self.sendAT('AT+CNMI=1,2,0,0,0') # Habilitamos notificacion de mensaje entrante
+					self.configPPP()
+			#self.atConnection = True
+			self.callInstance.modemInstance = self.modemInstance
+			return True
+		except:
+			#self.atConnection = False
+			return False
 					
-
 	def connectAndroid(self):
 		try:
-			output = subprocess.Popen(['adb','devices','-l'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+			output = subprocess.pPopen(['adb','devices','-l'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			devicesList, error = output.communicate()
 			model = regex.findall('model:(.*) ', devicesList)
 			if error=='' and model:
@@ -311,7 +351,7 @@ class Gsm(Modem):
 				self.telit_lock.acquire()
 				while self.active_call:
 					self.telit_lock.wait()
-				unreadList = self.sendAT('AT+CMGL=0')   #Equivale al "REC UNREAD" en modo texto
+				unreadList = self.sendAT('AT+CMGL=0', wait = 2)   #Equivale al "REC UNREAD" en modo texto
 				self.telit_lock.release()
 				for unreadIndex, unreadData in enumerate(unreadList):
 					if unreadData.startswith('+CMGL'):
@@ -403,10 +443,10 @@ class Gsm(Modem):
 										smsAmount -= 1
 						elif self.telitConnected:
 							time.sleep(5)
-							self.telit_lock.acquire()
 							while self.active_call:
-								self.telit_lock.wait()
-							unreadList = self.sendAT('AT+CMGL=0')
+								pass
+							self.telit_lock.acquire()
+							unreadList = self.sendAT('AT+CMGL=0', wait = 2)
 							self.telit_lock.release()
 							for unreadIndex, unreadData in enumerate(unreadList):
 								if unreadData.startswith('+CMGL'):
@@ -457,31 +497,62 @@ class Gsm(Modem):
 						else:
 							time.sleep(1.5)
 				except IOError:
+					print traceback.format_exc()
 					self.isActive = False
 				except:
 					print traceback.format_exc()
 					time.sleep(1.5)
 		logger.write('WARNING', '[GSM] Función \'receiveAT\' terminada.')
 
-	def send(self, message, telephoneNumber):
-			# Comprobación de envío de texto plano
-			if isinstance(message, messageClass.Message) and hasattr(message, 'plainText'):
-					return self.sendMessage(message.plainText, telephoneNumber)
-			# Comprobación de envío de archivo
-			elif isinstance(message, messageClass.Message) and hasattr(message, 'fileName'):
-					fileDirectory, fileName = os.path.split(message.fileName)
-					logger.write('WARNING', '[GSM] Imposible enviar \'%s\' por este medio. Archivo subido al servidor FTP.' % fileName)				
-					ftpHost = JSON_CONFIG["FTP"]["FTP_SERVER"]
-					if self.ftpInstance.send(message, False):
-						aviso = 'El comunicador 2.0 ha subido el archivo ' + fileName + ' para usted, al servidor FTP ' + ftpHost + '.'
-						return self.sendMessage(aviso,  telephoneNumber)
-					return False
-			# Entonces se trata de enviar una instancia de mensaje
+	def send(self, message, telephoneNumber, call = False):
+		# Comprobación de envío de texto plano
+		if isinstance(message, messageClass.Message) and hasattr(message, 'plainText'):
+			if call:
+				ppp = not self.wifiInstance.online and not self.ethernetInstance.online
+				try:
+					if ppp:
+						print "pon" #DBG
+						self.telit_lock.acquire()
+						self.sendAT('AT#SSLH=1')
+						self.sendAT('AT#SGACT=1,0')
+						self.modemInstance.close()
+						ponOut, ponErr = subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+						time.sleep(5)
+						audioMsg = self.callInstance.text_to_audio(message.plainText)
+						subprocess.Popen('poff', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+						self.modemInstance.open()
+						self.telit_lock.release()
+					else:
+						audioMsg = self.callInstance.text_to_audio(message.plainText)
+					return self.sendVoiceCall(audioMsg, telephoneNumber)
+				except requests.exceptions.ConnectionError:
+					if ppp:
+						subprocess.Popen('poff', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+						self.telit_lock.release()
+					logger.write('WARNING', '[GSM] No se puede convertir el mensaje a audio porque no hay conexion a Internet.')
+					logger.write('INFO', '[GSM] El mensaje sera enviado por SMS.')
+			return self.sendMessage(message.plainText, telephoneNumber)
+		# Comprobación de envío de archivo
+		elif isinstance(message, messageClass.Message) and hasattr(message, 'fileName'):
+			fileDirectory, fileName = os.path.split(message.fileName)
+			if call:
+				logger.write('WARNING', '[GSM] No es posible enviar archivos mediante llamadas de voz.')
 			else:
-					isInstance = True
-					# Serializamos el objeto para poder transmitirlo
-					serializedMessage = 'INSTANCE' + pickle.dumps(message)
-					return self.sendMessage(serializedMessage, telephoneNumber, True)
+				logger.write('WARNING', '[GSM] Imposible enviar archivos por SMS.')		
+			logger.write('INFO', '[GSM] Archivo %s subido al servidor FTP. Receptor informado por SMS.' % fileName)	
+			ftpHost = JSON_CONFIG["FTP"]["FTP_SERVER"]
+			if self.ftpInstance.send(message, False):
+				aviso = 'El comunicador 2.0 ha subido el archivo ' + fileName + ' para usted, al servidor FTP ' + ftpHost + '.'
+				return self.sendMessage(aviso,  telephoneNumber)
+			return False
+		# Entonces se trata de enviar una instancia de mensaje
+		else:
+			if call:
+				logger.write('WARNING', '[GSM] No es posible enviar instancias mediante llamadas de voz. Enviando por SMS.')
+			isInstance = True
+			# Serializamos el objeto para poder transmitirlo
+			serializedMessage = 'INSTANCE' + pickle.dumps(message)
+			return self.sendMessage(serializedMessage, telephoneNumber, True)
 
 	def sendMessage(self, plainText, telephoneNumber, isInstance = False):
 		try:
@@ -575,7 +646,6 @@ class Gsm(Modem):
 					self.telit_lock.wait()
 				self.sendAT('AT+CMGD=1,2')
 				self.telit_lock.release()
-				#self.removeAllSms() #DEBUG: Es necesario?
 				return True
 
 		except:
@@ -583,33 +653,44 @@ class Gsm(Modem):
 				logger.write('ERROR', '[GSM] Error al enviar el mensaje de texto a %s.' % str(telephoneNumber))
 				return False
 
-	def sendVoiceCall(self, telephoneNumber):
+	def sendVoiceCall(self, audioMsg, telephoneNumber):
 		try:
-			self.sendAT('ATD' + str(telephoneNumber) + ';') # Numero al cual se quiere llamar
+			self.telit_lock.acquire()
+			self.sendAT('ATD' + str(telephoneNumber) + ';', wait = 10) # Numero al cual se quiere llamar
 			logger.write('INFO', '[GSM] Llamando al número %s...' % str(telephoneNumber))
-			
 			active = False
 			while not active:
 				status = self.sendAT('AT+CLCC')[1].split(',')[2] 
 				if status == '0':
-					self.callInstance.thread = threading.Thread(target = self.callInstance.voiceCall)
-					self.callInstance.telephoneNumber = telephoneNumber
+					self.callInstance.thread = threading.Thread(target = self.callInstance.msgCall, args=(audioMsg,))
 					self.callInstance.thread.start()
-					active = True					
+					active = True
+				time.sleep(0.5)					
 			return True
 		except:
+			print traceback.format_exc()
+			self.telit_lock.release()
 			logger.write('ERROR', '[GSM] Se produjo un error al intentar realizar la llamada!')
 			return False
 
 	def answerVoiceCall(self):
 		self.telit_lock.acquire()
-		self.sendAT('ATA') # Atiende la llamada entrante
 		self.new_call = False
-		logger.write('INFO', '[GSM] Conectado con el número %s.' % self.callerID)
-		self.callInstance.thread = threading.Thread(target = self.callInstance.voiceCall)
-		self.callInstance.telephoneNumber = self.callerID
-		self.callInstance.thread.start()
-		return True
+		telephoneNumber = self.getTelephoneNumber(str(self.callerID))
+		if telephoneNumber in contactList.allowedNumbers.values() or not JSON_CONFIG["COMMUNICATOR"]["RECEPTION_FILTER"]:
+			self.sendAT('AT#SSLH=1')
+			self.sendAT('AT#SGACT=1,0')
+			self.sendAT('ATA') # Atiende la llamada entrante
+			logger.write('INFO', '[GSM] Conectado con el número %s.' % self.callerID)
+			self.callInstance.thread = threading.Thread(target = self.callInstance.voiceCall)
+			self.callInstance.telephoneNumber = self.callerID
+			self.callInstance.thread.start()
+			return True
+		else:
+			self.sendAT('ATH')
+			logger.write('INFO', '[GSM] Llamada de %s rechazada.' % self.callerID)
+			self.telit_lock.release()
+			return False
 				
 	def hangUpVoiceCall(self):
 			try:
@@ -632,14 +713,6 @@ class Gsm(Modem):
 	def removeSms(self, smsIndex):
 			try:
 					self.sendAT('AT+CMGD=' + str(smsIndex)) # Elimina el mensaje especificado
-					return True
-			except:
-					return False
-
-	def removeAllSms(self):
-			try:
-					self.telit_lock.acquire()
-					self.telit_lock.release()
 					return True
 			except:
 					return False
@@ -748,13 +821,14 @@ class Gsm(Modem):
 			new_options = fdopen(temp, "w")
 			old_options = open("/etc/ppp/options-mobile", "r")
 			lines = old_options.readlines()
-			lines = lines[1:]
+			lines = lines[2:]
 			old_options.close()
 			if model == 'mf626':
 				gprs_port = int(self.modemInstance.port[-1:]) + 1
 				new_options.write(self.modemInstance.port[:-1] + str(gprs_port) + '\r\n')
 			else:
 				new_options.write(self.modemInstance.port + '\r\n')
+			new_options.write(str(self.modemInstance.baudrate) + '\r\n')
 			for line in lines:
 				new_options.write(line)
 			remove("/etc/ppp/options-mobile")

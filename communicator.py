@@ -99,6 +99,8 @@ def open():
 		emailInstance.gsmInstance = gsmInstance
 		emailInstance.controllerInstance = controllerInstance
 		
+		gsmInstance.wifiInstance = wifiInstance
+		gsmInstance.ethernetInstance = ethernetInstance
 		gsmInstance.ftpInstance = ftpInstance
 		gsmInstance.callInstance = callInstance
 		ftpInstance.gsmInstance = gsmInstance

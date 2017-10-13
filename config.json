@@ -46,13 +46,14 @@
 	},
 "PRIORITY_LEVELS":
 	{
-	"GSM"       : 4,
-	"GPRS"      : 5,
-	"WIFI"      : 6,
-	"ETHERNET"  : 7,
-	"BLUETOOTH" : 3,
-	"EMAIL"     : 2,
-	"FTP"	    : 1
+	"VOZ"	    : 1,
+	"SMS"       : 5,
+	"GPRS"      : 6,
+	"WIFI"      : 7,
+	"ETHERNET"  : 8,
+	"BLUETOOTH" : 4,
+	"EMAIL"     : 3,
+	"FTP"	    : 2
 	},
 "LOGGER":
 	{

@@ -32,7 +32,7 @@ from email.mime.image import MIMEImage
 import logger
 import contactList
 import messageClass
-from modemClass import ATCommandError
+from modemClass import ATCommandError, AtNewCall
 
 JSON_FILE = 'config.json'
 JSON_CONFIG = json.load(open(JSON_FILE))
@@ -95,10 +95,9 @@ class Email(object):
 		finally:
 			logger.write('INFO','[EMAIL] Objeto destruido.' )
 
-	def connect(self, mode = 1):
-		self.mode = mode
+	def connect(self):
 		try:
-			if mode in [1,2]:
+			if self.mode in [1,2,4]:
 				self.smtpServer = smtplib.SMTP_SSL(self.smtpHost, self.smtpPort, timeout = 30) # Establecemos servidor y puerto SMTP
 				self.imapServer = imaplib.IMAP4_SSL(self.imapHost, self.imapPort) # Establecemos servidor y puerto IMAP
 				self.smtpServer.ehlo()
@@ -124,6 +123,8 @@ class Email(object):
 		
 	def sendSSLCommand(self, command, expected = None):
 		try:
+			if self.gsmInstance.new_call:
+				raise AtNewCall
 			self.gsmInstance.sendAT('AT#SSLSEND=1', '>', 1)
 			self.gsmInstance.sendAT((command + '\r\n\x1A').encode('utf-8'), 'SSLSRING', 30)
 			response = self.gsmInstance.sendAT('AT#SSLRECV=1,1000', expected, 5)
@@ -223,11 +224,14 @@ class Email(object):
 				self.smtpServer.sendmail(mime['From'], mime['To'], mime.as_string())
 			logger.write('INFO', '[EMAIL] Mensaje enviado a \'%s\'' % mime['To'])
 			return True
+		except AtNewCall:
+			logger.write('WARNING', '[EMAIL] Recepcion fallida: llamada entrante.')
+		except ATCommandError as error:
+			logger.write('WARNING', '[EMAIL] Recepcion fallida: error en los comandos AT.')
+			logger.write('DEBUG', '[EMAIL] %s: %s.' % (type(error).__name__, error.msg))
 		except Exception as errorMessage:
 			logger.write('WARNING', '[EMAIL] Mensaje no enviado: %s' % str(errorMessage))
 			return False
-		except ATCommandError:
-			logger.write('ERROR', '[EMAIL] Mensaje no enviado: fallo en los comandos AT.')
 		finally:
 			if self.gsmInstance.telitConnected:
 				self.gsmInstance.sendAT('AT#SSLH=1')
@@ -242,15 +246,16 @@ class Email(object):
 				emailIdsList = list()
 				# Mientras no se haya recibido ningun correo electronico, el temporizador no haya expirado y no se haya detectado movimiento...
 				while len(emailIdsList) == 0 and self.isActive:
-					if self.mode in [1,2]:
+					if self.mode in [1,2,4]:
 						self.imapServer.recent() # Actualizamos la Bandeja de Entrada
 						result, emailIds = self.imapServer.uid('search', None, '(UNSEEN)') # Buscamos emails sin leer (nuevos)
 						emailIdsList = emailIds[0].split()
 					else:
 						self.telit_lock.acquire()
-						while self.gsmInstance.active_call:
-							self.telit_lock.wait()
-						self.punito = time.time() #DBG
+						if self.gsmInstance.active_call:
+							self.telit_lock.release()
+							self.isActive = False
+							break
 						self.sendSSLCommand('. SELECT INBOX', '. OK')
 						result = self.sendSSLCommand('. SEARCH UNSEEN', '. OK')
 						self.telit_lock.release()
@@ -261,7 +266,7 @@ class Email(object):
 					logger.write('DEBUG', '[EMAIL] Ha(n) llegado ' + str(emailAmount) + ' nuevo(s) mensaje(s) de correo electronico!')
 					# Recorremos los emails recibidos...
 					for emailId in emailIdsList:
-						if self.mode in [1,2]:
+						if self.mode in [1,2,4]:
 							result, emailData = self.imapServer.uid('fetch', emailId, '(RFC822)')
 							emailReceived = email.message_from_string(emailData[0][1])
 							# Retorna un objeto 'message', y podemos acceder a los items de su cabecera como un diccionario.'
@@ -313,13 +318,18 @@ class Email(object):
 				# ... sino, dejamos de esperar mensajes
 				else:
 					break
+		except AtNewCall:
+			self.telit_lock.release()
+			logger.write('WARNING', '[EMAIL] Recepcion fallida: llamada entrante.')
+		except ATCommandError as error:
+			self.telit_lock.release()
+			logger.write('WARNING', '[EMAIL] Recepcion fallida: error en los comandos AT.')
+			logger.write('DEBUG', '[EMAIL] %s: %s.' % (type(error).__name__, error.msg))
 		except (serial.serialutil.SerialException, Exception) as message:
+			self.telit_lock.release()
 			logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailAccount)
 			logger.write('DEBUG', '[EMAIL] %s : %s' % (type(message).__name__, message))
-		except ATCommandError:
-			logger.write('WARNING', '[EMAIL] Recepcion fallida: error en los comandos AT.')
 		finally:
-			print traceback.format_exc()
 			self.successfulConnection = False
 			self.isActive = False
 			self.thread = threading.Thread(target = self.receive, name = self.threadName)
