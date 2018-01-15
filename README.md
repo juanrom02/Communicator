@@ -18,7 +18,7 @@ Soporta los servicios de correo electrónico y FTP(aprovechando el stack TCP/IP)
 	
 	- Librería pexpect (sudo pip install pexpect)
 	
-	- Librería python-messaging ([GitHub]{https://github.com/pmarti/python-messaging})
+	- Librería python-messaging (https://github.com/pmarti/python-messaging)
 	
 	- Librería SpeechRecognition (sudo pip install SpeechRecognition)
 	
