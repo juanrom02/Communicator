@@ -39,6 +39,10 @@ class AtNoCarrier(ATCommandError): pass
 
 class AtNewCall(ATCommandError): pass
 
+class AdbError(Exception):
+	def __init__(self, msg = ''):
+		self.msg = msg
+
 class Modem(object):
 
 	receptionQueue = None
@@ -61,106 +65,109 @@ class Modem(object):
 			self.modemInstance.baudrate = JSON_CONFIG["MODEM"]["BAUD_RATE"]
 
 	def sendAT(self, atCommand, expected = 'OK', wait = 0, mode = 1):
-			end = time.time() + wait
-			#if atCommand in ['ATA', '+++', 'AT+CMGL=0', 'AT#SGACT?']:
-			#~ if atCommand == '+++':
-				#~ self.modemInstance.reset_input_buffer()
-			if mode == 0:
-				self.modemInstance.write(atCommand) 
-			elif mode == 1:
-				self.modemInstance.write(atCommand + '\r')
-			elif mode == 2:
-				self.modemInstance.write(atCommand + '\r\n')
-			curframe = inspect.currentframe()
-			calframe = inspect.getouterframes(curframe,2)
-			print calframe[1][3] + ': ' + atCommand
-			totalOutput = list()
-			#~ if self.modemInstance.in_waiting != 0 and atCommand != '':
-				#~ reception = self.modemInstance.read(self.modemInstance.in_waiting)
-				#~ 
-				#~ self.modemInstance.reset_input_buffer()
-			while atCommand.startswith('AT') and  atCommand not in ['ATZ', 'ATE1']:
-				modemOutput = self.modemInstance.readline()
-				if modemOutput.startswith(atCommand):
-					totalOutput.append(modemOutput)
-					break
+		old_expected = expected
+		end = time.time() + wait
+		#if atCommand in ['ATA', '+++', 'AT+CMGL=0', 'AT#SGACT?']:
+		#~ if atCommand == '+++':
+			#~ self.modemInstance.reset_input_buffer()
+		if mode == 0:
+			self.modemInstance.write(atCommand) 
+		elif mode == 1:
+			self.modemInstance.write(atCommand + '\r')
+		elif mode == 2:
+			self.modemInstance.write(atCommand + '\r\n')
+		curframe = inspect.currentframe()
+		calframe = inspect.getouterframes(curframe,2)
+		print calframe[1][3] + ': ' + atCommand
+		totalOutput = list()
+		#~ if self.modemInstance.in_waiting != 0 and atCommand != '':
+			#~ reception = self.modemInstance.read(self.modemInstance.in_waiting)
+			#~ 
+			#~ self.modemInstance.reset_input_buffer()
+		while atCommand.startswith('AT') and  atCommand not in ['ATZ', 'ATE1']:
+			modemOutput = self.modemInstance.readline()
+			if modemOutput.startswith(atCommand):
+				totalOutput.append(modemOutput)
+				break
+			elif modemOutput.startswith('RING'):
+				expected = '+CLIP'
+				wait = 0
+				break
+		while True and expected != None:
+			modemOutput = self.modemInstance.readline()
+			if modemOutput == '':
+				if wait == 0:
+					raise AtTimeout("%s" % atCommand)
+			else:
+				totalOutput.append(modemOutput)
+				if modemOutput.startswith(expected):
+					if expected == '+CLIP':
+						self.callerID = self.getTelephoneNumber(regex.findall('"(.*)"', modemOutput.split(',')[0])[0])
+						if self.callerID == '':
+							self.callerID = 'desconocido'
+						logger.write('INFO', '[GSM] El número %s está llamando.' % self.callerID)
+						self.active_call = True
+						self.new_call = True
+						expected = old_expected
+					else:
+						print totalOutput
+						return totalOutput
+				elif modemOutput.startswith(('. BAD', '. NO ', 'ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
+					errorMessage = modemOutput.replace('\r\n', '')
+					logger.write('DEBUG', '[GSM] %s' % errorMessage)
+					raise ATCommandError("%s" % atCommand)
+				elif modemOutput.startswith('NO CARRIER'):
+					print totalOutput
+					raise AtNoCarrier
 				elif modemOutput.startswith('RING'):
 					expected = '+CLIP'
 					wait = 0
-					break
-			while True and expected != None:
-				modemOutput = self.modemInstance.readline()
-				if modemOutput == '':
-					if wait == 0:
-						raise AtTimeout("%s" % atCommand)
-				else:
-					totalOutput.append(modemOutput)
-					if modemOutput.startswith(expected):
-						print totalOutput
-						if expected == '+CLIP':
-							self.callerID = self.getTelephoneNumber(regex.findall('"(.*)"', modemOutput.split(',')[0])[0])
-							if self.callerID == '':
-								self.callerID = 'desconocido'
-							logger.write('INFO', '[GSM] El número %s está llamando.' % self.callerID)
-							self.active_call = True
-							self.new_call = True
-						return totalOutput
-					elif modemOutput.startswith(('. BAD', '. NO ', 'ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
-						errorMessage = modemOutput.replace('\r\n', '')
-						logger.write('DEBUG', '[GSM] %s' % errorMessage)
-						raise ATCommandError("%s" % atCommand)
-					elif modemOutput.startswith('NO CARRIER'):
-						print totalOutput
-						raise AtNoCarrier
-					elif modemOutput.startswith('RING'):
-						expected = '+CLIP'
-						wait = 0
-					elif modemOutput.startswith('SSLSRING'):
-						self.modemInstance.write(atCommand + '\r')
-				if wait == 0:
-					continue
-				elif time.time() > end:
-					print totalOutput
-					raise AtTimeout("%s" % atCommand)
-		#~ 
-		#~ if expected != None:
-			#~ totalOutput = []
-			#~ while wait > 0:    
-				#~ modemOutput = self.modemInstance.readlines() # Espero la respuesta
-				#~ totalOutput += modemOutput
-				#~ for outputElement in modemOutput:
-					#~ if outputElement.startswith(expected):
-						#~ print totalOutput
-						#~ return totalOutput
-					#~ elif outputElement.startswith(('. BAD', 'ERROR', '+CME ERROR', '+CMS ERROR')):
-						#~ raise Exception(outputElement)
-				#~ time.sleep(1)   
-				#~ wait -= 1
-			#~ print totalOutput
-			#~ raise RuntimeError("%s: %s" % (atCommand, totalOutput[-1]))
-		#~ else:
+				elif modemOutput.startswith('SSLSRING'):
+					self.modemInstance.write(atCommand + '\r')
+			if wait == 0:
+				continue
+			elif time.time() > end:
+				print totalOutput
+				raise AtTimeout("%s" % atCommand)
+	#~ 
+	#~ if expected != None:
+		#~ totalOutput = []
+		#~ while wait > 0:    
 			#~ modemOutput = self.modemInstance.readlines() # Espero la respuesta
-		#~ print modemOutput
-		#~ # El módem devuelve una respuesta ante un comando
-		#~ if len(modemOutput) > 0:
-				#~ # Verificamos si se produjo algún tipo de error relacionado con el comando AT
-				#~ for outputElement in modemOutput:
-						#~ # El 'AT+CNMA' sólo es soportado en Dongles USB que requieren confirmación de SMS
-						#~ if outputElement.startswith(('ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
-								#~ errorMessage = outputElement.replace('\r\n', '')
-								#~ if atCommand.startswith('AT'):
-									#~ logger.write('WARNING', '[GSM] %s - %s.' % (atCommand[:-1], errorMessage))
-								#~ else:
-									#~ logger.write('WARNING', '[GSM] No se pudo enviar el mensaje - %s.' % errorMessage)
-								#~ raise
-						#~ # El comando AT para llamadas de voz (caracterizado por su terminacion en ';') no es soportado
-						#~ elif outputElement.startswith('NO CARRIER') and atCommand.startswith('ATD') and atCommand.endswith(';'):
-								#~ raise
-		#~ # Esto ocurre cuando el puerto 'ttyUSBx' no es un módem
-		#~ else:
-			#~ raise Exception("%s: No hubo respuesta" % atCommand)
-		#~ # Si la respuesta al comando AT no era un mensaje de error, retornamos la salida
-		#~ return modemOutput
+			#~ totalOutput += modemOutput
+			#~ for outputElement in modemOutput:
+				#~ if outputElement.startswith(expected):
+					#~ print totalOutput
+					#~ return totalOutput
+				#~ elif outputElement.startswith(('. BAD', 'ERROR', '+CME ERROR', '+CMS ERROR')):
+					#~ raise Exception(outputElement)
+			#~ time.sleep(1)   
+			#~ wait -= 1
+		#~ print totalOutput
+		#~ raise RuntimeError("%s: %s" % (atCommand, totalOutput[-1]))
+	#~ else:
+		#~ modemOutput = self.modemInstance.readlines() # Espero la respuesta
+	#~ print modemOutput
+	#~ # El módem devuelve una respuesta ante un comando
+	#~ if len(modemOutput) > 0:
+			#~ # Verificamos si se produjo algún tipo de error relacionado con el comando AT
+			#~ for outputElement in modemOutput:
+					#~ # El 'AT+CNMA' sólo es soportado en Dongles USB que requieren confirmación de SMS
+					#~ if outputElement.startswith(('ERROR', '+CME ERROR', '+CMS ERROR')) and atCommand != 'AT+CNMA':
+							#~ errorMessage = outputElement.replace('\r\n', '')
+							#~ if atCommand.startswith('AT'):
+								#~ logger.write('WARNING', '[GSM] %s - %s.' % (atCommand[:-1], errorMessage))
+							#~ else:
+								#~ logger.write('WARNING', '[GSM] No se pudo enviar el mensaje - %s.' % errorMessage)
+							#~ raise
+					#~ # El comando AT para llamadas de voz (caracterizado por su terminacion en ';') no es soportado
+					#~ elif outputElement.startswith('NO CARRIER') and atCommand.startswith('ATD') and atCommand.endswith(';'):
+							#~ raise
+	#~ # Esto ocurre cuando el puerto 'ttyUSBx' no es un módem
+	#~ else:
+		#~ raise Exception("%s: No hubo respuesta" % atCommand)
+	#~ # Si la respuesta al comando AT no era un mensaje de error, retornamos la salida
+	#~ return modemOutput
 
 	def closePort(self):
 			self.modemInstance.close()
@@ -246,25 +253,28 @@ class Gsm(Modem):
 					
 	def connectAndroid(self):
 		try:
-			output = subprocess.pPopen(['adb','devices','-l'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+			output = subprocess.Popen(['adb','devices','-l'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			devicesList, error = output.communicate()
 			model = regex.findall('model:(.*) ', devicesList)
 			if error=='' and model:
 				#Detecta por primera vez el dispositivo
 				if not self.androidConnected:
-					tethering = 'adb shell su -c service call connectivity 30 i32 1'
-					adbProcess = subprocess.Popen(tethering.split(), stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-					adbProcess.communicate()
+					tethering = ['adb', 'shell', 'su -c service call connectivity 33 i32 1']
+					adbProcess = subprocess.Popen(tethering, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+					out, err = adbProcess.communicate()
 					logger.write('DEBUG', '[GSM] Dispositivo Android conectado: %s.' % model[0])
+					DEVNULL = open(os.devnull, 'w')
+					subprocess.call(['adb','shell','su -c svc data enable'], stdout = DEVNULL)
+					subprocess.call(['adb','shell','su -c svc wifi enable'], stdout = DEVNULL)
+					DEVNULL.close()
 					time.sleep(2)
 				self.androidConnected = True
 			else:
-					
-					self.androidConnected = False
-		except:
 				self.androidConnected = False
+		except:
+			self.androidConnected = False
 		finally:
-				return self.androidConnected
+			return self.androidConnected
 				
 	def receive(self):
 		if self.androidConnected:
@@ -273,73 +283,71 @@ class Gsm(Modem):
 			self.receiveAT()
 
 	def receiveAndroid(self):
+		smsAmount = 0
+		unreadList = list()   
+		self.isActive = True                  
+		while self.isActive:
 			try:
-					smsAmount = 0
-					unreadList = list()
-					shell = pexpect.spawn("adb shell")
-					shell.expect("$")
-					self.sendPexpect(shell, "su", "#")
-					self.sendPexpect(shell, "sqlite3 /data/data/com.android.providers.telephony/databases/mmssms.db", "sqlite>")
-			except:
-					pass                       
-
-			#Ejemplo de unreadList[0] = 1285|+543517502317|Hola 13/06 11:53
-			#Ejemplo de unreadList[1] = 1286|+543517502317|Hola 13/06 11:58
-			smsAmount = len(unreadList)
-			self.isActive = True
-			while self.isActive:
-					try:
-							# Leemos los mensajes de texto recibidos...
-							if smsAmount is not 0:
-									smsPart = list()
-									logger.write('DEBUG', '[SMS] Ha(n) llegado ' + str(smsAmount) + ' nuevo(s) mensaje(s) de texto!')
-									for sms in unreadList:
-											smsPart = sms.split('|')
-											smsId = smsPart[0]
-											smsAddress = smsPart[1]
-											smsBody = smsPart[2]
-											#smsBody = smsBody[:-2] #Elimino el \r\r
-											telephoneNumber = self.getTelephoneNumber(smsAddress) # Obtenemos el numero de telefono
-											# Comprobamos si el remitente del mensaje (un teléfono) está registrado...
-											if telephoneNumber in contactList.allowedNumbers.values() or not JSON_CONFIG["COMMUNICATOR"]["RECEPTION_FILTER"]:
-													if smsBody.startswith('INSTANCE'):
-															# Quitamos la 'etiqueta' que hace refencia a una instancia de mensaje
-															serializedMessage = smsBody[len('INSTANCE'):]
-															# 'Deserializamos' la instancia de mensaje para obtener el objeto en sí
-															try:
-																	messageInstance = pickle.loads(serializedMessage)
-																	self.receptionQueue.put((messageInstance.priority, messageInstance))
-															except:
-																	print traceback.format_exc()
-																	logger.write('ERROR', '[GSM] No se pudo rearmar la instancia recibida de ' + str(telephoneNumber))
-													else:
-															self.receptionQueue.put((10, smsBody))
-													#self.sendOutput(telephoneNumber, smsMessage) # -----> SOLO PARA LA DEMO <-----
-													logger.write('INFO', '[GSM] Mensaje de ' + str(telephoneNumber) + ' recibido correctamente!')
-											# ... sino, rechazamos el mensaje entrante.
-											else:
-													logger.write('WARNING', '[GSM] Mensaje de ' + str(telephoneNumber) + 'rechazado!')
-											# Marco como leido el mensaje
-											self.sendPexpect(shell, 'UPDATE sms SET read=1 WHERE _id=' + smsId + ';', "sqlite>") #DEBUG
-											# Eliminamos el mensaje de la lista
-											unreadList.remove(sms)
-											# Decrementamos la cantidad de mensajes a procesar
-											smsAmount -= 1
+				# Leemos los mensajes de texto recibidos...
+				if smsAmount is not 0:
+					smsPart = list()
+					logger.write('DEBUG', '[SMS] Ha(n) llegado ' + str(smsAmount) + ' nuevo(s) mensaje(s) de texto!')
+					for sms in unreadList:
+						smsPart = sms.split('|')
+						smsId = smsPart[0]
+						smsAddress = smsPart[1]
+						smsBody = smsPart[2]
+						#smsBody = smsBody[:-2] #Elimino el \r\r
+						telephoneNumber = self.getTelephoneNumber(smsAddress) # Obtenemos el numero de telefono
+						# Comprobamos si el remitente del mensaje (un teléfono) está registrado...
+						if telephoneNumber in contactList.allowedNumbers.values() or not JSON_CONFIG["COMMUNICATOR"]["RECEPTION_FILTER"]:
+							if smsBody.startswith('INSTANCE'):
+								# Quitamos la 'etiqueta' que hace refencia a una instancia de mensaje
+								serializedMessage = smsBody[len('INSTANCE'):]
+								# 'Deserializamos' la instancia de mensaje para obtener el objeto en sí
+								messageInstance = pickle.loads(serializedMessage)
+								self.receptionQueue.put((messageInstance.priority, messageInstance))
 							else:
-									sql_query = self.sendPexpect(shell, "SELECT _id, address, body FROM sms WHERE read = 0;", "sqlite>")
-									#Le damos formato a la consulta
-									sql_query = sql_query + "0000|"
-									sql_query = sql_query.replace('\r\r','')
-									sql_query = sql_query[len("SELECT _id, address, body FROM sms WHERE read = 0;"):]
-									#Buscamos la expresion regular. El parametro overlapped es necesario porque los resultados se superponen
-									unreadList = regex.findall('\n([0-9]+\|.*?)\n[0-9]+\|', sql_query, regex.DOTALL, overlapped = True)
-									smsAmount = len(unreadList)
-									#Determino cada cuanto voy a revisar los mensajes recibidos
-									time.sleep(5)
-					except:
-							print traceback.format_exc() #DEBUG
-							time.sleep(1.5)
-			logger.write('WARNING', '[GSM] Funcion \'receiveAndroid\' terminada.')
+								self.receptionQueue.put((10, smsBody))
+								#self.sendOutput(telephoneNumber, smsMessage) # -----> SOLO PARA LA DEMO <-----
+								logger.write('INFO', '[GSM] Mensaje de ' + str(telephoneNumber) + ' recibido correctamente!')
+						# ... sino, rechazamos el mensaje entrante.
+						else:
+							logger.write('WARNING', '[GSM] Mensaje de ' + str(telephoneNumber) + 'rechazado!')
+						# Marco como leido el mensaje
+						self.sendPexpect(shell, 'UPDATE sms SET read=1 WHERE _id=' + smsId + ';', "sqlite>") #DEBUG
+						# Eliminamos el mensaje de la lista
+						unreadList.remove(sms)
+						# Decrementamos la cantidad de mensajes a procesar
+						smsAmount -= 1
+				else:
+					shell = pexpect.spawn("adb shell")
+					self.sendPexpect(shell, "", "$")
+					self.sendPexpect(shell, "su\n", "#")
+					self.sendPexpect(shell, "sqlite3 /data/user_de/0/com.android.providers.telephony/databases/mmssms.db", "sqlite>")
+					sql_query = self.sendPexpect(shell, "SELECT _id, address, body FROM sms WHERE read = 0;", "sqlite>")
+					#Le damos formato a la consulta
+					sql_query = sql_query + "0000|"
+					sql_query = sql_query.replace('\r\r','')
+					sql_query = sql_query[len("SELECT _id, address, body FROM sms WHERE read = 0;"):]
+					#Buscamos la expresion regular. El parametro overlapped es necesario porque los resultados se superponen
+					unreadList = regex.findall('\n([0-9]+\|.*?)\n[0-9]+\|', sql_query, regex.DOTALL, overlapped = True)
+					#Ejemplo de unreadList[0] = 1285|+543517502317|Hola 13/06 11:53
+					#Ejemplo de unreadList[1] = 1286|+543517502317|Hola 13/06 11:58
+					smsAmount = len(unreadList)
+					#Determino cada cuanto voy a revisar los mensajes recibidos
+					time.sleep(5)
+			except (pickle.PickleError, ValueError):
+				logger.write('ERROR', '[GSM] No se pudo rearmar la instancia recibida de ' + str(telephoneNumber))
+				self.sendPexpect(shell, 'UPDATE sms SET read=1 WHERE _id=' + smsId + ';', "sqlite>") #DEBUG
+				unreadList.remove(sms)
+				smsAmount -= 1
+			except AdbError as msg:
+				logger.write('DEBUG', '[GSM] Pexpect: %s' % msg)
+			except:
+				print traceback.format_exc() #DEBUG
+				time.sleep(1.5)
+		logger.write('WARNING', '[GSM] Funcion \'receiveAndroid\' terminada.')
 							   
 	def receiveAT(self):
 		try:
@@ -496,8 +504,9 @@ class Gsm(Modem):
 										############################# FIN LLAMADAS DE VOZ #############################
 						else:
 							time.sleep(1.5)
-				except IOError:
+				except (IOError, serial.SerialException):
 					print traceback.format_exc()
+					self.telit_lock.release()
 					self.isActive = False
 				except:
 					print traceback.format_exc()
@@ -567,36 +576,53 @@ class Gsm(Modem):
 				#Para enviar un SMS de multiples lineas, debo enviar una a la vez
 				smsLine = plainText.split('\n')
 				#Consulto el tiempo del dispositivo, para cuando quiera ver los eventos posteriores
-				time_device = self.sendADB('adb shell date')
-				time_device = time_device[:-11]
+				time_device = self.sendADB('adb shell date +%s')
+				time_device = int(time_device[:-1].ljust(13,'0'))
 				#Desbloqueo el celular
 				self.sendADB('adb shell input keyevent 26')
 				self.sendADB('adb shell input swipe 540 1900 540 1000')
 				self.sendADB('adb shell input text 7351')
 				#Envio el SMS y bloqueo el celular
 				self.sendADB('adb shell am start -a android.intent.action.SENDTO -d sms:' + str(telephoneNumber) + ' --ez exit_on_sent true')
+				self.sendADB('adb shell input keyevent 22')
 				for line in smsLine:
 					self.sendADB('adb shell input text "' + line + '"')
 					self.sendADB('adb shell input keyevent 66')
 				self.sendADB('adb shell input keyevent 67') #Elimino el ultimo \n
 			   #self.sendADB('adb shell am start -a android.intent.action.SENDTO -d sms:' + str(telephoneNumber) + ' --es sms_body "' + plainText + '" --ez exit_on_sent true')
-				self.sendADB('adb shell input keyevent 22')
+				self.sendADB('adb shell input tap 1000 1700')
 				self.sendADB('adb shell input keyevent 66')
 				self.sendADB('adb shell input keyevent 26')
 				#Consulto si se envio correctamente el mensaje
-				thread = threading.Thread(target=self.logcat, args=(time_device, "adb logcat -v brief Microlog:D *:S"))
-				thread.start()
-
-				thread.join(10)
-				if thread.is_alive():
-					self.process.terminate()
-					thread.join()
-				if self.SmsReceiverResult == None:
-					logger.write('WARNING', '[ANDROID] El estado del envio es desconocido. Revisar la conexion')
-					self.successfulList.append(False)
+				time.sleep(10)
+				shell = pexpect.spawn("adb shell")
+				self.sendPexpect(shell, "", "$")
+				self.sendPexpect(shell, "su\n", "#")
+				self.sendPexpect(shell, "sqlite3 /data/user_de/0/com.android.providers.telephony/databases/mmssms.db", "sqlite>")
+				sql_query = self.sendPexpect(shell, "SELECT body FROM sms WHERE date > %s AND type = 2;" % time_device, "sqlite>")
+							
+				msg = sql_query.split('\n')
+				print "plaintext\n" + repr(plainText)
+				print "query\n" + repr(msg[1])
+				
+				if len(msg) > 1 and msg[1].startswith(plainText.split('\n')[0]):
+					self.successfulList.append(True)
 				else:
-					self.successfulList.append(self.SmsReceiverResult)
-					self.SmsReceiverResult = None
+					self.successfulList.append(False)
+				
+				#thread = threading.Thread(target=self.logcat, args=(time_device, "adb logcat -v brief Microlog:D *:S"))
+				#thread.start()
+
+				#thread.join(10)
+				#if thread.is_alive():
+					#self.process.terminate()
+					#thread.join()
+				#if self.SmsReceiverResult == None:
+					#logger.write('WARNING', '[ANDROID] El estado del envio es desconocido. Revisar la conexion')
+					#self.successfulList.append(False)
+				#else:
+					#self.successfulList.append(self.SmsReceiverResult)
+					#self.SmsReceiverResult = None
 			else:    
 				self.telit_lock.acquire()
 				while self.active_call:
@@ -628,6 +654,8 @@ class Gsm(Modem):
 								index += 1
 						else:
 							break
+				self.telit_lock.acquire()
+				self.sendAT('AT+CMGD=1,2')
 				self.telit_lock.release()
 
 			if False in self.successfulList:
@@ -636,18 +664,10 @@ class Gsm(Modem):
 				else:
 					logger.write('WARNING', '[GSM] No se pudo enviar el mensaje a %s.' % str(telephoneNumber))
 				return False
-			else:
-				logger.write('INFO', '[GSM] Mensaje de texto enviado a %s.' % str(telephoneNumber))
-				# Borramos el mensaje enviado almacenado en la memoria
-				print info02[-3]
-				smsIndex = self.getSmsIndex(info02[-3])
-				self.telit_lock.acquire()
-				while self.active_call:
-					self.telit_lock.wait()
-				self.sendAT('AT+CMGD=1,2')
-				self.telit_lock.release()
-				return True
-
+			logger.write('INFO', '[GSM] Mensaje de texto enviado a %s.' % str(telephoneNumber))
+			return True
+		except AdbError as error:
+			logger.write('DEBUG', '[GSM] Pexpect: %s' % error)
 		except:
 				print traceback.format_exc()
 				logger.write('ERROR', '[GSM] Error al enviar el mensaje de texto a %s.' % str(telephoneNumber))
@@ -678,8 +698,8 @@ class Gsm(Modem):
 		self.new_call = False
 		telephoneNumber = self.getTelephoneNumber(str(self.callerID))
 		if telephoneNumber in contactList.allowedNumbers.values() or not JSON_CONFIG["COMMUNICATOR"]["RECEPTION_FILTER"]:
-			self.sendAT('AT#SSLH=1')
-			self.sendAT('AT#SGACT=1,0')
+			self.sendAT('AT#SSLH=1', wait = 2)
+			self.sendAT('AT#SGACT=1,0', wait = 2)
 			self.sendAT('ATA') # Atiende la llamada entrante
 			logger.write('INFO', '[GSM] Conectado con el número %s.' % self.callerID)
 			self.callInstance.thread = threading.Thread(target = self.callInstance.voiceCall)
@@ -761,6 +781,7 @@ class Gsm(Modem):
 					pass
 			
 	def sendADB(self,adbCommand):
+		try:
 			pipe = subprocess.Popen(adbCommand.split(), stdout = subprocess.PIPE, stderr=subprocess.PIPE)
 			output, error = pipe.communicate()
 			time.sleep(0.5)
@@ -772,15 +793,20 @@ class Gsm(Modem):
 					self.androidConnected = False
 			else:
 					return output
+		except:
+			print traceback.format_exc()
 
 	def sendPexpect(self, child, command, response):
-		try:
-			child.sendline(command)
-			r = child.expect([response, pexpect.TIMEOUT], 5)
+		child.sendline(command)
+		r = child.expect_exact([response, pexpect.TIMEOUT, pexpect.EOF], 5)
+		if r == 0:
 			return child.before
-		except:
-			print traceback.format_exc() #DEBUG
-			logger.write('DEBUG', '[GSM] Shell Android - %s.' % child.before)
+		elif r == 1:
+			logger.write('WARNING', '[GSM] Timeout del shell de Android.')
+			raise AdbError("%s" % command)
+		elif r == 2:
+			logger.write('WARNING', '[GSM] El shell de Android se ha cerrado inesperadamente.')
+			raise AdbError("%s" % command)
 
 
 	def logcat(self, time_device, adbCommand):

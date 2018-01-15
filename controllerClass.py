@@ -12,6 +12,7 @@ import pexpect
 import serial
 import json
 import regex
+from socket import timeout
 from modemClass import ATCommandError, AtTimeout
 
 import logger
@@ -45,6 +46,7 @@ class Controller(threading.Thread):
 	bluetoothInstance = None
 	emailInstance = None
 	ftpInstance = None
+	callInstance = None
 	
 	telit_lock = threading.Condition(threading.Lock())
 	communicatorName = None
@@ -115,6 +117,9 @@ class Controller(threading.Thread):
 		while self.isActive:
 			self.availableGsm = self.verifyGsmConnection()
 			if self.gsmInstance.androidConnected:
+				self.wifiInstance.pattern = re.compile('usb[0-9]+')
+				self.wifiInstance.state = 'UNKNOWN'
+				self.gprsInstance.pattern = re.compile('usb[0-9]+')
 				self.verifyAndroidStatus()
 			else:
 				self.wifiInstance.pattern = re.compile('wlan[0-9]+')
@@ -125,7 +130,9 @@ class Controller(threading.Thread):
 			self.availableEthernet = self.verifyNetworkConnection(self.ethernetInstance)
 			self.availableBluetooth = self.verifyBluetoothConnection()
 			internetConnection = [self.gprsInstance.online, self.wifiInstance.online, self.ethernetInstance.online]
-			self.availableEmail = self.verifyEmailConnection()
+			self.availableEmail = self.verifyEmailConnection() #DBG
+			#if not self.ftpInstance.isActive: #DBG
+			#		self.availableFtp = self.verifyFtpConnection() #DBG
 			#~ if any(i for i in internetConnection):
 				#~ if not self.ftpInstance.isActive:
 					#~ self.availableFtp = self.verifyFtpConnection()
@@ -139,6 +146,7 @@ class Controller(threading.Thread):
 					#~ self.emailInstance.isActive = False
 					#~ self.emailInstance.thread = threading.Thread(target = self.emailInstance.receive, name = emailThreadName)
 			if self.gsmInstance.new_call:
+				self.callInstance.gprsIsActive = self.gprsInstance.isActive
 				self.gsmInstance.answerVoiceCall()
 			time.sleep(self.REFRESH_TIME)
 		logger.write('WARNING', '[CONTROLLER] Función \'%s\' terminada.' % inspect.stack()[0][3])	
@@ -261,13 +269,10 @@ class Controller(threading.Thread):
 					self.telit_lock.release()
 					currentStatus = False
 				else:
-					result = self.gsmInstance.sendAT('AT#PING="%s"' % TEST_REMOTE_SERVER, wait = 30)
+					self.gsmInstance.sendAT('AT#SD=1,0,80,"%s",0,0,1' % TEST_REMOTE_SERVER, wait = 10)
+					self.gsmInstance.sendAT('AT#SH=1', wait = 5)
 					self.telit_lock.release()
-					ping = result[-3].split(',')
-					if ping[-1].startswith('255'):
-						currentStatus = False
-					else:			
-						currentStatus = True
+					currentStatus = True
 			else:
 				remoteHost = socket.gethostbyname(TEST_REMOTE_SERVER)
 				testSocket = socket.create_connection((remoteHost, 80), 2) # Se determina si es alcanzable
@@ -275,11 +280,13 @@ class Controller(threading.Thread):
 		except socket.error:
 			print traceback.format_exc()
 			currentStatus = False
-		except AtTimeout:
+		except (AtTimeout, ATCommandError):
 			self.telit_lock.release()
 			currentStatus = False
-		except:
-			print traceback.format_exc() #DBG
+		except serial.SerialException:
+			self.telit_lock.release()
+			currentStatus = False
+			#print traceback.format_exc() #DBG
 		finally:
 			if currentStatus != instance.online:
 				instance.online = currentStatus
@@ -307,7 +314,6 @@ class Controller(threading.Thread):
 				self.gprsInstance.localInterface = self.gsmInstance.localInterface
 				info = self.gprsInstance.localInterface + ' - ' + self.gprsInstance.localAddress
 				logger.write('INFO', '[%s] Listo para usarse (%s).' % (self.gprsInstance.MEDIA_NAME, info))
-				end = time.time()
 				self.gprsInstance.isActive = True
 			else:
 				active = self.gsmInstance.sendAT('AT#SGACT?','OK', 5)
@@ -328,9 +334,6 @@ class Controller(threading.Thread):
 			return False
 		
 	def verifyAndroidStatus(self):
-		self.wifiInstance.pattern = re.compile('usb[0-9]+')
-		self.wifiInstance.state = 'UNKNOWN'
-		self.gprsInstance.pattern = re.compile('usb[0-9]+')
 		if os.popen("adb shell dumpsys connectivity | grep -o 'ni{\[type: WIFI'").readline():
 			if self.gprsInstance.localInterface is not None:
 				self.closeConnection(self.gprsInstance)
@@ -344,14 +347,7 @@ class Controller(threading.Thread):
 				self.closeConnection(self.wifiInstance)
 			if self.gprsInstance.localInterface is not None:
 				self.closeConnection(self.gprsInstance)
-			shell = pexpect.spawn("adb shell")
-			shell.expect("$")
-			self.gsmInstance.sendPexpect(shell, "su", "#")
-			self.gsmInstance.sendPexpect(shell, "svc data enable", "#")
-			self.gsmInstance.sendPexpect(shell, "svc wifi enable", "#")
-			shell.sendline('exit')
-			shell.sendline('exit')
-
+			
 	def verifyBluetoothConnection(self):
 		activeInterfacesList = open('/tmp/activeInterfaces', 'a+').read()
 		# Ejemplo de bluetoothDevices: ['Devices:\n', '\thci0\t00:24:7E:64:7B:4A\n']
@@ -455,7 +451,7 @@ class Controller(threading.Thread):
 			
 	def verifyFtpConnection(self):
 		try:
-			if self.ethernetInstance.online or self.wifiInstance.online:
+			if (self.ethernetInstance.online or self.wifiInstance.online) or not self.gsmInstance.telitConnected:
 				self.ftpInstance.ftp_mode = 1
 				self.ftpInstance.connect()
 				lista = self.ftpInstance.ftpServer.nlst()
@@ -463,7 +459,8 @@ class Controller(threading.Thread):
 					if item.startswith(self.communicatorName):
 						self.ftpInstance.receive(item)
 						self.ftpServer.delete(item)
-			elif self.gsmInstance.online:
+				self.ftpInstance.ftpServer.quit()
+			else:
 				self.ftpInstance.ftp_mode = 2
 				self.ftpInstance.connect()
 				self.gsmInstance.sendAT('AT#FTPTYPE=0', wait = 5)
@@ -473,15 +470,15 @@ class Controller(threading.Thread):
 					if name:
 						self.ftpInstance.receive(name[0][:-1])
 						self.gsmInstance.sendAT(('AT#FTPDELE="%s"'%name[0][:-1]).encode('utf-8'), wait = 5)
-			if self.ftpInstance.ftp_mode == 1:
-				self.ftpInstance.ftpServer.quit()
-			else:
 				self.gsmInstance.sendAT('AT#FTPCLOSE', wait=5)
 				self.telit_lock.release()
 			logger.write('INFO', '[FTP] Servidor disponible (%s).' % self.ftpInstance.ftpHost)
 			self.ftpInstance.isActive = True
 			return True
-		except:
+		except (AtTimeout, timeout):
+			if self.ftpInstance.ftp_mode == 2:
+				self.telit_lock.acquire(False)
+				self.telit_lock.release()
 			print traceback.format_exc()
 			return False
 		

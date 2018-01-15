@@ -121,7 +121,7 @@ class DTMFdetector(object):
 	###########################################
 	## Post testing for algorithm
 	## figures out what's a valid signal and what's not
-	def post_testing(self):
+	def post_testing(self, nsign):
 		row = 0
 		col = 0
 		see_digit = 0
@@ -134,19 +134,24 @@ class DTMFdetector(object):
 		
 		row_col_ascii_codes = [["1", "2", "3", "A"],["4", "5", "6", "B"],["7", "8", "9", "C"],["*", "0", "#", "D"]]
 		
-		#Find the largest in the row group.
-		for i in range(4):
-			if self.r[i] > maxval:
-				maxval = self.r[i]
-				row = i
-				
-		#Find the largest in the column group.
-		col = 4
-		maxval = 0
-		for i in range(4,8):
-			if self.r[i] > maxval:
-				maxval = self.r[i]
-				col = i
+		if not nsign:
+			#Find the largest in the row group.
+			for i in range(4):
+				if self.r[i] > maxval:
+					maxval = self.r[i]
+					row = i
+					
+			#Find the largest in the column group.
+			col = 4
+			maxval = 0
+			for i in range(4,8):
+				if self.r[i] > maxval:
+					maxval = self.r[i]
+					col = i
+		else:
+			row = 3
+			col = 6
+			maxval = max(self.r[row],self.r[col])
 				
 		#Check for minimum energy
 		if self.r[row] < 4.0e5:
@@ -261,7 +266,7 @@ class DTMFdetector(object):
 	###########################################
 	## the Goertzel algorithm
 	## takes in a 16 bit signed sample
-	def goertzel(self, sample):
+	def goertzel(self, sample, nsign = False):
 		q0 = 0
 		i = 0
 		
@@ -278,7 +283,7 @@ class DTMFdetector(object):
 				self.r[i] = (self.q1[i] * self.q1[i]) + (self.q2[i] * self.q2[i]) - (self.coefs[i] * self.q1[i] * self.q2[i])
 				self.q1[i] = 0
 				self.q2[i] = 0
-			self.post_testing()
+			self.post_testing(nsign)
 			self.sample_count = 0
 			
 

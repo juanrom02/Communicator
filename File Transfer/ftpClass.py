@@ -167,5 +167,3 @@ class Ftp(object):
 			print traceback.format_exc()
 			tf.close()
 			raise
-		
-		

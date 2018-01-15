@@ -94,6 +94,7 @@ def open():
 		controllerInstance.bluetoothInstance = bluetoothInstance
 		controllerInstance.emailInstance = emailInstance
 		controllerInstance.ftpInstance = ftpInstance
+		controllerInstance.callInstance = callInstance
 		controllerInstance = controllerClass.Controller(REFRESH_TIME)
 		
 		emailInstance.gsmInstance = gsmInstance

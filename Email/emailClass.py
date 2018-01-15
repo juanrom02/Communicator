@@ -84,6 +84,7 @@ class Email(object):
 				self.telit_lock.acquire()
 				while self.gsmInstance.active_call:
 					self.telit_lock.wait()
+				self.sendSSLCommand('. LOGOUT', '. OK')
 				self.gsmInstance.sendAT('AT#SSLH=1')
 				self.telit_lock.release()
 			else:
@@ -276,7 +277,7 @@ class Email(object):
 							self.telit_lock.acquire()
 							while self.gsmInstance.active_call:
 								self.telit_lock.wait()
-							self.gsmInstance.sendAT('AT#SSLO=1')
+							self.gsmInstance.sendAT('AT#SSLO=1', 'CONNECT', wait = 5)
 							fetch = self.gsmInstance.sendAT(('. FETCH %s RFC822' % emailId).encode('utf-8'), '. OK', 30, 2)
 							emailData = ''.join(fetch[1:-2])
 							self.gsmInstance.sendAT('+++', 'OK', 10, 0)
@@ -301,13 +302,11 @@ class Email(object):
 									messageInstance = pickle.loads(serializedMessage)
 									self.receptionQueue.put((messageInstance.priority, messageInstance))
 									end = time.time()
-									print ('Lectura de MAIL demora ' + str(end - self.punito) + '\r\n') #DBG
 									logger.write('INFO', '[EMAIL] Ha llegado una nueva instancia de mensaje!')
 								else:
 									emailBody = emailBody[:emailBody.rfind('\r\n')] # Elimina el salto de línea del final
 									self.receptionQueue.put((10, emailBody))
 									end = time.time()
-									print ('Lectura de MAIL demora ' + str(end - self.punito) + '\r\n') #DBG
 									logger.write('INFO', '[EMAIL] Ha llegado un nuevo mensaje!')
 						else:
 							logger.write('WARNING', '[EMAIL] Imposible procesar la solicitud. El correo no se encuentra registrado!')
@@ -319,16 +318,17 @@ class Email(object):
 				else:
 					break
 		except AtNewCall:
-			self.telit_lock.release()
 			logger.write('WARNING', '[EMAIL] Recepcion fallida: llamada entrante.')
-		except ATCommandError as error:
 			self.telit_lock.release()
+		except ATCommandError as error:
 			logger.write('WARNING', '[EMAIL] Recepcion fallida: error en los comandos AT.')
 			logger.write('DEBUG', '[EMAIL] %s: %s.' % (type(error).__name__, error.msg))
-		except (serial.serialutil.SerialException, Exception) as message:
 			self.telit_lock.release()
+		except (serial.serialutil.SerialException, Exception) as message:
+			print traceback.format_exc() #DBG
 			logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailAccount)
 			logger.write('DEBUG', '[EMAIL] %s : %s' % (type(message).__name__, message))
+			self.telit_lock.release()
 		finally:
 			self.successfulConnection = False
 			self.isActive = False

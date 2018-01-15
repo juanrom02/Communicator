@@ -33,11 +33,12 @@
 	},
 "FTP":
 	{
-	"FTP_SERVER"	: "181.28.14.17",
+	"FTP_SERVER"	: "181.28.14.195",
 	"FTP_PORT"	: 21,
 	"USER"		: "client01dl",
 	"PASSWORD"	: "client01dl",
-	"DIRECTORY"	: "volume9"
+	"DIRECTORY"	: "volume9",
+	"TIMEOUT"	: 5
 	},
 "MODEM":
 	{
@@ -55,16 +56,16 @@
 	"EMAIL"     : 3,
 	"FTP"	    : 2
 	},
+"AUDIO":
+	{
+	"LANGUAGE"	: "es",
+	"RECORD_SECS"	: 30
+	},
 "LOGGER":
 	{
 	"FILE_LOG"              : "events.log",
 	"FILE_LOGGING_LEVEL"    : "DEBUG",
 	"CONSOLE_LOGGING_LEVEL" : "DEBUG"
-	},
-"AUDIO":
-	{
-	"LANGUAGE"	: "es",
-	"RECORD_SECS"	: 30
 	}
 }
 

@@ -5,6 +5,7 @@ import Queue
 import inspect
 import threading
 import bluetooth
+import traceback #DBG
 
 import logger
 import contactList
@@ -89,6 +90,8 @@ class Bluetooth(object):
 				name = firstMatch['name']
 				host = firstMatch['host']
 				port = firstMatch['port']
+				print str(host)
+				print str(port)
 				# Crea un nuevo socket Bluetooth que usa el protocolo de transporte especificado
 				clientSocket = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
 				# Conecta el socket con el dispositivo remoto (host) sobre el puerto (channel) especificado
@@ -96,6 +99,7 @@ class Bluetooth(object):
 				logger.write('DEBUG', '[BLUETOOTH] Conectado con la dirección \'%s\'.' % host)
 				return self.bluetoothTransmitter.send(messageToSend, clientSocket)
 			except bluetooth.btcommon.BluetoothError as bluetoothError:
+				print traceback.format_exc() #DBG
 				# (11, 'Resource temporarily unavailable')
 				# (16, 'Device or resource busy')
 				logger.write('WARNING','[BLUETOOTH] %s.' % bluetoothError)
