@@ -2,7 +2,7 @@
 "COMMUNICATOR":
 	{
 	"NAME"                : "Client01",
-	"RECEPTION_FILTER"    : 0,
+	"RECEPTION_FILTER"    : 1,
 	"TRANSMISSION_QSIZE"  : 25,
 	"RECEPTION_QSIZE"     : 50,
 	"RETRY_TIME"          : 15,

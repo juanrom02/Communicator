@@ -61,7 +61,7 @@ class Ftp(object):
 			return True
 		except (socket.timeout, ftplib.error_perm, serial.serialutil.SerialException):
 			if self.isActive:
-				print traceback.format_exc()
+				#print traceback.format_exc()
 				logger.write('WARNING', '[FTP] La conexion con el servidor ha fallado (%s).' % self.ftpHost)
 				self.isActive = False
 			raise	
@@ -119,8 +119,8 @@ class Ftp(object):
 		except ftplib.error_perm: #DBG: Falta especificar
 			print traceback.format_exc()
 			return False
-		except:
-			print traceback.format_exc()
+		#~ except:
+			#~ print traceback.format_exc()
 		
 	def receive(self, fileName):
 		try:
@@ -138,13 +138,13 @@ class Ftp(object):
 				elements = fileName.split('.-')
 				fileName = elements[1]
 				origin = 'de ' + elements[2]
+				print "%s" % fileName
 			if fileName.startswith('text'):
 				message = tf.read()
 				self.receptionQueue.put((10, message))
 				logger.write('INFO','[FTP] Mensaje %s recibido correctamente!' % origin)
 			elif fileName.startswith('instance'):
 				serializedMessage = tf.read()
-				print serializedMessage
 				messageInstance = pickle.loads(serializedMessage[len('INSTANCE'):])
 				self.receptionQueue.put((messageInstance.priority, messageInstance))
 				logger.write('INFO','[FTP] Instancia %s recibida correctamente!' % origin)

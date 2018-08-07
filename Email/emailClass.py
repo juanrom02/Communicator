@@ -11,7 +11,7 @@ import smtplib
 import imaplib
 import mimetypes
 import subprocess
-import communicator
+#import communicator
 import base64
 import traceback
 import regex
@@ -42,7 +42,7 @@ ATTACHMENTS = 'Attachments'
 
 class Email(object):
 
-	smtpServer = smtplib.SMTP
+	smtpServer = smtplib.SMTP_SSL
 	imapServer = imaplib.IMAP4_SSL
 
 	successfulConnection = False
@@ -117,7 +117,7 @@ class Email(object):
 			return True
 		# Error con los servidores (probablemente estén mal escritos o los puertos son incorrectos)
 		except (Exception, ATCommandError):
-			print traceback.format_exc()
+			#print traceback.format_exc()
 			logger.write('ERROR', '[EMAIL] Error al intentar conectar con los servidores SMTP e IMAP.')
 			self.successfulConnection = False
 			return False
@@ -138,9 +138,9 @@ class Email(object):
 			self.gsmInstance.sendAT(('AT#SSLD=1,%s,"%s",0,1' % (self.imapPort,self.imapHost)).encode('utf-8'), 'SSLSRING', 30)
 			self.gsmInstance.sendAT('AT#SSLRECV=1,1000'.encode('utf-8'), 'OK', 2)
 			self.sendSSLCommand('. LOGIN %s %s' % (self.emailAccount,self.emailPassword), '. OK')
-		except:
+		except Exception as error:
 			if self.isActive:
-				logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailInstance.emailAccount)
+				logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailAccount)
 				logger.write('DEBUG', '[EMAIL] %s : %s.' % (type(error).__name__, error))
 				self.successfulConnection = None
 				self.isActive = False
@@ -149,7 +149,7 @@ class Email(object):
 	def send(self, message, emailDestination):
 		# Comprobación de envío de texto plano
 		if isinstance(message, messageClass.Message) and hasattr(message, 'plainText'):
-			mimeText = MIMEText(message.plainText, 'plain')
+			mimeText = email.mime.text.MIMEText(message.plainText, 'plain')
 			mimeText['From'] = '%s <%s>' % (self.clientName, self.emailAccount)
 			mimeText['To'] = emailDestination
 			mimeText['Subject'] = JSON_CONFIG["EMAIL"]["SUBJECT"]
@@ -167,19 +167,19 @@ class Email(object):
 			if mainType == 'text':
 				fileObject = open(absoluteFilePath)
 				# Note: we should handle calculating the charset
-				attachmentFile = MIMEText(fileObject.read(), _subtype = subType)
+				attachmentFile = email.mime.text.MIMEText(fileObject.read(), _subtype = subType)
 				fileObject.close()
 			elif mainType == 'image':
 				fileObject = open(absoluteFilePath, 'rb')
-				attachmentFile = MIMEImage(fileObject.read(), _subtype = subType)
+				attachmentFile = email.mime.image.MIMEImage(fileObject.read(), _subtype = subType)
 				fileObject.close()
 			elif mainType == 'audio':
 				fileObject = open(absoluteFilePath, 'rb')
-				attachmentFile = MIMEAudio(fileObject.read(), _subtype = subType)
+				attachmentFile = email.mime.audio.MIMEAudio(fileObject.read(), _subtype = subType)
 				fileObject.close()
 			else:
 				fileObject = open(absoluteFilePath, 'rb')
-				attachmentFile = MIMEBase(mainType, subType)
+				attachmentFile = email.mime.base.MIMEBase(mainType, subType)
 				attachmentFile.set_payload(fileObject.read())
 				fileObject.close()
 				# Codificamos el payload (carga útil) usando Base64
@@ -194,7 +194,7 @@ class Email(object):
 			# Serializamos el objeto para poder transmitirlo
 			serializedMessage = 'INSTANCE' + pickle.dumps(message)
 			# Se construye un mensaje simple
-			mimeText = MIMEText(serializedMessage)
+			mimeText = email.mime.text.MIMEText(serializedMessage)
 			mimeText['From'] = '%s <%s>' % (self.clientName, self.emailAccount)
 			mimeText['To'] = emailDestination
 			mimeText['Subject'] = JSON_CONFIG["EMAIL"]["SUBJECT"]
@@ -231,6 +231,7 @@ class Email(object):
 			logger.write('WARNING', '[EMAIL] Recepcion fallida: error en los comandos AT.')
 			logger.write('DEBUG', '[EMAIL] %s: %s.' % (type(error).__name__, error.msg))
 		except Exception as errorMessage:
+			print traceback.format_exc()
 			logger.write('WARNING', '[EMAIL] Mensaje no enviado: %s' % str(errorMessage))
 			return False
 		finally:
@@ -285,29 +286,26 @@ class Email(object):
 							emailReceived = email.message_from_string(emailData)
 						sourceName = self.getSourceName(emailReceived)     # Almacenamos el nombre del remitente
 						sourceEmail = self.getSourceEmail(emailReceived)   # Almacenamos el correo del remitente
-						emailSubject = self.getEmailSubject(emailReceived) # Almacenamos el asunto correspondiente
 						logger.write('DEBUG', '[EMAIL] Procesando correo de \'%s\'' % sourceEmail)
 						# Comprobamos si el remitente del mensaje (un correo) está registrado...
 						if sourceEmail in contactList.allowedEmails.values() or not JSON_CONFIG["COMMUNICATOR"]["RECEPTION_FILTER"]:
 							for emailHeader in emailReceived.walk():
 								if emailHeader.get('Content-Disposition') is not None:
 									self.receiveAttachment(emailHeader)
-							emailBody = self.getEmailBody(emailReceived) # Obtenemos el cuerpo del email
-							if emailBody is not None:
-								#self.sendOutput(sourceEmail, emailSubject, emailBody) # -----> SOLO PARA LA DEMO <-----
-								if emailBody.startswith('INSTANCE'):
-									# Quitamos la 'etiqueta' que hace refencia a una instancia de mensaje
-									serializedMessage = emailBody[len('INSTANCE'):]
-									# 'Deserializamos' la instancia de mensaje para obtener el objeto en sí
-									messageInstance = pickle.loads(serializedMessage)
-									self.receptionQueue.put((messageInstance.priority, messageInstance))
-									end = time.time()
-									logger.write('INFO', '[EMAIL] Ha llegado una nueva instancia de mensaje!')
-								else:
-									emailBody = emailBody[:emailBody.rfind('\r\n')] # Elimina el salto de línea del final
-									self.receptionQueue.put((10, emailBody))
-									end = time.time()
-									logger.write('INFO', '[EMAIL] Ha llegado un nuevo mensaje!')
+								elif emailHeader.get_content_type() == "text/plain":
+									emailBody = emailHeader.get_payload()
+									#self.sendOutput(sourceEmail, emailSubject, emailBody) # -----> SOLO PARA LA DEMO <-----
+									if emailBody.startswith('INSTANCE'):
+										# Quitamos la 'etiqueta' que hace refencia a una instancia de mensaje
+										serializedMessage = emailBody[len('INSTANCE'):]
+										# 'Deserializamos' la instancia de mensaje para obtener el objeto en sí
+										messageInstance = pickle.loads(serializedMessage)
+										self.receptionQueue.put((messageInstance.priority, messageInstance))
+										logger.write('INFO', '[EMAIL] Ha llegado una nueva instancia de mensaje!')
+									else:
+										emailBody = emailBody[:emailBody.rfind('\r\n')] # Elimina el salto de línea del final
+										self.receptionQueue.put((10, emailBody))
+										logger.write('INFO', '[EMAIL] Ha llegado un nuevo mensaje!')
 						else:
 							logger.write('WARNING', '[EMAIL] Imposible procesar la solicitud. El correo no se encuentra registrado!')
 							messageToSend = 'Imposible procesar la solicitud. Usted no se encuentra registrado!'
@@ -325,7 +323,6 @@ class Email(object):
 			logger.write('DEBUG', '[EMAIL] %s: %s.' % (type(error).__name__, error.msg))
 			self.telit_lock.release()
 		except (serial.serialutil.SerialException, Exception) as message:
-			print traceback.format_exc() #DBG
 			logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailAccount)
 			logger.write('DEBUG', '[EMAIL] %s : %s' % (type(message).__name__, message))
 			self.telit_lock.release()
@@ -354,6 +351,7 @@ class Email(object):
 			logger.write('INFO', '[EMAIL] Archivo adjunto \'%s\' descargado correctamente!' % fileName)
 			return True
 		else:
+			print 'c'
 			logger.write('WARNING', '[EMAIL] El archivo \'%s\' ya existe! Imposible descargar.' % fileName)
 			return False
 
@@ -380,25 +378,6 @@ class Email(object):
 				sourceEmail = senderElement.replace('<', '').replace('>', '')
 		# Ejemplo sourceEmail: mauriciolg.90@gmail.com
 		return sourceEmail
-		
-	def getEmailSubject(self, emailReceived):
-		decodedHeader = decode_header(emailReceived.get('subject'))
-		return unicode(make_header(decodedHeader)).encode('utf-8')
-
-	def getEmailBody(self, emailReceived):
-		plainText = None
-		for emailHeader in emailReceived.walk():
-			if emailHeader.get_content_type() == 'text/plain':
-				plainText = emailHeader.get_payload()
-				# Se debe convertir texto de DOS(windows) a UNIX (LINUX) porque 
-				# de la forma que lo devulve email, da errores en pickle
-				plainText = plainText.replace('\r\n', '\n')
-				break
-		# Si el cuerpo del email no está vacío, retornamos el texto plano
-		if plainText:
-			return plainText
-		else:
-			return None
 
 	def deleteEmail(self, emailId):
 		if self.gsmInstance.telitConnected:
@@ -408,16 +387,16 @@ class Email(object):
 			self.imapServer.store(emailId, '+FLAGS', '\\Deleted')
 			self.imapServer.expunge()
 
-	def sendOutput(self, sourceEmail, emailSubject, emailBody):
-		try:
-			unixProcess = subprocess.Popen(shlex.split(emailBody), stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-			unixOutput, unixError = unixProcess.communicate()
-			if len(unixOutput) > 0:
-				emailBody = unixOutput[:unixOutput.rfind('\n')] # Quita la ultima linea en blanco
-			else:
-				emailBody = unixError[:unixError.rfind('\n')] # Quita la ultima linea en blanco
-		except OSError as e: # El comando no fue encontrado (el ejecutable no existe)
-			emailBody = str(e)
-		finally:
-			# Enviamos la respuesta del SO al remitente
-			self.sendMessage(emailBody, sourceEmail)
+	#~ def sendOutput(self, sourceEmail, emailSubject, emailBody):
+		#~ try:
+			#~ unixProcess = subprocess.Popen(shlex.split(emailBody), stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+			#~ unixOutput, unixError = unixProcess.communicate()
+			#~ if len(unixOutput) > 0:
+				#~ emailBody = unixOutput[:unixOutput.rfind('\n')] # Quita la ultima linea en blanco
+			#~ else:
+				#~ emailBody = unixError[:unixError.rfind('\n')] # Quita la ultima linea en blanco
+		#~ except OSError as e: # El comando no fue encontrado (el ejecutable no existe)
+			#~ emailBody = str(e)
+		#~ finally:
+			#~ # Enviamos la respuesta del SO al remitente
+			#~ self.sendMessage(emailBody, sourceEmail)

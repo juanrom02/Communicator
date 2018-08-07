@@ -66,6 +66,7 @@ import sys
 ## and do it
 class DTMFdetector(object):
 
+	charStr = ""
 
 	###########################################
 	## The constructor

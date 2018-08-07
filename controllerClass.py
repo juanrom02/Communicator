@@ -29,6 +29,11 @@ bluetoothThreadName = 'bluetoothReceptor'
 
 threadNameList = [gsmThreadName, gprsThreadName, wifiThreadName, ethernetThreadName, bluetoothThreadName, emailThreadName]
 
+#Para testing
+ttyUSBDevices = list()
+netInterfaces = list()
+localAddress = ''
+
 class Controller(threading.Thread):
 
 	availableGsm = False       # Indica si el modo GSM está disponible
@@ -47,6 +52,8 @@ class Controller(threading.Thread):
 	emailInstance = None
 	ftpInstance = None
 	callInstance = None
+	
+	instances = [gsmInstance, gprsInstance, wifiInstance, ethernetInstance, bluetoothInstance, emailInstance, ftpInstance, callInstance]
 	
 	telit_lock = threading.Condition(threading.Lock())
 	communicatorName = None
@@ -68,15 +75,19 @@ class Controller(threading.Thread):
 		self.ftpInstance.telit_lock = self.telit_lock
 		self.communicatorName = str(JSON_CONFIG["COMMUNICATOR"]["NAME"])
 		self.REFRESH_TIME = _REFRESH_TIME
+		self.isActive = True
 
 	def close(self):
 		# Esperamos que terminen los hilos receptores
+		#for instance in instances:
+		#	self.closeInstance(instance)
 		self.closeInstance(self.emailInstance)
 		self.closeInstance(self.gprsInstance)
 		self.closeInstance(self.wifiInstance)
 		self.closeInstance(self.ethernetInstance)
 		self.closeInstance(self.bluetoothInstance)
 		self.closeInstance(self.gsmInstance)
+		self.closeInstance(self.ftpInstance)
 		#~ self.gsmInstance.isActive = False
 		#~ self.gprsInstance.isActive = False
 		#~ self.wifiInstance.isActive = False
@@ -113,7 +124,6 @@ class Controller(threading.Thread):
 			return 
 			
 	def run(self):
-		self.isActive = True
 		while self.isActive:
 			self.availableGsm = self.verifyGsmConnection()
 			if self.gsmInstance.androidConnected:
@@ -130,21 +140,21 @@ class Controller(threading.Thread):
 			self.availableEthernet = self.verifyNetworkConnection(self.ethernetInstance)
 			self.availableBluetooth = self.verifyBluetoothConnection()
 			internetConnection = [self.gprsInstance.online, self.wifiInstance.online, self.ethernetInstance.online]
-			self.availableEmail = self.verifyEmailConnection() #DBG
-			#if not self.ftpInstance.isActive: #DBG
-			#		self.availableFtp = self.verifyFtpConnection() #DBG
-			#~ if any(i for i in internetConnection):
-				#~ if not self.ftpInstance.isActive:
-					#~ self.availableFtp = self.verifyFtpConnection()
-				#~ self.availableEmail = self.verifyEmailConnection()
-			#~ else:
-				#~ self.availableFtp = False
-				#~ self.availableEmail = False
-				#~ if self.emailInstance.isActive:
-					#~ logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailInstance.emailAccount)
-					#~ self.emailInstance.successfulConnection = None
-					#~ self.emailInstance.isActive = False
-					#~ self.emailInstance.thread = threading.Thread(target = self.emailInstance.receive, name = emailThreadName)
+			#self.availableEmail = self.verifyEmailConnection() #DBG
+			#~ #if not self.ftpInstance.isActive: #DBG
+			#~ #		self.availableFtp = self.verifyFtpConnection() #DBG
+			if any(i for i in internetConnection):
+				if not self.ftpInstance.isActive:
+					self.availableFtp = self.verifyFtpConnection()
+				self.availableEmail = self.verifyEmailConnection()
+			else:
+				self.availableFtp = False
+				self.availableEmail = False
+				if self.emailInstance.isActive:
+					logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailInstance.emailAccount)
+					self.emailInstance.successfulConnection = None
+					self.emailInstance.isActive = False
+					self.emailInstance.thread = threading.Thread(target = self.emailInstance.receive, name = emailThreadName)
 			if self.gsmInstance.new_call:
 				self.callInstance.gprsIsActive = self.gprsInstance.isActive
 				self.gsmInstance.answerVoiceCall()
@@ -166,9 +176,9 @@ class Controller(threading.Thread):
 		ttyUSBPattern = re.compile('ttyUSB[0-9]+')
 		lsDevProcess = subprocess.Popen(['ls', '/dev/'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 		lsDevOutput, lsDevError = lsDevProcess.communicate()
-		ttyUSBDevices = ttyUSBPattern.findall(lsDevOutput)
+		self.ttyUSBDevices = ttyUSBPattern.findall(lsDevOutput)
 		# Se detectaron otros dispositivos GSM conectados
-		for ttyUSBx in ttyUSBDevices:
+		for ttyUSBx in self.ttyUSBDevices:
 			# Si el puerto serie nunca fue establecido, entonces la instancia no esta siendo usada
 			if self.gsmInstance.localInterface is None:
 				# Si no se produce ningún error durante la configuración, ponemos al módem a recibir SMS y llamadas
@@ -193,7 +203,7 @@ class Controller(threading.Thread):
 							#~ logger.write('WARNING', '[GPRS] La conexion automatica ha fallado - %s' % message)
 							#~ self.telit_lock.release()
 							#~ pass
-					#~ return True
+					return True
 				# Cuando se intenta una conexion sin exito (connect = False), debe cerrarse y probar con la siguiente
 				else:
 					self.gsmInstance.successfulConnection = None
@@ -223,19 +233,20 @@ class Controller(threading.Thread):
 						time.sleep(5)
 					else:
 						return False
-
-			for networkInterface in os.popen('ip link show').readlines():
+			
+			self.netInterfaces = os.popen('ip link show').readlines()
+			for networkInterface in self.netInterfaces:
 				matchedPattern = instance.pattern.search(networkInterface)
 				if matchedPattern is not None and networkInterface.find('state ' + instance.state) > 0:
 					if instance.localInterface is None and not instance.isActive:
 						instance.localInterface = matchedPattern.group()
 						commandToExecute = 'ip addr show ' + instance.localInterface + ' | grep "inet "'
-						localAddress = os.popen(commandToExecute).readline()
-						while not localAddress:
-							localAddress = os.popen(commandToExecute).readline()
+						self.localAddress = os.popen(commandToExecute).readline()
+						while not self.localAddress:
+							self.localAddress = os.popen(commandToExecute).readline()
 							time.sleep(1)
-						localAddress = localAddress.split()[1].split('/')[0]
-						if instance.connect(localAddress):
+						networkAddress = self.localAddress.split()[1].split('/')[0]
+						if instance.connect(networkAddress):
 							info = instance.localInterface + ' - ' + instance.localAddress
 							logger.write('INFO', '[%s] Listo para usarse (%s).' % (instance.MEDIA_NAME, info))
 							instance.thread.start()
@@ -278,7 +289,7 @@ class Controller(threading.Thread):
 				testSocket = socket.create_connection((remoteHost, 80), 2) # Se determina si es alcanzable
 				currentStatus = True
 		except socket.error:
-			print traceback.format_exc()
+			#print traceback.format_exc()
 			currentStatus = False
 		except (AtTimeout, ATCommandError):
 			self.telit_lock.release()
@@ -322,9 +333,9 @@ class Controller(threading.Thread):
 				self.telit_lock.release()
 			return True
 		except:
-			print traceback.format_exc()
+			#print traceback.format_exc()
 			self.telit_lock.release()
-			print 'gprsInstance.isActive ' + str(self.gprsInstance.isActive)
+			#print 'gprsInstance.isActive ' + str(self.gprsInstance.isActive)
 			if self.gprsInstance.isActive:
 				logger.write('INFO', '[GPRS] Se ha desconectado el medio.')
 				self.gprsInstance.localInterface = None
@@ -334,11 +345,15 @@ class Controller(threading.Thread):
 			return False
 		
 	def verifyAndroidStatus(self):
-		if os.popen("adb shell dumpsys connectivity | grep -o 'ni{\[type: WIFI'").readline():
+		wifi = subprocess.Popen("adb shell dumpsys connectivity | grep -o 'ni{\[type: WIFI'", stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
+		wifiOut, wifiErr = wifi.communicate()
+		mobile = subprocess.Popen("adb shell dumpsys connectivity | grep -o 'ni{\[type: MOBILE'", stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
+		mobileOut, mobileErr = mobile.communicate()
+		if wifiOut and not wifiErr:
 			if self.gprsInstance.localInterface is not None:
 				self.closeConnection(self.gprsInstance)
 			self.availableWifi = self.verifyNetworkConnection(self.wifiInstance)
-		elif os.popen("adb shell dumpsys connectivity | grep -o 'ni{\[type: MOBILE'").readline():
+		elif mobileOut and not mobileErr:
 			if self.wifiInstance.localInterface is not None:
 				self.closeConnection(self.wifiInstance)
 			self.availableGprs = self.verifyNetworkConnection(self.gprsInstance)
@@ -349,12 +364,13 @@ class Controller(threading.Thread):
 				self.closeConnection(self.gprsInstance)
 			
 	def verifyBluetoothConnection(self):
-		activeInterfacesList = open('/tmp/activeInterfaces', 'a+').read()
+		#activeInterfacesList = open('/tmp/activeInterfaces', 'a+').read()
 		# Ejemplo de bluetoothDevices: ['Devices:\n', '\thci0\t00:24:7E:64:7B:4A\n']
-		bluetoothDevices = os.popen('hcitool dev').readlines()
+		hcitool = subprocess.Popen('hcitool dev', stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
+		btDeviceList, btErr = hcitool.communicate()
 		# Sacamos el primer elemento por izquierda ('Devices:\n')
-		bluetoothDevices.pop(0)
-		for btDevice in bluetoothDevices:
+		btDeviceList = btDeviceList[1:]
+		for btDevice in btDeviceList:
 			# Ejemplo de btDevice: \thci0\t00:24:7E:64:7B:4A\n
 			btInterface = btDevice.split('\t')[1]
 			btAddress = btDevice.split('\t')[2].replace('\n', '')
@@ -424,10 +440,10 @@ class Controller(threading.Thread):
 				return False
 			if self.emailInstance.successfulConnection is False:
 				# Si no se produce ningún error durante la configuración, ponemos a recibir
-				if self.emailInstance.connect():				
+				if self.emailInstance.connect():
 					self.emailInstance.thread.start()
 					logger.write('INFO', '[EMAIL] Listo para usarse (' + self.emailInstance.emailAccount + ').')
-					end = time.time()
+					#end = time.time()
 					return True
 				# Si se produce un error durante la configuración, devolvemos 'False'
 				else:
@@ -440,7 +456,7 @@ class Controller(threading.Thread):
 				return False
 		# No hay conexión a Internet (TEST_REMOTE_SERVER no es alcanzable), por lo que se vuelve a intentar
 		except (ATCommandError, serial.serialutil.SerialException, socket.gaierror) as error:
-			print traceback.format_exc()
+			#print traceback.format_exc()
 			if self.emailInstance.isActive:
 				logger.write('INFO', '[EMAIL] Se ha desconectado el medio (%s).' % self.emailInstance.emailAccount)
 				logger.write('DEBUG', '[EMAIL] %s : %s.' % (type(error).__name__, error))
@@ -458,7 +474,7 @@ class Controller(threading.Thread):
 				for item in lista:
 					if item.startswith(self.communicatorName):
 						self.ftpInstance.receive(item)
-						self.ftpServer.delete(item)
+						self.ftpInstance.ftpServer.delete(item)
 				self.ftpInstance.ftpServer.quit()
 			else:
 				self.ftpInstance.ftp_mode = 2
@@ -466,7 +482,7 @@ class Controller(threading.Thread):
 				self.gsmInstance.sendAT('AT#FTPTYPE=0', wait = 5)
 				lista = self.gsmInstance.sendAT('AT#FTPLIST', 'NO CARRIER', 10) 
 				for item in lista:
-					name = regex.findall('(' + self.communicatorName + '.*)', item)
+					name = regex.findall('(^' + self.communicatorName + '.*)', item)
 					if name:
 						self.ftpInstance.receive(name[0][:-1])
 						self.gsmInstance.sendAT(('AT#FTPDELE="%s"'%name[0][:-1]).encode('utf-8'), wait = 5)
@@ -479,7 +495,7 @@ class Controller(threading.Thread):
 			if self.ftpInstance.ftp_mode == 2:
 				self.telit_lock.acquire(False)
 				self.telit_lock.release()
-			print traceback.format_exc()
+			#print traceback.format_exc()
 			return False
 		
 			

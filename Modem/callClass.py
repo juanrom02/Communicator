@@ -50,17 +50,19 @@ class Call():
 		self.language = JSON_CONFIG["AUDIO"]["LANGUAGE"]
 		if self.language not in gTTS.LANGUAGES:
 			logger.write('WARNING', '[VOZ] El idioma no esta soportado. Revise el archivo de configuracion')
-		self.audioMsgQueue.put("Audio/Mensajes/3517502317.-audio.-20170926.-122020")
-		self.audioMsgQueue.put("Audio/Mensajes/3517502317.-audio.-20170926.-122104")
-		self.audioMsgQueue.put("Audio/Mensajes/3517502317.-audio.-20170926.-122149")
+		#~ self.audioMsgQueue.put("Audio/Mensajes/3517502317.-audio.-20170926.-122020")
+		#~ self.audioMsgQueue.put("Audio/Mensajes/3517502317.-audio.-20170926.-122104")
+		#~ self.audioMsgQueue.put("Audio/Mensajes/3517502317.-audio.-20170926.-122149")
 		
 	def voiceCall(self, bienvenida = True):
 		end_a2t = Queue.Queue(self.RECEPTION_QSIZE)
 		try:
+			print 'start'
 			#~ self.gsmInstance.sendAT('AT+IPR=230400')
 			#~ self.modemInstance.baudrate = 230400
 			isActive = True
 			if bienvenida:
+				print 'bienvenida'
 				self.gsmInstance.sendAT('AT#SPCM=3,1','CONNECT', 5)
 				self.sendAudioFile('Audio/bienvenida.raw', False)
 			time.sleep(0.5)
@@ -71,20 +73,26 @@ class Call():
 				#~ self.dtmfThread.start()
 				print 'waitDTMF 5'
 				start = time.time()
+				print 'time ' + str(start)
 				while self.dtmfThread.is_alive() and time.time() < (start + 5):
+					print 'while1'
 					pass
 				if self.dtmfThread.is_alive():
+					print 'dtmfalive'
 					self.decodeActive = False
 					self.dtmfThread.join()
 				numero = self.dtmfNumber
-				self.dtmfNumber = None
+				print 'numero '+ str(numero)
 				if audio == 'Audio/menu.raw':
+					print 'menu'
 					if numero is '1':
-						cantidad = self.audioMsgQueue.qsize()
+						#cantidad = self.audioMsgQueue.qsize()
 						if self.audioMsgQueue.qsize() > 0:
+							print 'msgQueue'
 							self.sendAudioFile('Audio/1_hay_mensajes.raw')
 							self.sendAudioFile('Audio/tono.raw')
 							while self.audioMsgQueue.qsize() > 0:
+								print 'sendFile'
 								fileName = self.audioMsgQueue.get()
 								self.sendAudioFile(fileName)
 								os.remove(fileName)
@@ -105,20 +113,24 @@ class Call():
 						self.sendAudioFile('Audio/2_el_mensaje_es.raw', False)
 						duracion = len(self.flujoGrabacion)/float(8000)
 						start = time.time()
+						print 'start ' + str(start) + ", duracion " + str(duracion)
 						self.modemInstance.write(self.flujoGrabacion)
 						while time.time() < (start + duracion):
+							print 'time'
 							pass
 						audio = 'Audio/2_opciones_guardado.raw'
 					elif numero is '3': #Medios disponibles
 						self.availableMedia()
 						time.sleep(1)
 					elif numero is '0': #Salir
+						print 'numero0'
 						time.sleep(0.5)
 						self.sendAudioFile('Audio/salir.raw', False)
 						self.modemInstance.reset_input_buffer()
 						self.modemInstance.dtr = 0
 						time.sleep(0.1)
 						while self.modemInstance.in_waiting is not 0:
+							print 'NO CARRIER'
 							if self.modemInstance.read(1) == 'N' and self.modemInstance.readline().startswith('O CARRIER'):
 								break
 						self.gsmInstance.sendAT('ATH')
@@ -131,7 +143,9 @@ class Call():
 					else:
 						self.checkHangUp()
 				elif audio == 'Audio/2_opciones_guardado.raw':
+					print "opciones guardado"
 					if numero == '1':
+						print 'number1'
 						fileName = self.saveAudioMessage()
 						self.audioMsgQueue.put(fileName)
 						self.sendAudioFile('Audio/2_guardado_exito.raw')
@@ -139,12 +153,14 @@ class Call():
 						self.tempAudioMsg = None
 						audio = 'Audio/menu.raw'
 					elif numero == '2':
+						print "number2"
 						audio == 'Audio/menu.raw'
 						ppp = not self.gsmInstance.wifiInstance.online and not self.gsmInstance.ethernetInstance.online
 						if ppp:
 							self.sendAudioFile('Audio/2_guardado_posterior.raw', False)
 							end_a2t.put(self.flujoGrabacion)
 						else:
+							print "ppp"
 							#Aguarde? DBG
 							text = self.audio_to_text(self.flujoGrabacion)
 							if text.startswith("AUDIO_NO_RECONOCIDO"):
@@ -159,6 +175,7 @@ class Call():
 								self.sendAudioFile('Audio/2_mensaje_convertido.raw')
 						audio = 'Audio/menu.raw'
 					elif numero == '3':
+						print 'number3'
 						self.sendAudioFile('Audio/2_grabar_tono.raw')
 						self.sendAudioFile('Audio/tono.raw', False)
 						print 'recordAudio' #DBG
@@ -170,7 +187,9 @@ class Call():
 						duracion = len(self.flujoGrabacion)/float(8000)
 						start = time.time()
 						self.modemInstance.write(self.flujoGrabacion)
+						print 'start ' + str(start) + ", duracion " + str(duracion) 
 						while time.time() < (start + duracion):
+							print "pass"
 							pass
 					elif numero == '0':
 						audio = 'Audio/menu.raw'
@@ -181,7 +200,7 @@ class Call():
 		except CallEnded:
 			#~ self.gsmInstance.sendAT('AT+IPR=115200')
 			#~ self.modemInstance.baudrate = 115200
-			
+			print 'callEnded'
 			if end_a2t.qsize() > 0:
 				self.gsmInstance.sendAT('AT#SSLH=1')
 				self.gsmInstance.sendAT('AT#SGACT=1,0')
@@ -192,11 +211,13 @@ class Call():
 				subprocess.Popen('pon', stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 				poff = False
 				while True:
+					print 'logfile'
 					line = logfile.readline()
 					if not line:
 						time.sleep(0.1)
 					else:
 						pppMsg = regex.findall('pppd\[.*\]: (.*)', line)
+						print pppMsg
 						if not pppMsg:
 							pass
 						elif pppMsg[0].startswith('Exit'):
@@ -204,14 +225,15 @@ class Call():
 								logger.write('WARNING','[VOZ] Los mensajes no pueden transformarse a texto porque no hay conexion a Internet.')
 							break
 						elif pppMsg[0].startswith('local  IP address'):
+							print 'localip'
 							while end_a2t.qsize() > 0:
 								text = self.audio_to_text(end_a2t.get())
-								print 'text ' + text
 								if text.startswith("AUDIO_NO_RECONOCIDO"):
 									logger.write('WARNING','[VOZ] Un mensaje no ha podido ser reconocido.')
 								elif text.startswith("SIN_CONEXION"):
 									logger.write('WARNING','[VOZ] Un mensaje no ha sido decodificado porque no hay conexion a Internet.')
 								else:
+									print 'put'
 									self.gsmInstance.receptionQueue.put((10,text))
 									logger.write('INFO', '[VOZ] Mensaje de ' + self.gsmInstance.callerID + ' recibido correctamente!')
 							subprocess.Popen('poff', stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
@@ -221,6 +243,7 @@ class Call():
 				#~ self.modemInstance.dtr = 1
 				#~ time.sleep(2)
 				#~ self.gsmInstance.sendAT('AT')
+			print 'closeCall'
 			self.closeCall()
 			return True
 		except: #DBG
@@ -251,6 +274,7 @@ class Call():
 			
 	def dtmfDecoder(self, grabar = False):
 		try:
+			self.dtmfNumber = None
 			print 'dtmfDecoder'
 			dtmf = DTMFdetector()
 			#self.modemInstance.reset_input_buffer() #DBG
@@ -259,6 +283,7 @@ class Call():
 			#~ if grabar: #DBG
 				#~ f = open('grabacion.raw', 'wb')
 			while self.decodeActive:
+				print 'decodeActive'
 				self.port_lock.acquire()
 				#~ wait = self.modemInstance.in_waiting
 				#~ print wait
@@ -284,8 +309,8 @@ class Call():
 						dtmf.charStr = ''
 		except IndexError:
 			pass
-		except: #DBG
-			print traceback.format_exc()
+		#~ except: #DBG
+			#~ print traceback.format_exc()
 			
 	def hangUpVoiceCall(self):
 			try:
@@ -316,6 +341,7 @@ class Call():
 			f.write(raw.get_wav_data())
 			recognizer = speech_recognition.Recognizer()
 			with speech_recognition.AudioFile(f.name) as data:
+				print 'record'
 				audio = recognizer.record(data)
 			text = recognizer.recognize_google(audio, language="es-AR")
 			return text
@@ -328,21 +354,20 @@ class Call():
 	def sendAudioFile(self, fileName, hangUp = True):
 		try:
 			audioFile = open(fileName, 'rb')
-			audioDuration = AudioSegment.from_file(fileName, format="raw", frame_rate=8000, channels=1, sample_width=1).duration_seconds
+			audioSegment = AudioSegment.from_file(fileName, format="raw", frame_rate=8000, channels=1, sample_width=1)
+			audioDuration = audioSegment.duration_seconds
 			print fileName + " " + str(audioDuration) #DBG
 			if fileName in self.dtmfAudio:
 				self.dtmfThread = threading.Thread(target=self.dtmfDecoder)
 				self.dtmfThread.start()
 			start = time.time()
 			r = audioFile.read(4000)
-			print 'A', #DBG
 			while self.dtmfNumber is None and time.time() < (start + audioDuration):
 				i = time.time()
 				self.modemInstance.write(r)
 				r = audioFile.read(4000)
 				if (0.5 + i - time.time())>0.1:
 					time.sleep(0.5 + i - time.time())
-			print 'B' #DBG
 			#Con esto corta antes el audio cuando marco un numero
 			if self.dtmfNumber is not None:
 				pass
@@ -362,7 +387,6 @@ class Call():
 				#~ self.modemInstance.dtr = 1
 			elif hangUp:
 				self.checkHangUp()
-			print 'C'
 			#~ if hangUp and self.dtmfNumber is None:
 				#~ self.checkHangUp()
 			#self.modemInstance.write(audioFile.read())
@@ -375,8 +399,8 @@ class Call():
 			return True
 		except CallEnded:
 			raise
-		except: #DBG
-			print traceback.format_exc()
+		#~ except: #DBG
+			#~ print traceback.format_exc()
 		
 	def checkHangUp(self):
 		try:

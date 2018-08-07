@@ -7,6 +7,7 @@ import bluetooth
 
 import logger
 import messageClass
+import traceback
 
 BUFFER_SIZE = 4096 # Tamano del buffer en bytes (cantidad de caracteres)
 
@@ -74,6 +75,7 @@ class BluetoothTransmitter():
 				logger.write('WARNING', '[BLUETOOTH] El archivo \'%s\' ya existe, fue rechazado!' % fileName)
 				return True # Para que no se vuelva a intentar el envio. El control esta en la notificación		
 		except Exception as errorMessage:
+			print traceback.format_exc() #DBG
 			logger.write('WARNING', '[BLUETOOTH] Archivo \'%s\' no enviado: %s' % (fileName, str(errorMessage)))
 			return False
 		finally:
