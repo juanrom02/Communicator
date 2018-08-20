@@ -156,11 +156,24 @@ class BtTransmitterTest(unittest.TestCase):
 		del btTransmitterInstance.sendMessageInstance
 		del clientSkt
 		
-	def test_btTransmitter_SENDMESSAGE(self):
+	def test_btTransmitter_SENDMESSAGE_TRUE(self):
 		print "%s" % sys._getframe().f_code.co_name
 		clientSkt = MagicMock(spec = socket.socket)
+		clientSkt.send = MagicMock()
 		
 		self.assertTrue(btTransmitterInstance.sendMessage("example", clientSkt))
+		clientSkt.send.assert_called_once()
+		
+		del clientSkt
+		
+	@patch("socket.socket.send")
+	def test_btTransmitter_SENDMESSAGE_FALSE(self, send_call):
+		print "%s" % sys._getframe().f_code.co_name
+		clientSkt = MagicMock(spec = socket.socket)
+		clientSkt.send = MagicMock(side_effect = [Exception])
+		
+		self.assertFalse(btTransmitterInstance.sendMessage("example", clientSkt))
+		clientSkt.send.assert_called_once()
 		
 		del clientSkt
 		
@@ -177,7 +190,22 @@ class BtTransmitterTest(unittest.TestCase):
 		self.assertTrue(btTransmitterInstance.sendFile("/home/pi/Communicator/grabacion.raw", clientSkt))
 		file_op.read.assert_called_once()
 		
-		del clientSkt.recv
+		del clientSkt
+		del file_op
+		del file_patch
+		
+	def test_btTransmitter_SENDFILE_FALSE(self):
+		print "%s" % sys._getframe().f_code.co_name
+		clientSkt = MagicMock(spec = socket.socket)
+		clientSkt.send = MagicMock(side_effect = [Exception])
+		clientSkt.recv = MagicMock()
+		file_patch = mock_open()
+		patch("__builtin__.open", file_patch).start()
+		file_op = file_patch()
+		
+		self.assertFalse(btTransmitterInstance.sendFile("/home/pi/Communicator/grabacion.raw", clientSkt))
+		clientSkt.recv.assert_not_called()
+
 		del clientSkt
 		del file_op
 		del file_patch
@@ -255,22 +283,32 @@ class BtReceptorTest(unittest.TestCase):
 	def test_btReceptor_RECEIVEFILE(self):
 		print "%s" % sys._getframe().f_code.co_name
 		socket_mock.recv = MagicMock(side_effect = ["file.txt", "primero", "segundo", "EOF"])
-		os.mkdir = MagicMock()
-		os.path.isfile = MagicMock(return_value = False)
+		patch("os.mkdir").start()
+		patch("os.path.isfile", return_value = False).start()
+		sleep_call = patch("time.sleep").start()
 		file_patch = mock_open()
 		patch("__builtin__.open", file_patch).start()
-		time.sleep = MagicMock()
+		btReceptorInstance.remoteSocket.send = MagicMock()
 		
 		self.assertTrue(btReceptorInstance.receiveFile())
 		os.mkdir.assert_called_once()
-		self.assertEqual(time.sleep.call_count, 2)
+		self.assertEqual(sleep_call.call_count, 2)
 		
 		del socket_mock.recv
-		del os.mkdir
-		del os.path.isfile
 		del file_patch
-		del time.sleep
 		
+	def test_btReceptor_RECEIVEFILE_FILE_EXISTS(self):
+		print "%s" % sys._getframe().f_code.co_name
+		socket_mock.recv = MagicMock(side_effect = ["file.txt"])
+		patch("os.mkdir").start()
+		patch("os.path.isfile", return_value = True).start()
+		btReceptorInstance.remoteSocket.send = MagicMock()
+		
+		self.assertFalse(btReceptorInstance.receiveFile())
+		os.mkdir.assert_called_once()
+		btReceptorInstance.remoteSocket.send.assert_any_call("FILE_EXISTS")
+		
+		del socket_mock.recv		
 	
 		
 if __name__ == '__main__':
