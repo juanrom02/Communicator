@@ -27,6 +27,7 @@ class Ftp(object):
 	ftpUser = None
 	ftpPassword = None
 	ftpDirectory = None
+	ftpTimeout = 0
 	
 	communicatorName = None
 	receptionQueue = None
@@ -44,7 +45,11 @@ class Ftp(object):
 		self.ftpUser = JSON_CONFIG["FTP"]["USER"]
 		self.ftpPassword = JSON_CONFIG["FTP"]["PASSWORD"]
 		self.ftpDirectory = JSON_CONFIG["FTP"]["DIRECTORY"]
+		self.ftpTimeout = JSON_CONFIG["FTP"]["TIMEOUT"]
 		self.communicatorName = str(JSON_CONFIG["COMMUNICATOR"]["NAME"])
+		
+	def close(self):
+		logger.write('INFO','[FTP] Objeto destruido.' )
 		
 	def connect(self):
 		try:
@@ -56,12 +61,11 @@ class Ftp(object):
 				self.gsmInstance.sendAT(ftpOpen.encode('utf-8'), wait=5)
 				self.gsmInstance.sendAT(('AT#FTPCWD="%s"' % self.ftpDirectory).encode('utf-8'), wait=5)
 			else:
-				self.ftpServer = ftplib.FTP(self.ftpHost, self.ftpUser, self.ftpPassword, timeout = 10)
+				self.ftpServer = ftplib.FTP(self.ftpHost, self.ftpUser, self.ftpPassword, timeout = self.ftpTimeout)
 				self.ftpServer.cwd(self.ftpDirectory)
 			return True
 		except (socket.timeout, ftplib.error_perm, serial.serialutil.SerialException):
 			if self.isActive:
-				#print traceback.format_exc()
 				logger.write('WARNING', '[FTP] La conexion con el servidor ha fallado (%s).' % self.ftpHost)
 				self.isActive = False
 			raise	
