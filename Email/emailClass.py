@@ -305,11 +305,11 @@ class Email(object):
 									else:
 										emailBody = emailBody[:emailBody.rfind('\r\n')] # Elimina el salto de línea del final
 										self.receptionQueue.put((10, emailBody))
-										logger.write('INFO', '[EMAIL] Ha llegado un nuevo mensaje!')
+										logger.write('INFO', '[EMAIL] Ha llegado un nuevo mensaje de ' + sourceEmail + ' !')
 						else:
 							logger.write('WARNING', '[EMAIL] Imposible procesar la solicitud. El correo no se encuentra registrado!')
 							messageToSend = 'Imposible procesar la solicitud. Usted no se encuentra registrado!'
-							self.sendMessage(messageToSend, sourceEmail)
+							self.sendMessage(messageToSend)
 						# Eliminamos el mensaje de la bandeja de entrada porque ya fue leído
 						#self.deleteEmail(emailId) #DBG
 				# ... sino, dejamos de esperar mensajes
