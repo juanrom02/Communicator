@@ -17,12 +17,7 @@ def main():
 	print '\t\t1 - Enviar mensaje/archivo'
 	print '\t\t2 - Enviar instancia de mensaje'
 	print '\t\t3 - Leer un mensaje'
-	print '\t\t4 - Llamar a un número'
-	print '\t\t5 - Atender la llamada'
-	print '\t\t6 - Colgar la llamada'
-	#~ print '\t\t7 - Conectar GPRS'
-	#~ print '\t\t8 - Desconectar GPRS'
-	print '\t\t7 - Descargar archivo del servidor FTP'
+	print '\t\t4 - Descargar archivo del servidor FTP'
 	print '\t\tq - Salir'
 	print '\t\to - DEBUG: Abrir Comunicador'
 	print '\t\tc - DEBUG: Cerrar Comunicador\n'
@@ -95,24 +90,8 @@ def main():
 							print '\tMensaje de texto: ' + str(messageReceived.infoText)
 					else:
 						print 'Mensaje recibido: %s' % messageReceived
-			# Opcion 4 - Llamar a un número
+			# Opcion 4 - Bajar archivo del servidor FTP
 			elif optionSelected is '4':
-				# Indicamos el número al cual efectuar la llamada de voz
-				telephoneNumber = raw_input('Número a llamar: ')
-				communicator.sendVoiceCall(telephoneNumber)
-			# Opcion 5 - Atender la llamada
-			elif optionSelected is '5':
-				communicator.answerVoiceCall()
-			# Opcion 6 - Colgar la llamada
-			elif optionSelected is '6':
-				communicator.hangUpVoiceCall()
-			#~ # Opcion 7 - Conectar GPRS
-			#~ elif optionSelected is '7':
-				#~ communicator.connectGprs()
-			#~ # Opcion 8 - Desconectar GPRS
-			#~ elif optionSelected is '8':
-				#~ communicator.disconnectGprs()
-			elif optionSelected is '7':
 				communicator.ftpInstance.connect()
 				lista = communicator.ftpInstance.ftpServer.nlst()
 				fileName = raw_input('Nombre del archivo a descargar: ')
