@@ -117,7 +117,7 @@ class Controller(threading.Thread):
 	def closeInstance(self, instance):
 		if instance.isActive:
 			instance.isActive = False
-			if instance.thread.isAlive():
+			if instance != self.ftpInstance and instance.thread.isAlive():
 				instance.thread.join()
 			instance.close()
 		else:
@@ -369,7 +369,7 @@ class Controller(threading.Thread):
 		hcitool = subprocess.Popen('hcitool dev', stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
 		btDeviceList, btErr = hcitool.communicate()
 		# Sacamos el primer elemento por izquierda ('Devices:\n')
-		btDeviceList = btDeviceList[1:]
+		btDeviceList = btDeviceList.split("\n")[1:]
 		for btDevice in btDeviceList:
 			# Ejemplo de btDevice: \thci0\t00:24:7E:64:7B:4A\n
 			btInterface = btDevice.split('\t')[1]
