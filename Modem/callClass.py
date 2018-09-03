@@ -59,13 +59,13 @@ class Call():
 		try:
 			#~ self.gsmInstance.sendAT('AT+IPR=230400')
 			#~ self.modemInstance.baudrate = 230400
-			isActive = True
+			self.isActive = True
 			if bienvenida:
 				self.gsmInstance.sendAT('AT#SPCM=3,1','CONNECT', 5)
 				self.sendAudioFile('Audio/bienvenida.raw', False)
 			time.sleep(0.5)
 			audio = 'Audio/menu.raw'
-			while True:
+			while self.isActive:
 				self.sendAudioFile(audio)
 				#~ self.dtmfThread = threading.Thread(target=self.dtmfDecoder)
 				#~ self.dtmfThread.start()
@@ -120,6 +120,7 @@ class Call():
 								break
 						self.gsmInstance.sendAT('ATH')
 						self.modemInstance.dtr = 1
+						logger.write('INFO', '[GSM] Llamada finalizada.')
 						raise CallEnded
 					elif numero is not None:
 						audio == 'Audio/menu.raw'
