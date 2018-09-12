@@ -93,12 +93,15 @@ def main():
 			# Opcion 4 - Bajar archivo del servidor FTP
 			elif optionSelected is '4':
 				communicator.ftpInstance.connect()
-				lista = communicator.ftpInstance.ftpServer.nlst()
+				result, fileList = askFileList()
+				if result is None:
+					print 'Abortado.'
+					continue
 				fileName = raw_input('Nombre del archivo a descargar: ')
-				if fileName not in lista:
+				if fileName not in fileList and not result:
 					showLista = raw_input('El archivo no existe. Desea ver una lista de los archivos disponibles?[S/n]')
 					if showLista in ['s','S']:
-						for item in lista:
+						for item in fileList:
 							print item
 				else:
 					communicator.ftpInstance.receive(fileName)
@@ -164,6 +167,18 @@ def askMedia():
 		return False
 	else:
 		return None
+		
+def askFileList():
+	fileList = communicator.ftpInstance.getFileList()
+	selectList = raw_input('¿Desea ver una lista de archivos del servidor? [S/n] ')
+	if (selectList is 'S' or selectList is 's' or len(selectList) is 0) and fileList:
+		for item in fileList:
+			print item
+		return True, fileList
+	elif selectList is 'N' or selectList is 'n':
+		return False, fileList
+	else:
+		return None, fileList
 
 if __name__ == '__main__':
 	main() 
