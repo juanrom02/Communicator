@@ -171,3 +171,18 @@ class Ftp(object):
 			print traceback.format_exc()
 			tf.close()
 			raise
+			
+	def getFileList(self):
+		try:
+			if self.ftp_mode == 2:
+				return self.gsmInstance.sendAT('AT#FTPLIST', wait = 5)
+			else:
+				return self.ftpServer.nlst()
+		except ftplib.error_perm, resp:
+			if str(resp) == "550 No files found":
+				logger.write('INFO', '[FTP] No se han encontrado archivos en el servidor')
+				return list()
+			else:
+				print traceback.format_exc()
+				raise
+		
